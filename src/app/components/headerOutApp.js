@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import styles from "./HeaderOutApp.module.css";
+import styles from "./headerOutApp.module.css";
 
 const HeaderOutApp = () => {
     const [menuOpen, setMenuOpen] = useState(false);
