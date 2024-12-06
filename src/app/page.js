@@ -4,8 +4,8 @@ import Typewriter from "typewriter-effect";
 import styles from "./page.module.css"
 import VideoPlayer from "@/app/components/VideoPlayer";
 import CompanyMarquee from "@/app/components/CompanyMarquee";
-import HeaderOutApp from "@/app/components/HeaderOutApp";
 import { useRouter } from "next/navigation";
+import HeaderOutApp from "@/app/components/HeaderOutApp";
 const Page = () => {
     const router = useRouter();
     const fadeInUp = {
