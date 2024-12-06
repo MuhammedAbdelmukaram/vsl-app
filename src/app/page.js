@@ -6,6 +6,7 @@ import VideoPlayer from "@/app/components/VideoPlayer";
 import CompanyMarquee from "@/app/components/CompanyMarquee";
 import { useRouter } from "next/navigation";
 import HeaderOutApp from "../app/components/HeaderOutApp";
+
 const Page = () => {
     const router = useRouter();
     const fadeInUp = {
