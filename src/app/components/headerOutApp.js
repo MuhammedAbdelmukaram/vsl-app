@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import styles from "./HeaderOutApp.module.css";
 
-const Header = () => {
+const HeaderOutApp = () => {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -44,4 +44,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default HeaderOutApp;
