@@ -1,0 +1,419 @@
+.pageContainer {
+    background: #0A0A0A;
+    color: #fff;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stepper {
+    margin-top: 30px;
+    display: flex;
+    gap: 26px;
+    margin-bottom: 20px;
+}
+
+.step {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #333;
+}
+
+.activeStep {
+    background: #D45900;
+}
+
+.stepContainer {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: normal;
+    margin-bottom: 30px;
+}
+
+
+
+.uploadSection {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.uploadBox {
+    border: 2px dashed #D45900;
+    padding: 20px;
+    border-radius: 6px;
+    text-align: center;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+
+
+.uploadBox img,
+.uploadIcon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.dragDropArea {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.orWord{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.greyLine{
+    height: 1px;
+    width: 140px;
+    background-color: #848484;
+}
+
+.browseButton {
+    align-self: center;
+    background: #D45900;
+    width: 140px;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.browseButton:hover {
+    background: #f16200;
+}
+
+.nextButton {
+    margin-bottom: 30px;
+    margin-top: 60px;
+    width: 100%;
+    padding: 14px 20px;
+    background: #f16200;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.nextButton:hover {
+    background-color: #e59400;
+}
+
+.uploadItem{
+    display: flex;
+    flex-direction: column;
+
+}
+.uploadDescription{
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    align-self: flex-start;
+}
+/* Enhancements for Step 2 */
+.optionsSectionWrapper{
+    display: flex;
+    flex-direction: column;
+    margin-top: 60px;
+}
+
+.heading{
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    align-self: flex-start;
+}
+
+.optionsSection {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.option label {
+    color: #fff;
+    cursor: pointer;
+}
+
+.option label span {
+    color: #D45900;
+    font-size: 0.9rem;
+    margin-left: 5px;
+}
+
+.customInfoIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px; /* Adjust size */
+    height: 14px; /* Adjust size */
+    font-size: 10px; /* Adjust font size */
+    font-weight: bold;
+    color: #fff;
+    background-color: #D45900; /* Match your orange color */
+    border-radius: 50%; /* Make it circular */
+    margin-left: 10px; /* Add some spacing */
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.customInfoIcon:hover {
+    background-color: #f16200; /* Slightly brighter color on hover */
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.label{
+    display: flex;
+    align-items: center;
+}
+
+.checkboxWrapper{
+
+    height: 24px;
+}
+
+.checkboxWrapper input[type="checkbox"] {
+    appearance: none; /* Removes default styles for custom styling */
+    width: 24px; /* Adjust width to make the checkbox larger */
+    height: 24px; /* Adjust height to make the checkbox larger */
+    background-color: #0A0A0A; /* Background color for the checkbox */
+    border: 2px solid #D45900; /* Border color and thickness */
+    border-radius: 4px; /* Optional: Make the checkbox rectangular with rounded corners */
+    cursor: pointer; /* Pointer cursor for better UX */
+    display: inline-block;
+    margin-right: 10px; /* Add space between the checkbox and label */
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.checkboxWrapper input[type="checkbox"]:checked {
+    background-color: #D45900; /* Background color when checked */
+    border: 2px solid #f16200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.timeInputs {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 1rem;
+}
+
+.timeInputs h3 {
+    margin-right: 20px;
+    color: #fff;
+}
+
+.timeInputs input {
+    width: 100px;
+    padding: 8px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background: #222;
+    color: #fff;
+    text-align: center;
+}
+
+.timeInputsInner{
+    display: flex;
+    gap: 10px;
+}
+
+.textInputs {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap:8px;
+
+}
+
+.textInputs input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background: #222;
+    color: #fff;
+}
+
+.textInputs input[type="color"] {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: transparent;
+}
+
+
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.inputLabel {
+    font-size: 12px;
+    color: #fff;
+}
+
+.timeInput {
+    width: 80px;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background: #222;
+    color: #fff;
+    text-align: center;
+}
+
+
+
+.infoIcon {
+    display: inline-block;
+    margin-left: 5px;
+    color: #D45900;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Title */
+
+
+/* Embed Section */
+.embedSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+/* Embed Code Textarea */
+.embedCode {
+    width: 100%;
+    max-width: 500px;
+    height: 200px;
+    background: #111;
+    color: #fff;
+    border: 1px solid #D45900;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 0.9rem;
+    font-family: "Courier New", Courier, monospace;
+    resize: none;
+    overflow: auto;
+}
+
+/* Copy Code Button */
+.copyButton {
+    background: #D45900;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.copyButton:hover {
+    background-color: #e59400;
+}
+
+.exitButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    color: #fff;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.exitButton:hover {
+    background: #D45900;
+}
+
+/* Finish Button */
+.finishButton {
+    margin-bottom: 30px;
+    margin-top: 60px;
+    width: 100%;
+    padding: 14px 20px;
+    background: #f16200;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.finishButton:hover {
+    background-color: #e59400;
+}
+
+/* Helper Text */
+.helperText {
+    margin-top: 10px;
+    color: #aaa;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.9rem;
+}

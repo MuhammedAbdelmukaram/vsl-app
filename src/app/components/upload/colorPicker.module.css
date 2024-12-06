@@ -1,0 +1,35 @@
+.colorPickerContainer {
+    display: flex;
+
+    align-items: center;
+    gap: 10px;
+
+    margin-top: 10px;
+    border-radius: 6px;
+    width: fit-content;
+}
+
+.colorInput {
+    width: 30px!important;
+    height: 30px!important;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    background: none;
+    padding: 0;
+    outline: none;
+}
+
+.colorHexInput {
+    background: #fff;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 1rem;
+    width: 100px;
+    text-align: center;
+    outline: none;
+    font-family: "Courier New", Courier, monospace;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}

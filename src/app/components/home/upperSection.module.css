@@ -1,0 +1,102 @@
+.upperSection {
+    padding: 20px;
+    border-bottom: 1px solid #333;
+    margin-left: 220px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h2 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.calendarButton {
+    display: flex;
+    align-items: center;
+    background: #333;
+    color: #ffa500;
+    border: 1px solid #ffa500;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.calendarButton:hover {
+    background: #ffa500;
+    color: #333;
+}
+
+.calendarIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.metric {
+    background: #181818;
+    border: 1px solid #333;
+    padding: 16px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.metricContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #bbb;
+    margin-bottom: 8px;
+}
+
+.cardLower{
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.value {
+    width: 100%;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.trendLine {
+    width: 100%;
+    height: 50px;
+}
+
+.metric:hover {
+    background: #222;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    transform: translateY(-3px);
+    transition: all 0.3s ease;
+}

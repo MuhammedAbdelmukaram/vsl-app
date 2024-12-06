@@ -1,0 +1,197 @@
+.pageContainer {
+    padding: 20px;
+    color: #fff;
+    margin-left: 220px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.addButton{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    background-color: #D45900;
+    color: white;
+    border: none;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px 26px;
+    transition: background-color 0.2s ease;
+}
+
+.addButton:hover{
+    background-color: #e76100;
+}
+
+.buttonImage {
+    width: 24px; /* Adjust size as needed */
+    height: 24px;
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* Converts it to white */
+}
+
+
+.description {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.filterButton {
+    padding: 8px 16px;
+    border-radius: 50px;
+    background-color: #1B1B1B; /* 33% transparency */
+    cursor: pointer;
+    border: 1px solid #4d4d4d;
+    color: #fff;
+    font-size: 0.85rem;
+    transition: background-color 0.3s ease;
+}
+
+.filterButton.active {
+    background-color: #ffa500;
+    color: #000;
+}
+
+.filterButton:hover {
+    background-color: #555;
+}
+
+.videoGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Always 4 columns */
+    gap: 60px; /* Consistent gap between rows */
+    justify-content: center; /* Center the grid within the container */
+    min-height: calc(3 * 200px + 2 * 60px); /* 3 rows of 200px height with 2 gaps (60px) */
+}
+
+.videoCard {
+    background: transparent;
+    border-radius: 8px;
+    padding: 0;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%; /* Ensure it fills the grid cell */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.videoCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.videoThumbnail {
+    position: relative; /* Required for aspect ratio hack */
+    width: 100%; /* Make the thumbnail responsive */
+    padding-top: 56.25%; /* Maintain 16:9 aspect ratio */
+    overflow: hidden; /* Hide overflowing content */
+    border-radius: 16px;
+    border: 1px solid #fff;
+    margin-bottom: 10px;
+    background: #000; /* Fallback background */
+}
+
+.videoThumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the container */
+    border-radius: 4px;
+}
+
+
+.videoCard.placeholder {
+    background: transparent;
+    border: none;
+    cursor: default;
+    pointer-events: none;
+}
+
+.videoInfoLower{
+    margin-top: 6px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.videoDate{
+    font-size: 12px;
+}
+
+.videoViews{
+    font-size: 12px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 60px;
+}
+
+.paginationButton {
+    width: 30px;
+    height: 30px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.paginationButton.active {
+    background-color: #ffa500;
+    color: #000;
+}
+
+.paginationButton:hover {
+    background-color: #555;
+}
+
+@media (max-width: 1200px) {
+    .videoGrid {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns for medium screens */
+        min-height: calc(4 * 200px + 3 * 60px); /* 4 rows with gaps */
+    }
+}
+
+@media (max-width: 900px) {
+    .videoGrid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
+        min-height: calc(6 * 200px + 5 * 60px); /* 6 rows with gaps */
+    }
+}
+
+@media (max-width: 600px) {
+    .videoGrid {
+        grid-template-columns: 1fr; /* 1 column for very small screens */
+        min-height: calc(12 * 200px + 11 * 60px); /* 12 rows with gaps */
+    }
+}

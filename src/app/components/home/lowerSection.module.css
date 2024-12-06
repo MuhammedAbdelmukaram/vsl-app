@@ -1,0 +1,107 @@
+.lowerSection {
+    padding: 20px;
+    margin-left: 220px;
+}
+
+.lowerSection h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
+.row {
+    border-top: 1px solid #363636;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background: transparent;
+    padding: 15px;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+.row:last-child {
+    border-bottom: 1px solid #363636; /* Add a border-bottom to the last row */
+}
+
+
+.row:hover {
+    background: #1e1e1e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+}
+
+.thumbnail img {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.stats {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding-left: 20px;
+}
+
+.statItem {
+    text-align: center;
+    flex: 1;
+}
+
+.statValue {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.statLabel {
+    font-size: 0.8rem;
+    color: #ccc;
+}
+
+.row:hover .statValue {
+    color: #ffa500;
+}
+
+.row:hover .statLabel {
+    color: #fff;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pageButton {
+    background: #000;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+.pageButton:hover {
+    background: #ffa500;
+    color: #000;
+}
+
+.pageButton.active {
+    background: #ffa500;
+    color: #000;
+    font-weight: bold;
+}

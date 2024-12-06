@@ -1,0 +1,19 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #0A0A0A; /* Dark background */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.mainContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+}
+
+.content {
+    flex: 1;
+    padding: 20px; /* Padding for the main content */
+    overflow-y: auto; /* Ensure scrolling for content */
+}
