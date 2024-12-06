@@ -66,7 +66,7 @@ const SidebarInApp = () => {
                     <div className={styles.menuItem} onClick={() => navigateTo("/settings")}>
                         Settings
                     </div>
-                    <div className={styles.menuItem} onClick={() => navigateTo("/logout")}>
+                    <div className={styles.menuItem} onClick={() => navigateTo("/")}>
                         Logout
                     </div>
                 </div>

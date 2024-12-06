@@ -1,0 +1,49 @@
+/* components/CompanyMarque.module.css */
+
+/* Footer container */
+.footer {
+    background-color: #000;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-top: 1px solid #555555;
+    border-bottom: 1px solid #555555;
+}
+
+.leftSide{
+
+}
+
+/* Partner logos container with responsive gap */
+.partnerLogos {
+    display: flex;
+    gap: clamp(2vw, 15vw, 20vw); /* Responsive gap that scales with screen size */
+    margin-right: 15vw;
+}
+
+/* Logo styling */
+.partnerLogos img {
+    width: auto;
+    height: 50px;
+    object-fit: contain;
+}
+
+.partnerLogos a {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.partnerLogos a:hover {
+    transform: scale(1.1); /* Scale up the logo */
+    cursor: pointer;
+}
+
+
+/* Media query for smaller screens (mobile) */
+@media (max-width: 768px) {
+    .partnerLogos img {
+        height: 30px; /* Reduce height for smaller screens */
+    }
+}

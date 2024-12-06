@@ -1,0 +1,133 @@
+/* Header container */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px 0px 20px;
+    background-color: #000;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Logo styling */
+.logo {
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+/* Hamburger menu styling */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 4px 0;
+    transition: 0.3s;
+}
+
+/* Navigation styling */
+.nav {
+    display: flex;
+    gap: 30px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(-20px);
+    align-items: center;
+    visibility: visible;
+    margin-top: 18px;
+    margin-right: 18px;
+}
+
+.navOpen {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.navLink {
+    text-decoration: none;
+    color: #eeeeee;
+    font-weight: normal;
+    position: relative;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.bookCall {
+    padding: 12px 24px;
+    border-radius: 7px;
+    background-color: #d45900;
+    font-weight: bold;
+    color: #fff; /* Ensure text color contrasts */
+    text-decoration: none; /* Remove underline for anchor link */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    position: relative;
+    display: inline-block;
+}
+
+.bookCall:hover {
+    background-color: #ef6200; /* Slightly darker shade */
+    transform: scale(1.00); /* Subtle scaling effect */
+}
+
+
+
+
+
+/* Hover effect for nav links */
+.navLink::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background-color: #d45900;
+    transition: width 0.3s ease;
+}
+
+.navLink:hover {
+    color: #d45900;
+}
+
+.navLink:hover::after {
+    width: 100%;
+}
+
+/* Mobile menu styling */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav {
+        flex-direction: column;
+        position: absolute;
+        top: 40px;
+        right: 40px;
+        background-color: #111111f5;
+        padding: 10px 20px;
+        border-radius: 8px;
+        display: flex;
+        transform: translateY(-40px); /* Initial transform for sliding effect */
+        opacity: 0; /* Initial opacity */
+        visibility: hidden; /* Hide the nav when closed */
+    }
+
+    .navOpen {
+        transform: translateY(0); /* Slide down effect */
+        opacity: 1; /* Fade in effect */
+        visibility: visible; /* Make the nav visible */
+    }
+
+    .navLink {
+        margin: 10px 0;
+    }
+}

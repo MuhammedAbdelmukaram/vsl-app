@@ -1,7 +1,17 @@
+"use client";
 import React from "react";
+import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import styles from "./login.module.css";
 
 const Page = () => {
+    const router = useRouter();
+
+    const handleLogin = (e) => {
+        e.preventDefault(); // Prevent form submission
+        // Perform any login validation logic here (if needed)
+        router.push("/home"); // Navigate to /home
+    };
+
     return (
         <div className={styles.page}>
             {/* Left section */}
@@ -12,7 +22,7 @@ const Page = () => {
                 <div className={styles.formContainer}>
                     <h1>Welcome Back!</h1>
                     <p>Log in to your account</p>
-                    <form>
+                    <form onSubmit={handleLogin}>
                         <div className={styles.inputGroup}>
                             <label htmlFor="email" className={styles.label}>
                                 Email

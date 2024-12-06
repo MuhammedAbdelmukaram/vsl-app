@@ -1,0 +1,78 @@
+.playerWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 16 / 9;
+    background-color: #000;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.reactPlayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.progressBarWrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 7px;
+    background-color: rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+}
+
+.progressBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #9a00f3;
+    transition: width 0.1s ease;
+}
+
+.playPauseButton {
+    position: absolute;
+    bottom: 10px; /* Adjust to fit above the progress bar */
+    left: 10px; /* Align to the left */
+    background: rgba(0, 0, 0, 0); /* Semi-transparent black background */
+    color: #fff;
+    border: none;
+    border-radius: 50%; /* Circular button */
+    width: 40px;
+    height: 40px;
+    font-size: 20px; /* Size of play/pause symbol */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.playPauseButton:hover {
+    background: rgba(0, 0, 0, 0.2); /* Slightly darker on hover */
+}
+
+.fullscreenButton {
+    position: absolute;
+    bottom: 10px; /* Adjust to fit above the progress bar */
+    right: 10px; /* Align to the right */
+    background: rgba(0, 0, 0, 0); /* Semi-transparent black background */
+    color: #fff;
+    border: none;
+    border-radius: 50%; /* Circular button */
+    width: 40px;
+    height: 40px;
+    font-size: 20px; /* Size of fullscreen symbol */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.fullscreenButton:hover {
+    background: rgba(0, 0, 0, 0.2); /* Slightly darker on hover */
+}

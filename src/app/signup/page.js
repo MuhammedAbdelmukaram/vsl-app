@@ -1,7 +1,16 @@
+"use client";
 import React from "react";
 import styles from "./signup.module.css";
+import {useRouter} from "next/navigation";
 
 const Page = () => {
+    const router = useRouter();
+    const handleLogin = (e) => {
+        e.preventDefault(); // Prevent form submission
+        // Perform any login validation logic here (if needed)
+        router.push("/home"); // Navigate to /home
+    };
+
     return (
         <div className={styles.page}>
             {/* Left section */}
@@ -12,7 +21,7 @@ const Page = () => {
                 <div className={styles.formContainer}>
                     <h1>Transform Your VSLs Today</h1>
                     <p>Start your 14-day free trial</p>
-                    <form>
+                    <form onSubmit={handleLogin}>
                         <div className={styles.inputGroup}>
                             <label htmlFor="name" className={styles.label}>
                                 Name

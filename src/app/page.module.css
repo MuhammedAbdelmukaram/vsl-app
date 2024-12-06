@@ -1,12 +1,78 @@
-.page {
+.container {
+  text-align: center;
+  color: #fff;
+  min-height: 90vh;
+  height: fit-content;
+  background: linear-gradient(180deg, #000000, #3a1f00);
+  padding: 10px 20px 60px 20px;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background-color: #121212; /* Dark theme background */
-  color: #ffffff; /* Light text color */
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  justify-content: center;
+  align-items: center;
+  overflow-y: hidden;
+  overflow-x: hidden;
+
 }
+
+.eyebrow{
+  margin-bottom: 12px;
+}
+
+.eyebrowText{
+  font-weight: bold;
+  font-size: 14px;
+  color: #d45900;
+}
+
+.eyebrowUnderline{
+  margin-top: 2px;
+  height: 3px;
+  width: 100%;
+  background-color: #d45900;
+}
+
+
+.heading {
+  font-size: 56px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  line-height: 1.1;
+  min-height: 124px;
+
+}
+
+.subtitles {
+  font-size: 1rem;
+  margin-bottom: 0px;
+  margin-bottom: 40px;
+  color: #FFFFFF;
+  overflow-x: hidden;
+}
+
+.bookCall {
+  margin-top: 32px;
+  background-color: #d45900;
+  color: #fff;
+  border: none;
+  padding: 20px 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+  overflow-x: hidden;
+}
+
+.bookCall:hover{
+  background-color: #ef6200;
+}
+
+.break {
+  display: inline;
+}
+
+
 
 .main {
   flex: 1;
