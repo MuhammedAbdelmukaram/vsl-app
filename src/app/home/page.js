@@ -1,7 +1,7 @@
 "use client"
 import React from "react";
-import UpperSection from "../components/home/UpperSection";
-import LowerSection from "../components/home/LowerSection";
+import UpperSection from "../components/home/upperSection";
+import LowerSection from "../components/home/lowerSection";
 import Layout from "../components/LayoutHS";
 
 const Home = () => {
