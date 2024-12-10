@@ -1,104 +1,46 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./videos.module.css";
 import Layout from "../components/LayoutHS";
-import Image from "next/image"; // Import Next.js Image
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-
-const videos = [
-    // Sample video objects
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    {
-        thumbnail: "/videoThumbnail.png",
-        title: "Master Thumbnail Design",
-        date: "12.4.2024",
-        views: 564,
-    },
-    // Add more video objects here...
-];
 
 const Page = () => {
     const router = useRouter();
+    const [videos, setVideos] = useState([]); // Store fetched videos
     const [activeFilter, setActiveFilter] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
     const videosPerPage = 12;
+
+    // Fetch videos on component load
+    useEffect(() => {
+        const fetchVideos = async () => {
+            try {
+                const token = localStorage.getItem("token"); // Get JWT from local storage
+                const response = await fetch("/api/getVideos", {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch videos");
+                }
+
+                const videoData = await response.json();
+                const formattedVideos = videoData.map((video) => ({
+                    id: video._id, // Include the video ID
+                    thumbnail: video.thumbnail || "/default-thumbnail.jpg",
+                    title: video.name || "Untitled Video",
+                    date: new Date(video.createdAt).toLocaleDateString(),
+                    views: 0, // Placeholder
+                }));
+                setVideos(formattedVideos);
+            } catch (error) {
+                console.error("Error fetching videos:", error);
+            }
+        };
+
+        fetchVideos();
+    }, []);
 
     const totalPages = Math.ceil(videos.length / videosPerPage);
 
@@ -107,24 +49,18 @@ const Page = () => {
         currentPage * videosPerPage
     );
 
-    const videosWithPlaceholders = [...filteredVideos];
-    while (videosWithPlaceholders.length < videosPerPage) {
-        videosWithPlaceholders.push(null);
-    }
-
     const handleFilterClick = (filter) => {
         setActiveFilter(filter);
         setCurrentPage(1);
     };
 
     const navigateToUpload = () => {
-        router.push("/upload"); // Navigate to /upload
+        router.push("/upload");
     };
 
-    const navigateToVideo = () => {
-        router.push("/video"); // Navigate to /video
+    const navigateToVideo = (id) => {
+        router.push(`/video/${id}`); // Navigate to specific video page with ID
     };
-
 
     return (
         <Layout>
@@ -132,14 +68,15 @@ const Page = () => {
                 <div className={styles.header}>
                     <h1>My Videos</h1>
                     <button className={styles.addButton} onClick={navigateToUpload}>
-                        <img src="/videos.png" alt="Add New Video" className={styles.buttonImage} />
+                        <img
+                            src="/videos.png"
+                            alt="Add New Video"
+                            className={styles.buttonImage}
+                        />
                         Add New Video
                     </button>
-
                 </div>
-                <p className={styles.description}>
-                    List of all gurus with prominent portfolios
-                </p>
+                <p className={styles.description}>List of all your videos</p>
                 <div className={styles.filters}>
                     {["All", "Active", "Inactive", "Favourite"].map((filter) => (
                         <button
@@ -154,39 +91,35 @@ const Page = () => {
                     ))}
                 </div>
                 <div className={styles.videoGrid}>
-                    {videosWithPlaceholders.map((video, index) =>
-                        video ? (
-                            <div className={styles.videoCard} key={index}  onClick={navigateToVideo}>
-                                <div className={styles.videoThumbnail}>
-                                    <Image
-                                        src={video.thumbnail}
-                                        alt={video.title}
-                                        layout="fill" // Ensures it covers the container
-                                        objectFit="cover" // Ensures the image maintains aspect ratio
-                                        priority // Optimizes for loading
-                                    />
-                                </div>
-                                <div className={styles.videoInfo}>
-                                    <h3>{video.title}</h3>
-                                    <div className={styles.videoInfoLower}>
-                                        <p className={styles.videoDate}>{video.date}</p>
-                                        <p className={styles.videoViews}>
-                                            {video.views}{" "}
-                                            <span role="img" aria-label="views">
+                    {filteredVideos.map((video, index) => (
+                        <div
+                            className={styles.videoCard}
+                            key={index}
+                            onClick={() => navigateToVideo(video.id)} // Pass video ID
+                        >
+                            <div className={styles.videoThumbnail}>
+                                <Image
+                                    src={video.thumbnail}
+                                    alt={video.title}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    priority
+                                />
+                            </div>
+                            <div className={styles.videoInfo}>
+                                <h3>{video.title}</h3>
+                                <div className={styles.videoInfoLower}>
+                                    <p className={styles.videoDate}>{video.date}</p>
+                                    <p className={styles.videoViews}>
+                                        {video.views}{" "}
+                                        <span role="img" aria-label="views">
                                             👁️
                                         </span>
-                                        </p>
-                                    </div>
-
+                                    </p>
                                 </div>
                             </div>
-                        ) : (
-                            <div
-                                className={`${styles.videoCard} ${styles.placeholder}`}
-                                key={index}
-                            />
-                        )
-                    )}
+                        </div>
+                    ))}
                 </div>
                 <div className={styles.pagination}>
                     {[...Array(totalPages).keys()].map((_, index) => (
@@ -205,5 +138,6 @@ const Page = () => {
         </Layout>
     );
 };
+
 
 export default Page;

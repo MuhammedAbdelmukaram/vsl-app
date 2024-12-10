@@ -17,12 +17,81 @@
     color: #fff;
 }
 
+.dropdownContainer {
+    position: relative;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.dropdownMenu button {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dropdownMenu button:hover {
+    background-color: #ffa500;
+    color: #000;
+    border-radius: 4px;
+}
+
+.customRange {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.customRange input {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.customRange p {
+    color: #ccc;
+    font-size: 0.85rem;
+}
+
+.customRange button {
+    margin-top: 5px;
+    background-color: #ffa500;
+    border: none;
+    color: #000;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px;
+    transition: background 0.2s;
+}
+
+.customRange button:hover {
+    background-color: #e69500;
+}
+
+
 .calendarButton {
     display: flex;
     align-items: center;
-    background: #333;
-    color: #ffa500;
-    border: 1px solid #ffa500;
+    background: #0a0a0b;
+    color: #969696;
+    border: 1px solid #969696;
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
@@ -30,8 +99,8 @@
 }
 
 .calendarButton:hover {
-    background: #ffa500;
-    color: #333;
+    background: #333;
+    color: #fff;
 }
 
 .calendarIcon {
@@ -47,8 +116,8 @@
 }
 
 .metric {
-    background: #181818;
-    border: 1px solid #333;
+    background: #131313;
+    border: 1px solid #363636;
     padding: 16px;
     border-radius: 8px;
     display: flex;
@@ -70,27 +139,41 @@
 .label {
     font-size: 0.85rem;
     font-weight: 500;
-    color: #bbb;
+    color: #d5d5d5;
     margin-bottom: 8px;
 }
 
 .cardLower{
+    margin-top: 30px;
     display: flex;
     align-items: flex-end;
     width: 100%;
     justify-content: space-between;
 }
 
-.value {
-    width: 100%;
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #fff;
+.metricValue{
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
     margin-bottom: 12px;
 }
 
-.trendLine {
+.value {
     width: 100%;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+
+}
+
+.metricSmall{
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.trendLine {
+
+    width: fit-content;
     height: 50px;
 }
 

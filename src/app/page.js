@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import Typewriter from "typewriter-effect";
 import styles from "./page.module.css"
-import VideoPlayer from "@/app/components/VideoPlayer";
+import VideoPlayer from "@/app/video-player/VideoPlayer";
 import CompanyMarquee from "@/app/components/CompanyMarquee";
 import { useRouter } from "next/navigation";
 import HeaderOutApp from "./components/headerOutApp";
@@ -63,7 +63,7 @@ const Page = () => {
                     </span>
 
               </motion.p>
-              <VideoPlayer url="/video.mp4" />
+              <VideoPlayer url="/test.mp4" thumbnail="videoThumbnail.png" exitThumbnail="videoThumbnail.png" autoPlayText={"hey you"} showExitThumbnail={true}  />
               <motion.div
                   initial="hidden"
                   whileInView="visible"

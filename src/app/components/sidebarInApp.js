@@ -17,6 +17,15 @@ const SidebarInApp = () => {
         setIsMenuOpen(false); // Close the menu after navigation
     };
 
+    const handleLogout = () => {
+        // Clear the token or user session from localStorage
+        localStorage.removeItem("token"); // Assuming 'token' is the key used
+        localStorage.removeItem("user"); // Clear any additional user data if needed
+
+        // Redirect to the login page ("/")
+        router.push("/");
+    };
+
     return (
         <aside className={styles.sidebar}>
             <div className={styles.logo}>
@@ -66,7 +75,7 @@ const SidebarInApp = () => {
                     <div className={styles.menuItem} onClick={() => navigateTo("/settings")}>
                         Settings
                     </div>
-                    <div className={styles.menuItem} onClick={() => navigateTo("/")}>
+                    <div className={styles.menuItem} onClick={handleLogout}>
                         Logout
                     </div>
                 </div>

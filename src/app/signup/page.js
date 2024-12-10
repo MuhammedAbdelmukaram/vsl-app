@@ -1,50 +1,93 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./signup.module.css";
-import {useRouter} from "next/navigation";
 
 const Page = () => {
     const router = useRouter();
-    const handleLogin = (e) => {
-        e.preventDefault(); // Prevent form submission
-        // Perform any login validation logic here (if needed)
-        router.push("/home"); // Navigate to /home
+
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+    });
+
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSignup = async (e) => {
+        e.preventDefault();
+        setError(""); // Reset error state
+        setSuccess(""); // Reset success state
+
+        try {
+            const response = await fetch("/api/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                setSuccess(result.message);
+                router.push("/home"); // Navigate to /home
+            } else {
+                setError(result.message);
+            }
+        } catch (err) {
+            setError("Something went wrong. Please try again.");
+        }
     };
 
     return (
         <div className={styles.page}>
-            {/* Left section */}
             <div className={styles.leftSection}></div>
-
-            {/* Right section */}
             <div className={styles.rightSection}>
                 <div className={styles.formContainer}>
                     <h1>Transform Your VSLs Today</h1>
                     <p>Start your 14-day free trial</p>
-                    <form onSubmit={handleLogin}>
+                    <form onSubmit={handleSignup}>
                         <div className={styles.inputGroup}>
-                            <label htmlFor="name" className={styles.label}>
-                                Name
-                            </label>
-                            <input id="name" type="text" placeholder="John Doe" />
+                            <label htmlFor="name" className={styles.label}>Name</label>
+                            <input
+                                id="name"
+                                type="text"
+                                name="name"
+                                placeholder="John Doe"
+                                value={formData.name}
+                                onChange={handleChange}
+                            />
                         </div>
-
                         <div className={styles.inputGroup}>
-                            <label htmlFor="email" className={styles.label}>
-                                Email
-                            </label>
-                            <input id="email" type="email" placeholder="johndoe@gmail.com" />
+                            <label htmlFor="email" className={styles.label}>Email</label>
+                            <input
+                                id="email"
+                                type="email"
+                                name="email"
+                                placeholder="johndoe@gmail.com"
+                                value={formData.email}
+                                onChange={handleChange}
+                            />
                         </div>
-
                         <div className={styles.inputGroup}>
-                            <label htmlFor="password" className={styles.label}>
-                                Password
-                            </label>
-                            <input id="password" type="password" placeholder="********" />
+                            <label htmlFor="password" className={styles.label}>Password</label>
+                            <input
+                                id="password"
+                                type="password"
+                                name="password"
+                                placeholder="********"
+                                value={formData.password}
+                                onChange={handleChange}
+                            />
                         </div>
-
                         <div className={styles.passwordRequirements}>
-                            <p>Your password must include</p>
+                            <p>Your password must include:</p>
                             <ul>
                                 <li>Min 8 characters</li>
                                 <li>Capital letter</li>
@@ -52,6 +95,8 @@ const Page = () => {
                                 <li>Special letter (!@#$%)</li>
                             </ul>
                         </div>
+                        {error && <p className={styles.error}>{error}</p>}
+                        {success && <p className={styles.success}>{success}</p>}
                         <button type="submit" className={styles.createAccount}>
                             Create Account
                         </button>
