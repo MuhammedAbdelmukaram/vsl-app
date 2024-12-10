@@ -11,6 +11,7 @@ const Overlay = ({ thumbnail, autoPlayText, handleClick }) => (
             <div className={styles.overlayContainer}>
                 <PlayButton />
                 <p>{autoPlayText}</p>
+
             </div>
         </div>
     </div>
