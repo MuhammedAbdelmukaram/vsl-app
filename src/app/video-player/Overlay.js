@@ -1,5 +1,5 @@
 import React from "react";
-import PlayButton from "./PlayButton";
+import PlayButton from "./playButton";
 import styles from "./VideoPlayer.module.css";
 
 const Overlay = ({ thumbnail, autoPlayText, handleClick }) => (
