@@ -38,16 +38,23 @@ export const uploadVideoToR2 = async (file, setVideoId, setUploadedVideoUrl, set
 
         if (!uploadResponse.ok) throw new Error("Failed to upload file");
 
+        // Construct the custom domain URL
+        const customDomainUrl = uploadUrl.replace(
+            "https://pub-c376537ae6c646e39fabf6d97ec84d7b.r2.dev",
+            "https://cdn.vslapp.pro"
+        );
+
         // Save video details to DB and retrieve video ID
-        const id = await saveVideoToDB(uploadUrl, token, file.name);
+        const id = await saveVideoToDB(customDomainUrl, token, file.name);
         setVideoId(id);
-        setUploadedVideoUrl(uploadUrl);
+        setUploadedVideoUrl(customDomainUrl);
         setUploadStatus("Uploaded Successfully!");
     } catch (error) {
         console.error("Upload Error:", error);
         setUploadStatus("Upload Failed. Please try again.");
     }
 };
+
 
 // Function to save video to database
 export const saveVideoToDB = async (videoUrl, token, videoName) => {
@@ -90,6 +97,7 @@ export const uploadFileToR2 = async (file, folder) => {
         const userId = decodedToken?.id;
         if (!userId) throw new Error("User ID not found in token payload.");
 
+        // Request signed URL for file upload
         const response = await fetch("/api/upload-video", {
             method: "POST",
             headers: {
@@ -108,6 +116,7 @@ export const uploadFileToR2 = async (file, folder) => {
 
         const { signedUrl, uploadUrl } = await response.json();
 
+        // Upload file to R2
         const uploadResponse = await fetch(signedUrl, {
             method: "PUT",
             headers: { "Content-Type": file.type },
@@ -115,12 +124,20 @@ export const uploadFileToR2 = async (file, folder) => {
         });
 
         if (!uploadResponse.ok) throw new Error("Failed to upload file");
-        return uploadUrl;
+
+        // Construct the custom domain URL
+        const customDomainUrl = uploadUrl.replace(
+            "https://pub-c376537ae6c646e39fabf6d97ec84d7b.r2.dev",
+            "https://cdn.vslapp.pro"
+        );
+
+        return customDomainUrl; // Return the custom domain URL
     } catch (error) {
         console.error("Upload Error:", error);
         throw error;
     }
 };
+
 
 // Function to handle thumbnail uploads
 export const handleThumbnailUpload = async (

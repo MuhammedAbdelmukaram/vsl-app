@@ -81,6 +81,29 @@
     background: rgba(0, 0, 0, 0.2);
 }
 
+.contextMenu {
+    position: fixed; /* Fix position relative to the viewport */
+    background: #333;
+    color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    padding: 0;
+    z-index: 1000;
+}
+
+.contextMenu li {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.contextMenu li:hover {
+    background: #444;
+}
+
+
+
 /* Overlay for AutoPlay */
 .overlay {
     position: absolute;

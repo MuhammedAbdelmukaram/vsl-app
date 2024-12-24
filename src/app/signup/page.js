@@ -1,10 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./signup.module.css";
 
 const Page = () => {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectTo = searchParams.get("redirect") || "/home"; // Default to /home
+    const priceId = searchParams.get("priceId"); // Price ID from query
 
     const [formData, setFormData] = useState({
         name: "",
@@ -36,7 +39,15 @@ const Page = () => {
 
             if (response.ok) {
                 setSuccess(result.message);
-                router.push("/home"); // Navigate to /home
+                // Store token (optional, if applicable)
+                localStorage.setItem("token", result.token);
+
+                // Redirect to the target page with priceId if applicable
+                if (redirectTo === "/plan" && priceId) {
+                    router.push(`/plan?priceId=${priceId}`);
+                } else {
+                    router.push(redirectTo);
+                }
             } else {
                 setError(result.message);
             }
@@ -62,6 +73,7 @@ const Page = () => {
                                 placeholder="John Doe"
                                 value={formData.name}
                                 onChange={handleChange}
+                                required
                             />
                         </div>
                         <div className={styles.inputGroup}>
@@ -73,6 +85,7 @@ const Page = () => {
                                 placeholder="johndoe@gmail.com"
                                 value={formData.email}
                                 onChange={handleChange}
+                                required
                             />
                         </div>
                         <div className={styles.inputGroup}>
@@ -84,6 +97,7 @@ const Page = () => {
                                 placeholder="********"
                                 value={formData.password}
                                 onChange={handleChange}
+                                required
                             />
                         </div>
                         <div className={styles.passwordRequirements}>
@@ -102,7 +116,8 @@ const Page = () => {
                         </button>
                     </form>
                     <div className={styles.loginLink}>
-                        Already have an account? <a href="/login">Log In</a>
+                        Already have an account?{" "}
+                        <a href={`/login?redirect=${redirectTo}${priceId ? `&priceId=${priceId}` : ''}`}>Log In</a>
                     </div>
                 </div>
             </div>

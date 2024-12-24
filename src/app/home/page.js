@@ -11,6 +11,11 @@ const Home = () => {
         const fetchVideos = async () => {
             try {
                 const token = localStorage.getItem("token"); // Assuming JWT is in localStorage
+
+                if (!token) {
+                    throw new Error("User is not authenticated");
+                }
+
                 const response = await fetch("/api/getVideos", {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -18,7 +23,12 @@ const Home = () => {
                 });
 
                 if (!response.ok) {
-                    throw new Error("Failed to fetch videos");
+                    if (response.status === 404) {
+                        // Handle the case where the user has no videos
+                        setVideoPerformance([]);
+                        return;
+                    }
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
                 }
 
                 const videos = await response.json();
@@ -38,11 +48,13 @@ const Home = () => {
                 setVideoPerformance(formattedVideos);
             } catch (error) {
                 console.error("Error fetching videos:", error);
+                setVideoPerformance([]); // Ensure the state is set even in case of an error
             }
         };
 
         fetchVideos();
     }, []);
+
 
     const overallPerformance = [
         {

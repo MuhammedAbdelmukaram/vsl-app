@@ -10,6 +10,7 @@ const VideoSchema = new mongoose.Schema({
     thumbnail: { type: String }, // Initial Thumbnail URL
     exitThumbnail: { type: String }, // Exit Thumbnail URL
 
+    status:{type:String},
     // Options
     options: {
         fastProgressBar: { type: Boolean, default: false }, // Enable fast progress bar
@@ -22,6 +23,7 @@ const VideoSchema = new mongoose.Schema({
     pitchTime: { type: String }, // Time when pitch happens (e.g., "12:45")
     autoPlayText: { type: String }, // Auto-play overlay text
     brandColor: { type: String, default: "#ffffff" }, // Hex value of brand color
+    iFrame: { type: String },
 
     // Analytics
     analytics: { type: mongoose.Schema.Types.ObjectId, ref: "Analytics" }, // Video's analytics data

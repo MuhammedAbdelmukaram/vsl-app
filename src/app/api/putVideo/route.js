@@ -29,6 +29,7 @@ export async function PUT(request) {
             pitchTime,     // New: pitchTime
             autoPlayText,  // New: autoPlayText
             brandColor,    // New: brandColor
+            iFrame,
         } = await request.json();
 
         if (!videoId) {
@@ -49,6 +50,7 @@ export async function PUT(request) {
             ...(pitchTime && { pitchTime }),
             ...(autoPlayText && { autoPlayText }),
             ...(brandColor && { brandColor }),
+            ...(iFrame && { iFrame }),
         };
 
         // Update Video

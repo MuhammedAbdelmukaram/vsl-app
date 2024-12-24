@@ -1,8 +1,12 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./upload.module.css";
 
 const StepThree = ({ videoId }) => {
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+
     const embedCode = `
 <iframe 
     src="${process.env.NEXT_PUBLIC_BASE_URL}/embed/${videoId}" 
@@ -12,9 +16,46 @@ const StepThree = ({ videoId }) => {
 </iframe>
 `;
 
+    useEffect(() => {
+        const saveEmbedCode = async () => {
+            setLoading(true);
+            try {
+                const token = localStorage.getItem("token"); // JWT token
+
+                const payload = {
+                    videoId,
+                    iFrame: embedCode, // Save the iFrame code
+                };
+
+                const response = await fetch("/api/putVideo", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                if (!response.ok) throw new Error("Failed to save embed code.");
+
+                console.log("Embed code saved successfully!");
+            } catch (error) {
+                console.error("Error saving embed code:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        saveEmbedCode();
+    }, [videoId]); // Run effect when videoId changes
+
     const copyToClipboard = () => {
         navigator.clipboard.writeText(embedCode);
         alert("Embed code copied to clipboard!");
+    };
+
+    const handleFinish = () => {
+        router.push("/videos"); // Navigate to /videos
     };
 
     return (
@@ -31,7 +72,13 @@ const StepThree = ({ videoId }) => {
                     Copy Code
                 </button>
             </div>
-            <button className={styles.finishButton}>Finish</button>
+            <button
+                className={styles.finishButton}
+                onClick={handleFinish}
+                disabled={loading}
+            >
+                {loading ? "Saving..." : "Finish"}
+            </button>
         </div>
     );
 };

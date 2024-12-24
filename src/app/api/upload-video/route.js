@@ -34,7 +34,7 @@ export async function POST(request) {
             ContentType: fileType,
         });
 
-        const signedUrl = await getSignedUrl(r2Client, command, { expiresIn: 60 * 60 }); // 1 hour expiration
+        const signedUrl = await getSignedUrl(r2Client, command, { expiresIn: 2 * 60 * 60 }); // 2 hours
 
         const uploadUrl = `${process.env.R2_PUBLIC_URL}/${key}`;
 

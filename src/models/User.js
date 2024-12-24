@@ -1,11 +1,57 @@
 // models/User.js
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }, // Hashed password
-    videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }], // User's videos
-}, { timestamps: true }); // Automatically adds createdAt and updatedAt
+const UserSchema = new mongoose.Schema(
+    {
+        name: { type: String, required: true },
+        email: { type: String, required: true, unique: true },
+        password: { type: String, required: true }, // Hashed password
+
+        // Plan and Subscription Details
+        plan: {
+            type: String,
+            enum: ["Free", "Basic", "Pro", "Enterprise"],
+            default: "Free", // Default to Free plan
+        },
+        stripeCustomerId: { type: String }, // Stripe Customer ID for tracking payments
+        stripeSubscriptionId: { type: String }, // Active subscription ID in Stripe
+        subscriptionStatus: {
+            type: String,
+            enum: ["active", "inactive", "canceled", "trialing", "past_due"],
+            default: "inactive",
+        },
+        subscriptionStartDate: { type: Date },
+        subscriptionEndDate: { type: Date },
+
+        // Payment and Billing History
+        billingHistory: [
+            {
+                invoiceId: { type: String },
+                amount: { type: Number }, // Amount paid
+                currency: { type: String, default: "usd" },
+                status: { type: String, enum: ["paid", "unpaid", "failed"] },
+                date: { type: Date, default: Date.now },
+            },
+        ],
+
+        // Usage Metrics
+        videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }], // User's videos
+        totalVideos: { type: Number, default: 0 }, // Count of videos uploaded
+        storageUsed: { type: Number, default: 0 }, // In MB or GB
+        maxStorage: { type: Number, default: 10000 }, // Default: 10000 MB for Free
+
+        // Enterprise-specific Details
+        enterpriseDetails: {
+            companyName: { type: String },
+            contactPerson: { type: String },
+            contactEmail: { type: String },
+            notes: { type: String },
+        },
+
+        // Misc
+        isActive: { type: Boolean, default: true }, // Account active status
+    },
+    { timestamps: true } // Automatically adds createdAt and updatedAt
+);
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);
