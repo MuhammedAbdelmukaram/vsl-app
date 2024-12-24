@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import VideoPlayer from "../../video-player/VideoPlayer";
+import Loader from "@/app/loader/page";
 
 const EmbedPage = ({ params }) => {
     const [id, setId] = useState(null);
@@ -41,7 +42,7 @@ const EmbedPage = ({ params }) => {
     }, [id]);
 
     if (error) return <div>Error: {error}</div>;
-    if (!videoData) return <div>Loading...</div>;
+    if (!videoData) return <Loader/>;
 
     return (
         <div>

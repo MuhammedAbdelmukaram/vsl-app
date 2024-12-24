@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import Layout from "../../components/LayoutHS";
 import ColorPicker from "@/app/components/upload/colorPicker";
 import styles from "./video.module.css";
+import Loader from "@/app/loader/page";
 
 const VideoPage = () => {
     const { id } = useParams(); // Fetch video ID from URL
@@ -72,7 +73,7 @@ const VideoPage = () => {
         }
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <Loader/>;
     if (error) return <div>Error: {error}</div>;
     if (!video) return <div>No video found</div>;
 
@@ -99,7 +100,7 @@ const VideoPage = () => {
     };
 
     return (
-        <Layout>
+        <Layout title={`${video.name}`}>
             <div className={styles.pageContainer}>
                 {/* Upper Section */}
                 <div className={styles.upperSection}>
