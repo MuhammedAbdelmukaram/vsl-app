@@ -19,7 +19,7 @@
 
 .contentWrapper {
     display: flex;
-    gap: 100px;
+    gap: 10vw;
 }
 
 .leftSection
@@ -126,6 +126,17 @@
     text-align: left;
 }
 
+
+.planCard{
+    cursor: pointer;
+}
+
+.planCard:hover{
+    background-color: #1f1f1f;
+    cursor: pointer;
+}
+
+
 .planHeader {
     display: flex;
     justify-content: space-between;
@@ -188,3 +199,72 @@
     color: #fff;
     cursor: pointer;
 }
+
+
+
+
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8); /* Darker overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #1e1e1e; /* Dark background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6); /* Stronger shadow for dark mode */
+    width: 400px;
+    text-align: left;
+    color: #fff; /* Light text for contrast */
+}
+
+.modalInputs{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.cancelButton,
+.saveButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cancelButton {
+    background-color: #555; /* Darker gray for cancel */
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.cancelButton:hover {
+    background-color: #666; /* Slightly lighter gray on hover */
+}
+
+.saveButton {
+    background-color: #d45900; /* Bright orange for save button */
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.saveButton:hover {
+    background-color: #f16200; /* Lighter orange on hover */
+}
+

@@ -1,18 +1,29 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import React, {useState, useEffect} from "react";
+import {useParams} from "next/navigation";
 import Layout from "../../components/LayoutHS";
-import ColorPicker from "@/app/components/upload/colorPicker";
+import ColorPicker from "@/app/components/colorPicker";
 import styles from "./video.module.css";
 import Loader from "@/app/loader/page";
+import {handleThumbnailUpload} from "../../../lib/uploadHelpers";
+import UntrackedVideoPlayer from "@/app/untracked-video-player/UntrackedVideoPlayer";
+import Retention from "@/app/components/analytics/Retention";
+import Countries from "@/app/components/analytics/Countries";
+import Devices from "@/app/components/analytics/Devices";
+import Browser from "@/app/components/analytics/Browser";
+import TrafficSource from "@/app/components/analytics/TrafficSource";
+import General from "@/app/components/analytics/General";
 
 const VideoPage = () => {
-    const { id } = useParams(); // Fetch video ID from URL
+    const {id} = useParams(); // Fetch video ID from URL
     const [video, setVideo] = useState(null);
     const [activeTab, setActiveTab] = useState("General");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isSaving, setIsSaving] = useState(false);
+    const [uploadedThumbnailUrl, setUploadedThumbnailUrl] = useState(null);
+    const [uploadedExitThumbnailUrl, setUploadedExitThumbnailUrl] = useState(null);
+
 
     // Fetch video data dynamically
     useEffect(() => {
@@ -20,12 +31,16 @@ const VideoPage = () => {
             try {
                 const token = localStorage.getItem("token");
                 const response = await fetch(`/api/getVideo/${id}`, {
-                    headers: { Authorization: `Bearer ${token}` },
+                    headers: {Authorization: `Bearer ${token}`},
                 });
 
                 if (!response.ok) throw new Error("Failed to fetch video");
                 const data = await response.json();
+
+                console.log(data);
                 setVideo(data);
+                setUploadedThumbnailUrl(data.thumbnail);
+                setUploadedExitThumbnailUrl(data.exitThumbnail);
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -38,17 +53,37 @@ const VideoPage = () => {
 
     // Handle input and checkbox changes
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const {name, value, type, checked} = e.target;
 
         if (type === "checkbox") {
             setVideo((prev) => ({
                 ...prev,
-                options: { ...prev.options, [name]: checked },
+                options: {...prev.options, [name]: checked},
             }));
         } else {
-            setVideo((prev) => ({ ...prev, [name]: value }));
+            setVideo((prev) => ({...prev, [name]: value}));
         }
     };
+
+    const handleThumbnailChange = async (e, type) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const uploadUrl = await handleThumbnailUpload(
+            file,
+            type,
+            id,
+            setUploadedThumbnailUrl,
+            setUploadedExitThumbnailUrl
+        );
+
+        // Update the video object with the new thumbnail URL
+        setVideo((prev) => ({
+            ...prev,
+            [type]: uploadUrl, // Update 'thumbnail' or 'exitThumbnail' dynamically
+        }));
+    };
+
 
     // Save updates to the database
     const handleSave = async () => {
@@ -79,24 +114,12 @@ const VideoPage = () => {
 
     // Tab Content
     const tabContent = {
-        General: (
-            <div className={styles.analyticsGrid}>
-                {Array(6)
-                    .fill()
-                    .map((_, index) => (
-                        <div className={styles.analyticsCard} key={index}>
-                            <h4>Total Views</h4>
-                            <p>435</p>
-                            <div className={styles.chart}></div>
-                        </div>
-                    ))}
-            </div>
-        ),
-        Retention: <div>Retention analytics coming soon...</div>,
-        Countries: <div>Country-wise analytics coming soon...</div>,
-        Devices: <div>Device-specific analytics coming soon...</div>,
-        Browser: <div>Browser-specific analytics coming soon...</div>,
-        "Traffic Source": <div>Traffic source analytics coming soon...</div>,
+        General: <General/>,
+        Retention: <Retention/>,
+        Countries: <Countries/>,
+        Devices: <Devices/>,
+        Browser: <Browser/>,
+        "Traffic Source": <TrafficSource/>,
     };
 
     return (
@@ -105,7 +128,7 @@ const VideoPage = () => {
                 {/* Upper Section */}
                 <div className={styles.upperSection}>
                     <div className={styles.videoDetails}>
-                        <div style={{ width: "fit-content" }}>
+                        <div style={{width: "fit-content"}}>
                             <div className={styles.videoInfo}>
                                 <input
                                     type="text"
@@ -120,7 +143,18 @@ const VideoPage = () => {
                                 </p>
                             </div>
                             <div className={styles.videoThumbnail}>
-                                <video src={video.videoUrl} controls width="100%"></video>
+                                <UntrackedVideoPlayer
+                                    url={video.videoUrl}
+                                    autoPlay={video.options.autoPlay}
+                                    autoPlayText={video.autoPlayText}
+                                    brandColor={video.brandColor}
+                                    thumbnail={video.thumbnail}
+                                    showThumbnail={video.options.showThumbnail}
+                                    exitThumbnail={video.exitThumbnail}
+                                    showExitThumbnail={video.options.showExitThumbnail}
+                                    fastProgressBar={video.options.fastProgressBar}
+                                />
+
                             </div>
                         </div>
                     </div>
@@ -129,46 +163,76 @@ const VideoPage = () => {
                     <div className={styles.optionsSection}>
                         <h3>Options</h3>
                         <div className={styles.optionsGrid}>
-                            {Object.entries(video.options).map(([key, value]) => (
-                                <div key={key} className={styles.option}>
-                                    <input
-                                        type="checkbox"
-                                        id={key}
-                                        name={key}
-                                        checked={value}
-                                        onChange={handleChange}
-                                    />
-                                    <label htmlFor={key}>
-                                        {key
-                                            .replace(/([A-Z])/g, " $1")
-                                            .replace(/^./, (str) =>
-                                                str.toUpperCase()
-                                            )}
-                                    </label>
-                                </div>
-                            ))}
+                            {Object.entries(video.options).map(([key, value]) => {
+                                const isDisabled =
+                                    key === "showThumbnail" && uploadedThumbnailUrl === "/default-thumbnail.jpg";
+                                return (
+                                    <div
+                                        key={key}
+                                        className={`${styles.option} ${isDisabled ? styles.disabledOption : ""}`}
+                                        {...(isDisabled && { "data-tooltip": "Upload thumbnail first" })}
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            id={key}
+                                            name={key}
+                                            checked={value}
+                                            onChange={handleChange}
+                                            disabled={isDisabled} // Ensure the checkbox is disabled when necessary
+                                        />
+                                        <label htmlFor={key}>
+                                            {key
+                                                .replace(/([A-Z])/g, " $1")
+                                                .replace(/^./, (str) => str.toUpperCase())}
+                                        </label>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
 
-                    {/* Thumbnails */}
+
+
                     <div className={styles.thumbnails}>
                         <div className={styles.thumbnailImages}>
                             <div className={styles.thumbnailWrapper}>
                                 <p>Thumbnail</p>
-                                <img
-                                    src={video.thumbnail || "/default-thumbnail.jpg"}
-                                    alt="Thumbnail"
+                                <label htmlFor="thumbnail-upload">
+                                    <img
+                                        src={uploadedThumbnailUrl || "/default-thumbnail.jpg"}
+                                        alt="Thumbnail"
+                                        className={styles.thumbnailImage}
+                                    />
+                                </label>
+                                <input
+                                    type="file"
+                                    id="thumbnail-upload"
+                                    accept="image/*"
+                                    style={{ display: "none" }} // Hide the input
+                                    onChange={(e) => handleThumbnailChange(e, "thumbnail")}
                                 />
                             </div>
                             <div className={styles.thumbnailWrapper}>
                                 <p>Exit Thumbnail</p>
-                                <img
-                                    src={video.exitThumbnail || "/default-thumbnail.jpg"}
-                                    alt="Exit Thumbnail"
+                                <label htmlFor="exit-thumbnail-upload">
+                                    <img
+                                        src={uploadedExitThumbnailUrl || "/default-thumbnail.jpg"}
+                                        alt="Exit Thumbnail"
+                                        className={styles.thumbnailImage}
+                                    />
+                                </label>
+                                <input
+                                    type="file"
+                                    id="exit-thumbnail-upload"
+                                    accept="image/*"
+                                    style={{ display: "none" }} // Hide the input
+                                    onChange={(e) => handleThumbnailChange(e, "exitThumbnail")}
                                 />
                             </div>
                         </div>
                     </div>
+
+
                     <button
                         className={styles.saveButton}
                         onClick={handleSave}

@@ -1,0 +1,165 @@
+.pricingPage {
+    font-family: 'Arial', sans-serif;
+
+    color: #fff;
+    background: linear-gradient(180deg, #000000, #3a1f00);;
+    text-align: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.toggleContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #fff;
+    border-radius: 25px;
+    width: fit-content;
+    height: fit-content;
+    margin: 0 auto 50px;
+
+}
+
+.toggleButton {
+    padding: 8px 12px;
+    flex: 1;
+    font-size: 14px;
+    font-weight: bold;
+    color: #bbb;
+    background: none;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.toggleButton.active {
+    background-color: #d45900;
+    color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+.pricingCards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: rgba(19, 19, 19, 0.3);
+    border: 1px solid #444;
+    border-radius: 15px;
+    padding: 20px 40px 30px 40px;
+    width: 350px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.card .planName {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.prices{
+    display: flex;
+    align-items: flex-end;
+    height: fit-content;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.card .priceOld {
+    font-size: 1.2rem;
+    color: #888;
+    text-decoration: line-through;
+    margin-bottom: 5px;
+}
+
+.card .priceNew {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.month{
+    font-size: 12px;
+    color: #B3B3B3;
+    font-weight: normal;
+}
+
+.card .features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+    color: #bbb;
+    font-size: 1.1rem;
+    text-align: left;
+}
+
+.card .features li {
+    margin-bottom: 10px;
+}
+
+.card .startButton {
+    background-color: #d45900;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.card .startButton:hover {
+    background-color: #e55c00;
+}
+
+.proPlan {
+    border: 1px solid #d45900;
+}
+
+.popularTag {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background-color: #d45900;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+    .pricingCards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 400px;
+    }
+}

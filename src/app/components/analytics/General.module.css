@@ -1,0 +1,74 @@
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.metric {
+    background: #131313;
+    border: 1px solid #363636;
+    padding: 16px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.metricContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #d5d5d5;
+    margin-bottom: 8px;
+}
+
+.cardLower{
+    margin-top: 30px;
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.metricValue{
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.value {
+    width: 100%;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+
+}
+
+.metricSmall{
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.trendLine {
+
+    width: fit-content;
+    height: 50px;
+}
+
+.metric:hover {
+    background: #222;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    transform: translateY(-3px);
+    transition: all 0.3s ease;
+}

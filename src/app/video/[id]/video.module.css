@@ -22,7 +22,6 @@
 }
 
 .videoThumbnail img {
-    width: 350px;
     height: auto;
     border-radius: 8px;
 }
@@ -32,6 +31,34 @@
     width: 100%;
     justify-content: space-between;
     align-items: flex-end;
+}
+
+.inputTitle{
+    background-color: #0a0a0b;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    margin-bottom: 6px;
+}
+
+.inputTitle:focus {
+    background-color: transparent; /* Ensure no background change on focus */
+    box-shadow: none; /* Remove any shadow */
+    border: none;
+}
+
+.inputTitle:active{
+    border: none;
+    background-color: transparent; /* Ensure no background change on focus */
+    box-shadow: none; /* Remove any shadow */
+    border: none;
+}
+
+.inputTitle:target{
+    border: none;
+    background-color: transparent; /* Ensure no background change on focus */
+    box-shadow: none; /* Remove any shadow */
+    border: none;
 }
 
 .videoInfo h2 {
@@ -71,6 +98,49 @@
     cursor: pointer;
 }
 
+/* Tooltip container */
+.option[data-tooltip] {
+    position: relative;
+    cursor: not-allowed;
+}
+
+/* Tooltip text */
+.option[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 0px; /* Position below the option */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    white-space: nowrap;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1;
+}
+
+/* Show tooltip on hover */
+.option[data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.disabledOption label {
+    color: #666; /* Grey out the text */
+    cursor: not-allowed; /* Add a not-allowed cursor */
+}
+
+/* Custom checkbox styling for disabled */
+.disabledOption input[type="checkbox"] + label::before {
+    border-color: #555; /* Lighter border for disabled */
+    background-color: #222; /* Greyed-out background */
+    cursor: not-allowed;
+}
+
 .customInfoIcon {
     display: inline-flex;
     align-items: center;
@@ -97,25 +167,51 @@
     height: 24px;
 }
 
-.checkboxWrapper input[type="checkbox"] {
-    appearance: none; /* Removes default styles for custom styling */
-    width: 24px; /* Adjust width to make the checkbox larger */
-    height: 24px; /* Adjust height to make the checkbox larger */
-    background-color: #0A0A0A; /* Background color for the checkbox */
-    border: 2px solid #D45900; /* Border color and thickness */
-    border-radius: 4px; /* Optional: Make the checkbox rectangular with rounded corners */
-    cursor: pointer; /* Pointer cursor for better UX */
+
+.optionsGrid{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Hide the default checkbox */
+.optionsGrid input[type="checkbox"] {
+    position: absolute; /* Position it off-screen */
+    opacity: 0; /* Make it invisible */
+    width: 0;
+    height: 0;
+}
+
+/* Style the custom checkbox */
+.optionsGrid label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox appearance */
+.optionsGrid label::before {
+    content: "";
     display: inline-block;
-    margin-right: 10px; /* Add space between the checkbox and label */
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ff6600; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    background-color: transparent; /* Background color */
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-.checkboxWrapper input[type="checkbox"]:checked {
-    background-color: #D45900; /* Background color when checked */
-    border: 2px solid #f16200;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Checked state */
+.optionsGrid input[type="checkbox"]:checked + label::before {
+    background-color: #ff6600; /* Background when checked */
+    border-color: #ff6600; /* Border color when checked */
+    background-image: url("/checkmark.svg"); /* Optional: add a checkmark icon */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 12px; /* Size of the checkmark icon */
 }
 
 
@@ -141,8 +237,9 @@
 .thumbnailImages img {
     border: 1px solid #fff;
     cursor: pointer;
-    width: 200px;
-    height: auto;
+    max-width: 200px; /* Restrict the maximum width */
+    aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
+    object-fit: cover; /* Ensure the image fills the space properly */
     margin: 5px;
     transition: transform 0.3s ease, filter 0.3s ease; /* Smooth hover effect */
 }
