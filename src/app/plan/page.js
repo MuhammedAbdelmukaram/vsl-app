@@ -1,16 +1,17 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { loadStripe } from "@stripe/stripe-js";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-const PlanPage = () => {
-    const router = useRouter();
+const PlanContent = () => {
     const searchParams = useSearchParams();
+    const router = useRouter();
+
     const priceId = searchParams.get("priceId");
-    const planName = searchParams.get("planName"); // Retrieve plan name from query
-    const billingPeriod = searchParams.get("billingPeriod"); // Retrieve billing period from query
+    const planName = searchParams.get("planName");
+    const billingPeriod = searchParams.get("billingPeriod");
 
     useEffect(() => {
         const handleCheckout = async () => {
@@ -22,7 +23,7 @@ const PlanPage = () => {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: `Bearer ${localStorage.getItem("token")}`, // Pass the user's token
+                            Authorization: `Bearer ${localStorage.getItem("token")}`,
                         },
                         body: JSON.stringify({ priceId, planName, billingPeriod }),
                     });
@@ -38,8 +39,7 @@ const PlanPage = () => {
                     console.error("Checkout error:", error);
                 }
             } else {
-                // Missing data, redirect to pricing page
-                router.push("/pricing");
+                router.push("/pricing"); // Redirect to pricing page if data is missing
             }
         };
 
@@ -47,6 +47,14 @@ const PlanPage = () => {
     }, [priceId, planName, billingPeriod, router]);
 
     return <div>Processing your plan...</div>;
+};
+
+const PlanPage = () => {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <PlanContent />
+        </Suspense>
+    );
 };
 
 export default PlanPage;
