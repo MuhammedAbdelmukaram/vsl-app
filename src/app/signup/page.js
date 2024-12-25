@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./signup.module.css";
 
-const Page = () => {
+const SignupContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const redirectTo = searchParams.get("redirect") || "/home"; // Default to /home
@@ -125,4 +126,12 @@ const Page = () => {
     );
 };
 
-export default Page;
+const SignupPage = () => {
+    return (
+        <Suspense fallback={<div>Loading signup...</div>}>
+            <SignupContent />
+        </Suspense>
+    );
+};
+
+export default SignupPage;
