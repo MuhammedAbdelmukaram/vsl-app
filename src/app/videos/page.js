@@ -7,16 +7,15 @@ import { useRouter } from "next/navigation";
 
 const Page = () => {
     const router = useRouter();
-    const [videos, setVideos] = useState([]); // Store fetched videos
+    const [videos, setVideos] = useState([]);
     const [activeFilter, setActiveFilter] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
     const videosPerPage = 12;
 
-    // Fetch videos on component load
     useEffect(() => {
         const fetchVideos = async () => {
             try {
-                const token = localStorage.getItem("token"); // Get JWT from local storage
+                const token = localStorage.getItem("token");
                 const response = await fetch("/api/getVideos", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
@@ -27,11 +26,12 @@ const Page = () => {
 
                 const videoData = await response.json();
                 const formattedVideos = videoData.map((video) => ({
-                    id: video._id, // Include the video ID
+                    id: video._id,
                     thumbnail: video.thumbnail || "/default-thumbnail.jpg",
                     title: video.name || "Untitled Video",
                     date: new Date(video.createdAt).toLocaleDateString(),
-                    views: 0, // Placeholder
+                    views: 0,
+                    favorite: video.favorite || false,
                 }));
                 setVideos(formattedVideos);
             } catch (error) {
@@ -42,12 +42,49 @@ const Page = () => {
         fetchVideos();
     }, []);
 
-    const totalPages = Math.ceil(videos.length / videosPerPage);
+    const toggleFavorite = async (videoId) => {
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch("/api/toggleFavorite", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ videoId }),
+            });
 
-    const filteredVideos = videos.slice(
-        (currentPage - 1) * videosPerPage,
-        currentPage * videosPerPage
+            if (!response.ok) {
+                throw new Error("Failed to toggle favorite");
+            }
+
+            const result = await response.json();
+
+            setVideos((prevVideos) =>
+                prevVideos.map((video) =>
+                    video.id === videoId ? { ...video, favorite: result.favorite } : video
+                )
+            );
+        } catch (error) {
+            console.error("Error toggling favorite:", error);
+        }
+    };
+
+    const totalPages = Math.ceil(
+        videos.filter((video) =>
+            activeFilter === "Favourite" ? video.favorite : true
+        ).length / videosPerPage
     );
+
+    const filteredVideos = videos
+        .filter((video) => {
+            if (activeFilter === "Favourite") return video.favorite;
+            return true;
+        })
+        .slice(
+            (currentPage - 1) * videosPerPage,
+            currentPage * videosPerPage
+        );
 
     const handleFilterClick = (filter) => {
         setActiveFilter(filter);
@@ -59,7 +96,7 @@ const Page = () => {
     };
 
     const navigateToVideo = (id) => {
-        router.push(`/video/${id}`); // Navigate to specific video page with ID
+        router.push(`/video/${id}`);
     };
 
     return (
@@ -78,7 +115,7 @@ const Page = () => {
                 </div>
                 <p className={styles.description}>List of all your videos</p>
                 <div className={styles.filters}>
-                    {["All", "Active", "Inactive", "Favourite"].map((filter) => (
+                    {["All", "Favourite"].map((filter) => (
                         <button
                             key={filter}
                             className={`${styles.filterButton} ${
@@ -95,7 +132,7 @@ const Page = () => {
                         <div
                             className={styles.videoCard}
                             key={index}
-                            onClick={() => navigateToVideo(video.id)} // Pass video ID
+                            onClick={() => navigateToVideo(video.id)}
                         >
                             <div className={styles.videoThumbnail}>
                                 <Image
@@ -107,14 +144,44 @@ const Page = () => {
                                 />
                             </div>
                             <div className={styles.videoInfo}>
-                                <h3>{video.title}</h3>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <h3>{video.title}</h3>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            toggleFavorite(video.id);
+                                        }}
+                                        style={{
+                                            background: "none",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            padding: "0",
+                                        }}
+                                    >
+                                        <img
+                                            src={video.favorite ? "/favorite.png" : "/unfavorite.png"}
+                                            alt={video.favorite ? "Favorited" : "Not Favorited"}
+                                            style={{ width: "16px", height: "16px" }}
+                                        />
+                                    </button>
+                                </div>
                                 <div className={styles.videoInfoLower}>
                                     <p className={styles.videoDate}>{video.date}</p>
                                     <p className={styles.videoViews}>
                                         {video.views}{" "}
-                                        <span role="img" aria-label="views">
-                                            👁️
-                                        </span>
+                                        <Image
+                                            src="/viewIcon.png"
+                                            alt="Partner 1"
+                                            width={13}
+                                            height={13}
+                                            className={styles.logo}
+                                        />
                                     </p>
                                 </div>
                             </div>
@@ -138,6 +205,5 @@ const Page = () => {
         </Layout>
     );
 };
-
 
 export default Page;

@@ -1,30 +1,48 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation"; // Import usePathname for active link detection
+import { usePathname, useRouter } from "next/navigation";
 import styles from "./sidebar.module.css";
 
 const SidebarInApp = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const pathname = usePathname(); // Get the current pathname
-    const router = useRouter(); // Initialize router for navigation
+    const [videoCount, setVideoCount] = useState(0);
+    const pathname = usePathname();
+    const router = useRouter();
 
     const toggleMenu = () => {
         setIsMenuOpen((prevState) => !prevState);
     };
 
     const navigateTo = (path) => {
-        router.push(path); // Navigate to the specified path
-        setIsMenuOpen(false); // Close the menu after navigation
+        router.push(path);
+        setIsMenuOpen(false);
     };
 
     const handleLogout = () => {
-        // Clear the token or user session from localStorage
-        localStorage.removeItem("token"); // Assuming 'token' is the key used
-        localStorage.removeItem("user"); // Clear any additional user data if needed
-
-        // Redirect to the login page ("/")
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
         router.push("/");
     };
+
+    useEffect(() => {
+        const fetchVideoCount = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const response = await fetch("/api/getVideosCount", {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                if (!response.ok) throw new Error("Failed to fetch video count");
+
+                const data = await response.json();
+                setVideoCount(data.count);
+            } catch (error) {
+                console.error("Error fetching video count:", error);
+            }
+        };
+
+        fetchVideoCount();
+    }, []);
 
     return (
         <aside className={styles.sidebar}>
@@ -50,7 +68,7 @@ const SidebarInApp = () => {
                     >
                         <img src="/videos.png" alt="My Videos" className={styles.icon} />
                         <span>My Videos</span>
-                        <span className={styles.badge}>6</span>
+                        <span className={styles.badge}>{videoCount}</span>
                     </li>
                     <li
                         className={`${styles.navItem} ${

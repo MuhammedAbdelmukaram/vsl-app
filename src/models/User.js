@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema(
         // Plan and Subscription Details
         plan: {
             type: String,
-            enum: ["Free", "Basic", "Pro", "Enterprise"],
+            enum: ["Free", "Basic", "Pro"],
             default: "Free", // Default to Free plan
         },
         stripeCustomerId: { type: String }, // Stripe Customer ID for tracking payments

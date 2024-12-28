@@ -68,8 +68,8 @@ const PricingPage = () => {
                             onClick={() =>
                                 handlePlanClick(
                                     isMonthly
-                                        ? "price_1QYeJoBpdFBuaaBzix5u7jQk" // Example Stripe price ID
-                                        : "price_1QYeKRBpdFBuaaBzmWLZ3nkA",
+                                        ? "price_1QYeJoBpdFBuaaBzix5u7jQk" // Basic Monthly
+                                        : "price_1Qaf6EBpdFBuaaBzU5lPvG1t",// Basic Yearly
                                     "Basic", // Plan name
                                     isMonthly ? "Monthly" : "Yearly" // Billing period
                                 )
@@ -96,7 +96,7 @@ const PricingPage = () => {
                                 handlePlanClick(
                                     isMonthly
                                         ? "price_1QYeKiBpdFBuaaBzKwckPObi" // Example Stripe price ID
-                                        : "price_1QYeKrBpdFBuaaBzhaasMjT8",
+                                        : "price_1Qaf5qBpdFBuaaBz40TS51PU", // Pro Yearly
                                     "Pro", // Plan name
                                     isMonthly ? "Monthly" : "Yearly" // Billing period
                                 )

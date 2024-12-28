@@ -27,6 +27,9 @@ const VideoSchema = new mongoose.Schema({
 
     // Analytics
     analytics: { type: mongoose.Schema.Types.ObjectId, ref: "Analytics" }, // Video's analytics data
+
+
+    favorite: { type: Boolean, default: false },
 }, { timestamps: true });
 
 export default mongoose.models.Video || mongoose.model("Video", VideoSchema);

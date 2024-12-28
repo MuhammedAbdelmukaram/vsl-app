@@ -2,11 +2,18 @@
 import React, {useState} from 'react';
 import styles from './plans.module.css'
 import Layout from "@/app/components/LayoutHS";
+import {useRouter} from "next/navigation";
 const Page = () => {
-
+    const router = useRouter();
 
     const [isMonthly, setIsMonthly] = useState(true);
+    const handlePlanClick = (priceId, planName, billingPeriod) => {
 
+        // Redirect logged-in user to plan page with plan metadata
+        router.push(
+            `/plan?priceId=${priceId}&planName=${planName}&billingPeriod=${billingPeriod}`
+        );
+    };
 
     return (
         <Layout>
@@ -47,7 +54,7 @@ const Page = () => {
                                 handlePlanClick(
                                     isMonthly
                                         ? "price_1QYeJoBpdFBuaaBzix5u7jQk" // Example Stripe price ID
-                                        : "price_1QYeKRBpdFBuaaBzmWLZ3nkA",
+                                        : "price_1Qaf6EBpdFBuaaBzU5lPvG1t",
                                     "Basic", // Plan name
                                     isMonthly ? "Monthly" : "Yearly" // Billing period
                                 )
@@ -76,7 +83,7 @@ const Page = () => {
                                 handlePlanClick(
                                     isMonthly
                                         ? "price_1QYeKiBpdFBuaaBzKwckPObi" // Example Stripe price ID
-                                        : "price_1QYeKrBpdFBuaaBzhaasMjT8",
+                                        : "price_1Qaf5qBpdFBuaaBz40TS51PU",
                                     "Pro", // Plan name
                                     isMonthly ? "Monthly" : "Yearly" // Billing period
                                 )

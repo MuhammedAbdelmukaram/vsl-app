@@ -23,9 +23,39 @@ const UploadPage = () => {
     const handleVideoFileChange = async (e) => {
         const file = e.target.files[0];
         if (file) {
-            await uploadVideoToR2(file, setVideoId, setUploadedVideoUrl, setUploadStatus);
+            try {
+                // Step 1: Store the current videoId before uploading the new video
+                const previousVideoId = videoId;
+
+                // Step 2: Upload the new video
+                await uploadVideoToR2(file, setVideoId, setUploadedVideoUrl, setUploadStatus);
+
+                // Step 3: Log the previousVideoId (after videoId might have been updated)
+                console.log("Previous video ID:", previousVideoId);
+
+                // Step 4: Move the old video to the deleted collection using the dynamic route
+                if (previousVideoId) {
+                    try {
+                        const response = await fetch(`/api/moveToDeleted/${previousVideoId}`, {
+                            method: "POST",
+                        });
+
+                        if (!response.ok) {
+                            throw new Error("Failed to move old video to the deleted collection");
+                        }
+
+                        console.log("Old video moved to the deleted collection successfully");
+                    } catch (error) {
+                        console.error("Error moving old video to deleted collection:", error);
+                    }
+                }
+            } catch (error) {
+                console.error("Error uploading new video:", error);
+                setUploadStatus("Upload Failed. Please try again.");
+            }
         }
     };
+
 
     useEffect(() => {
         const storedToken = localStorage.getItem("token");

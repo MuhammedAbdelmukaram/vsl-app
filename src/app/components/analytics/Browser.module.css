@@ -1,0 +1,82 @@
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    color: #fff; /* White text for contrast */
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Spacing between rows in a column */
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-radius: 8px;
+    gap: 60px;
+    transition: background-color 0.2s ease;
+}
+
+.row:hover {
+    background-color: #222; /* Slightly lighter background on hover */
+}
+
+.rank {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #d5d5d5; /* Slightly muted white for the rank */
+    margin-right: 10px;
+}
+
+.leftSide {
+    display: flex;
+    align-items: center;
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+
+.icon {
+    font-size: 1.5rem;
+    color: #fff; /* White icons */
+}
+
+.name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff; /* White for the browser name */
+    margin-left: 10px;
+    overflow: hidden; /* Prevent overflow */
+    text-overflow: ellipsis; /* Add ellipsis if the text overflows */
+    white-space: nowrap; /* Prevent wrapping */
+}
+
+.count {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #d45900; /* Orange for the count */
+    text-align: right;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1420px) {
+    .container {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+    }
+}

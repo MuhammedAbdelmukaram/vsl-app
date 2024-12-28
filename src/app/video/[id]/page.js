@@ -14,6 +14,39 @@ import Browser from "@/app/components/analytics/Browser";
 import TrafficSource from "@/app/components/analytics/TrafficSource";
 import General from "@/app/components/analytics/General";
 
+
+const EmbedModal = ({ isOpen, onClose, embedCode }) => {
+    const handleCopy = () => {
+        navigator.clipboard.writeText(embedCode)
+            .then(() => {
+                alert("Embed code copied to clipboard!");
+            })
+            .catch((err) => {
+                console.error("Failed to copy text: ", err);
+            });
+    };
+
+    if (!isOpen) return null;
+
+    return (
+        <div className={styles.modalOverlay}>
+            <div className={styles.modal}>
+                <h3>Embed Code</h3>
+                <textarea
+                    readOnly
+                    value={embedCode}
+                    className={styles.embedCodeTextarea}
+                    onClick={handleCopy} // Copy text on click
+                />
+                <p className={styles.copyTip}>Click to copy</p>
+                <button onClick={onClose} className={styles.closeButton}>
+                    Close
+                </button>
+            </div>
+        </div>
+    );
+};
+
 const VideoPage = () => {
     const {id} = useParams(); // Fetch video ID from URL
     const [video, setVideo] = useState(null);
@@ -23,7 +56,7 @@ const VideoPage = () => {
     const [isSaving, setIsSaving] = useState(false);
     const [uploadedThumbnailUrl, setUploadedThumbnailUrl] = useState(null);
     const [uploadedExitThumbnailUrl, setUploadedExitThumbnailUrl] = useState(null);
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Fetch video data dynamically
     useEffect(() => {
@@ -232,7 +265,12 @@ const VideoPage = () => {
                         </div>
                     </div>
 
-
+                    <button
+                        className={styles.embedButton}
+                        onClick={() => setIsModalOpen(true)}
+                    >
+                        Embed Code
+                    </button>
                     <button
                         className={styles.saveButton}
                         onClick={handleSave}
@@ -241,6 +279,13 @@ const VideoPage = () => {
                         {isSaving ? "Saving..." : "Save"}
                     </button>
                 </div>
+
+
+                <EmbedModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    embedCode={video.iFrame || "No embed code available"}
+                />
 
                 {/* Middle Section */}
                 <div className={styles.middleSection}>
