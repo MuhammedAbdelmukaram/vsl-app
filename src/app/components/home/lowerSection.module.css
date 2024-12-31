@@ -37,6 +37,9 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 
 }
+.thumbnail{
+    height: 80px!important;
+}
 
 .thumbnail img {
     width: 120px;
@@ -81,11 +84,11 @@
 }
 
 .row:hover .statValue {
-    color: #ffa500;
+    color: #c2c2c2;
 }
 
 .row:hover .statValueSpecial {
-    color: #ffa500;
+    color: #d25801;
 }
 
 .row:hover .statLabel {

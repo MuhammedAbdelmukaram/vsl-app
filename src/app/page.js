@@ -63,7 +63,14 @@ const Page = () => {
                     </span>
 
               </motion.p>
-              <VideoPlayer url="/test.mp4" thumbnail="videoThumbnail.png" exitThumbnail="videoThumbnail.png" autoPlayText={"hey you"} showExitThumbnail={true}  />
+
+              <iframe
+                  src="http://localhost:3000/embed/676fd3ffc0b98aad3aee39fa"
+                  style={{border: "none", width: "100%", height: "500px"}}
+                  allow="autoplay; fullscreen"
+                  allowFullScreen>
+              </iframe>
+
               <motion.div
                   initial="hidden"
                   whileInView="visible"

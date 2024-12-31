@@ -1,7 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import React, {useState, useEffect} from "react";
+import {usePathname, useRouter} from "next/navigation";
 import styles from "./sidebar.module.css";
+import Avatar from "react-avatar";
 
 const SidebarInApp = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,7 +30,7 @@ const SidebarInApp = () => {
             try {
                 const token = localStorage.getItem("token");
                 const response = await fetch("/api/getVideosCount", {
-                    headers: { Authorization: `Bearer ${token}` },
+                    headers: {Authorization: `Bearer ${token}`},
                 });
 
                 if (!response.ok) throw new Error("Failed to fetch video count");
@@ -47,7 +48,7 @@ const SidebarInApp = () => {
     return (
         <aside className={styles.sidebar}>
             <div className={styles.logo}>
-                <img src="/logo.png" alt="Logo" />
+                <img src="/logo.png" alt="Logo"/>
             </div>
             <nav className={styles.nav}>
                 <ul>
@@ -57,7 +58,7 @@ const SidebarInApp = () => {
                         }`}
                         onClick={() => navigateTo("/home")}
                     >
-                        <img src="/home.png" alt="Home" className={styles.icon} />
+                        <img src="/home.png" alt="Home" className={styles.icon}/>
                         <span>Home</span>
                     </li>
                     <li
@@ -66,7 +67,7 @@ const SidebarInApp = () => {
                         }`}
                         onClick={() => navigateTo("/videos")}
                     >
-                        <img src="/videos.png" alt="My Videos" className={styles.icon} />
+                        <img src="/videos.png" alt="My Videos" className={styles.icon}/>
                         <span>My Videos</span>
                         <span className={styles.badge}>{videoCount}</span>
                     </li>
@@ -76,7 +77,7 @@ const SidebarInApp = () => {
                         }`}
                         onClick={() => navigateTo("/analytics")}
                     >
-                        <img src="/analytics.png" alt="Analytics" className={styles.icon} />
+                        <img src="/analytics.png" alt="Analytics" className={styles.icon}/>
                         <span>Analytics</span>
                     </li>
                     <li
@@ -85,14 +86,19 @@ const SidebarInApp = () => {
                         }`}
                         onClick={() => navigateTo("/ab-testing")}
                     >
-                        <img src="/abtestIcon.png" alt="abtestIcon" className={styles.icon} />
+                        <img src="/abtestIcon.png" alt="abtestIcon" className={styles.icon}/>
                         <span>A/B Testing</span>
                     </li>
                 </ul>
             </nav>
             <div className={styles.profile}>
                 <div className={styles.profileContent} onClick={toggleMenu}>
-                    <img src="/profile.jpg" alt="John Doe" className={styles.profileImage} />
+
+                    <div style={{marginBottom:14}}>
+
+
+                        <Avatar name="Muhammed Abdelmukaram" size="50"  round={true}  color="#9f2b10"/>
+                    </div>
                     <p className={styles.profileName}>John Doe</p>
                 </div>
                 <div className={`${styles.popoutMenu} ${isMenuOpen ? styles.open : ""}`}>

@@ -16,6 +16,7 @@
 
 /* Selected Video Section */
 .selectionSection {
+
     display: flex;
     justify-content: space-between;
     gap: 20px;
@@ -28,12 +29,42 @@
 .pWrapper{
     flex: 1;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
     text-align: left;
+    padding-right: 12px;
+
 }
 
+.videoDetails{
+    margin-right: 4vw;
+}
+
+.videoDetails p{
+    color: #838383;
+    font-size: 12px;
+    margin-top: 16px;
+    align-items: center;
+    display: flex;
+    min-width: max-content;
+    justify-content: space-between;
+}
+
+.videoDetails svg{
+
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    align-self: flex-end;
+    margin-left: 0px;
+
+}
+
+
 .selectedVideoInverse{
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -45,12 +76,36 @@
     flex: 1;
     text-align: center;
 }
+.selectedVideoActive{
+    border: 1px solid #d45900;
+}
+
+.selectedVideoActive2{
+    border: 1px solid #527d8f;
+}
+
+.discardVsl{
+    cursor: pointer;
+    width: 16px;
+    height: 4px;
+    background-color: #fff;
+    position: absolute;
+    top:16px;
+    right: 16px;
+}
+
+.discardVsl:hover{
+    background-color: #e05f03;
+}
+
 
 .selectedVideo {
     display: flex;
     flex-direction: column;
+    position: relative;
     justify-content: flex-end;
     align-items: flex-end;
+    height: fit-content;
     gap: 10px;
     background-color: #131313;
     border-radius: 8px;
@@ -107,6 +162,8 @@
 }
 
 .pageName{
+    display: flex;
+    justify-content: space-between;
     text-align: left;
     margin-top: 4px;
     font-size: 18px;
@@ -125,7 +182,7 @@
 /* A/B Testing Section */
 .abTesting {
     margin-top: 20px;
-    background-color: #222;
+    background-color: #131314;
     padding: 20px;
     border-radius: 8px;
 }
@@ -135,6 +192,86 @@
     flex-direction: column;
     gap: 10px;
     margin-top: 10px;
+}
+
+
+.sliderContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+.sliderValues{
+    display: flex;
+    gap: 40px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.percent{
+    font-size: 26px;
+    color: #ffdac6;
+}
+.percent2{
+    font-size: 26px;
+    color: #c6f5ff;
+}
+
+
+.sliderLabelLeft {
+    font-size: 14px;
+    color: #838383;
+    flex: 0 0 auto;
+    text-align: left;
+}
+
+.sliderLabelRight {
+    font-size: 14px;
+    color: #ffdac6;
+    flex: 0 0 auto;
+    text-align: right;
+}
+
+.customSlider {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    height: 8px;
+    background: linear-gradient(
+            to right,
+            #ff6600 0%,
+
+            #537e8f 100%
+    );
+    border-radius: 5px;
+    outline: none;
+    transition: background 0.3s ease;
+}
+
+.customSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #e0e0e0;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+.customSlider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+.customSlider:focus {
+    box-shadow: 0px 0px 5px #ffffff;
 }
 
 .sliderLabel {
@@ -232,7 +369,8 @@
 
 .actionButtons {
     display: flex;
-    justify-content: space-between;
+    align-self: flex-end;
+    justify-content: flex-end;
     gap: 10px;
     margin-top: 10px;
 }
@@ -253,6 +391,26 @@
     transition: background-color 0.2s ease;
 }
 
+.addButtonP{
+    align-items: center;
+    margin-top: 32px;
+    gap: 10px;
+    font-size: 14px;
+    background-color: rgba(237, 99, 0, 0.56);
+    color: #FFDAC6;
+    border: 1px solid #D45900;
+    max-width: 300px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px 26px;
+    transition: background-color 0.2s ease;
+}
+
+.addButtonP:hover{
+    background-color: #e76100;
+}
+
 .addButton:hover{
     background-color: #e76100;
 }
@@ -264,13 +422,21 @@
     filter: brightness(0) invert(1); /* Converts it to white */
 }
 
-
+.editWrapper{
+    display: flex;
+    flex:1;
+    justify-content: flex-end;
+    margin-top: 16px;
+    width: 100%;
+    text-align: right;
+}
 
 .editButton{
-    background: #131313;
-    border: 1px solid #363636;
-    padding: 16px;
-    color: #fff;
+    color: #fd6501;
+    border: 1px solid transparent;
+    padding: 2px 4px;
+    background-color: transparent;
+    font-size: 12px;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -281,9 +447,8 @@
 }
 
 .editButton:hover {
-    background: #222;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-    transform: translateY(-1px);
+
+    text-decoration: underline;
     transition: all 0.3s ease;
 }
 

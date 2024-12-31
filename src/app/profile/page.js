@@ -4,6 +4,7 @@ import styles from "./profile.module.css";
 import Layout from "../components/LayoutHS";
 import {useRouter} from "next/navigation";
 import Loader from "@/app/loader/page";
+import Avatar from "react-avatar";
 
 const Page = () => {
     const [profile, setProfile] = useState(null);
@@ -157,7 +158,9 @@ const Page = () => {
                     }}>
                         <div className={styles.profileCard}>
                             <div className={styles.profilePicture}>
-                                <div className={styles.imagePlaceholder}></div>
+                                <div >
+                                    <Avatar name={profile.name} size="80" round={true} color="#9f2b10"/>
+                                </div>
                             </div>
                             <h2 className={styles.profileName}>{profile.name || "John Doe"}</h2>
                         </div>

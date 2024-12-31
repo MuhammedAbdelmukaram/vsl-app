@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, {useState, useRef, useEffect} from "react";
 import dynamic from "next/dynamic";
 import ProgressBar from "./ProgressBar";
 import Overlay from "./Overlay";
 import ExitThumbnail from "./ExitThumbnail";
-import { adjustedExponentialProgress } from "./utils";
+import {adjustedExponentialProgress} from "./utils";
 import styles from "./VideoPlayer.module.css";
 
-const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
+const ReactPlayer = dynamic(() => import("react-player"), {ssr: false});
 
 const VideoPlayer = ({
                          videoId,
@@ -32,7 +32,7 @@ const VideoPlayer = ({
     const [showExit, setShowExit] = useState(false);
     const [viewLogged, setViewLogged] = useState(false);
     const [contextMenuVisible, setContextMenuVisible] = useState(false);
-    const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
+    const [contextMenuPosition, setContextMenuPosition] = useState({x: 0, y: 0});
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -61,8 +61,8 @@ const VideoPlayer = ({
             try {
                 const response = await fetch("http://localhost:3000/api/analytics/view", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ videoId }),
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({videoId}),
                 });
 
                 if (response.ok) {
@@ -110,7 +110,7 @@ const VideoPlayer = ({
         const x = Math.min(e.clientX, viewportWidth - menuWidth);
         const y = Math.min(e.clientY, viewportHeight - menuHeight);
 
-        setContextMenuPosition({ x, y });
+        setContextMenuPosition({x, y});
     };
 
     const handleMenuClick = () => {
@@ -119,9 +119,10 @@ const VideoPlayer = ({
     };
 
     return (
+        <body style={{backgroundColor:"transparent", display:"flex",justifyContent:"center"}}>
         <div
             className={styles.playerWrapper}
-            style={{ width, maxWidth, aspectRatio }}
+            style={{width, maxWidth, aspectRatio}}
             onClick={handleWrapperClick}
             onContextMenu={handleContextMenu} // Disable default menu
         >
@@ -149,10 +150,10 @@ const VideoPlayer = ({
             )}
 
             {showExit && exitThumbnail && (
-                <ExitThumbnail exitThumbnail={exitThumbnail} handleClick={handleExitThumbnailClick} />
+                <ExitThumbnail exitThumbnail={exitThumbnail} handleClick={handleExitThumbnailClick}/>
             )}
 
-            <ProgressBar progress={progress} brandColor={brandColor} />
+            <ProgressBar progress={progress} brandColor={brandColor}/>
 
             {/* Custom Context Menu */}
             {contextMenuVisible && (
@@ -168,6 +169,7 @@ const VideoPlayer = ({
                 </ul>
             )}
         </div>
+        </body>
     );
 };
 
