@@ -11,6 +11,7 @@ const UploadPage = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [minutes, setMinutes] = useState("");
     const [seconds, setSeconds] = useState("");
+    const [showExitModal, setShowExitModal] = useState(false);
     const [uploadStatus, setUploadStatus] = useState("");
     const [uploadedVideoUrl, setUploadedVideoUrl] = useState("");
     const [uploadedThumbnailUrl, setUploadedThumbnailUrl] = useState("");
@@ -68,10 +69,45 @@ const UploadPage = () => {
         handleThumbnailUpload(e.target.files[0], type, videoId, setUploadedThumbnailUrl, setUploadedExitThumbnailUrl);
     };
 
+    const handleExitClick = () => {
+        setShowExitModal(true);
+    };
+
+    const confirmExit = () => {
+        setShowExitModal(false);
+        router.push("/home"); // Redirect to desired page on exit
+    };
+
+    const cancelExit = () => {
+        setShowExitModal(false);
+    };
+
     const nextStep = () => setCurrentStep((prev) => prev + 1);
 
     return (
         <div className={styles.pageContainer}>
+            <button className={styles.exitButton} onClick={handleExitClick}>
+                Exit
+            </button>
+
+            {/* Exit Confirmation Modal */}
+            {showExitModal && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modal}>
+                        <h3>Are you sure you want to exit?</h3>
+                        <p>All progress will be lost.</p>
+                        <div className={styles.modalActions}>
+                            <button className={styles.confirmButton} onClick={confirmExit}>
+                                Yes, Exit
+                            </button>
+                            <button className={styles.cancelButton} onClick={cancelExit}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className={styles.stepper}>
                 {[1, 2, 3].map((step) => (
                     <div

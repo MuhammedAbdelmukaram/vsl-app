@@ -29,10 +29,12 @@ const UserSchema = new mongoose.Schema(
                 invoiceId: { type: String },
                 amount: { type: Number }, // Amount paid
                 currency: { type: String, default: "usd" },
-                status: { type: String, enum: ["paid", "unpaid", "failed"] },
+                status: { type: String, enum: ["paid", "unpaid", "failed", "canceled"] },
                 date: { type: Date, default: Date.now },
+                plan: { type: String }, // Added plan field to store the plan name
             },
         ],
+
 
         // Usage Metrics
         videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }], // User's videos

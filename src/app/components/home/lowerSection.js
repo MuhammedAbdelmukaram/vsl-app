@@ -39,6 +39,10 @@ const LowerSection = ({ data }) => {
                         </div>
                         <div className={styles.stats}>
                             <div className={styles.statItem}>
+                                <p className={styles.statValueSpecial}>{video.name}</p>
+
+                            </div>
+                            <div className={styles.statItem}>
                                 <p className={styles.statValue}>{video.views}</p>
                                 <p className={styles.statLabel}>Views</p>
                             </div>

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./videos.module.css";
 import Layout from "../components/LayoutHS";
+import Loader from "../loader/page"; // Assuming the Loader component exists in this path
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -10,6 +11,7 @@ const Page = () => {
     const [videos, setVideos] = useState([]);
     const [activeFilter, setActiveFilter] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
+    const [loading, setLoading] = useState(true); // State to track if data is loading
     const videosPerPage = 12;
 
     useEffect(() => {
@@ -36,6 +38,8 @@ const Page = () => {
                 setVideos(formattedVideos);
             } catch (error) {
                 console.error("Error fetching videos:", error);
+            } finally {
+                setLoading(false); // Stop showing the loader after data is fetched
             }
         };
 
@@ -99,6 +103,11 @@ const Page = () => {
         router.push(`/video/${id}`);
     };
 
+    if (loading) {
+        // Show the loader while checking video status
+        return <Loader />;
+    }
+
     return (
         <Layout>
             <div className={styles.pageContainer}>
@@ -127,80 +136,113 @@ const Page = () => {
                         </button>
                     ))}
                 </div>
-                <div className={styles.videoGrid}>
-                    {filteredVideos.map((video, index) => (
-                        <div
-                            className={styles.videoCard}
-                            key={index}
-                            onClick={() => navigateToVideo(video.id)}
-                        >
-                            <div className={styles.videoThumbnail}>
-                                <Image
-                                    src={video.thumbnail}
-                                    alt={video.title}
-                                    layout="fill"
-                                    objectFit="cover"
-                                    priority
-                                />
-                            </div>
-                            <div className={styles.videoInfo}>
+                <div style={{width:"100%", height:1, backgroundColor:"#ffffff", marginBottom:20}}>
+
+                </div>
+                {videos.length > 0 ? (
+                    <>
+                        <div className={styles.videoGrid}>
+                            {filteredVideos.map((video, index) => (
                                 <div
-                                    style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                    }}
+                                    className={styles.videoCard}
+                                    key={index}
+                                    onClick={() => navigateToVideo(video.id)}
                                 >
-                                    <h3>{video.title}</h3>
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            toggleFavorite(video.id);
-                                        }}
-                                        style={{
-                                            background: "none",
-                                            border: "none",
-                                            cursor: "pointer",
-                                            padding: "0",
-                                        }}
-                                    >
-                                        <img
-                                            src={video.favorite ? "/favorite.png" : "/unfavorite.png"}
-                                            alt={video.favorite ? "Favorited" : "Not Favorited"}
-                                            style={{ width: "16px", height: "16px" }}
-                                        />
-                                    </button>
-                                </div>
-                                <div className={styles.videoInfoLower}>
-                                    <p className={styles.videoDate}>{video.date}</p>
-                                    <p className={styles.videoViews}>
-                                        {video.views}{" "}
+                                    <div className={styles.videoThumbnail}>
                                         <Image
-                                            src="/viewIcon.png"
-                                            alt="Partner 1"
-                                            width={13}
-                                            height={13}
-                                            className={styles.logo}
+                                            src={video.thumbnail}
+                                            alt={video.title}
+                                            layout="fill"
+                                            objectFit="cover"
+                                            priority
                                         />
-                                    </p>
+                                    </div>
+                                    <div className={styles.videoInfo}>
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                            }}
+                                        >
+                                            <h3 className={styles.title}>{video.title}</h3>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    toggleFavorite(video.id);
+                                                }}
+                                                style={{
+                                                    background: "none",
+                                                    border: "none",
+                                                    cursor: "pointer",
+                                                    padding: "0",
+                                                }}
+                                            >
+                                                <img
+                                                    src={video.favorite ? "/favorite.png" : "/unfavorite.png"}
+                                                    alt={video.favorite ? "Favorited" : "Not Favorited"}
+                                                    style={{ width: "16px", height: "16px" }}
+                                                />
+                                            </button>
+                                        </div>
+                                        <div className={styles.videoInfoLower}>
+                                            <p className={styles.videoDate}>{video.date}</p>
+                                            <p className={styles.videoViews}>
+                                                {video.views}{" "}
+                                                <Image
+                                                    src="/viewIcon.png"
+                                                    alt="Views"
+                                                    width={13}
+                                                    height={13}
+                                                    className={styles.logo}
+                                                />
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
-                <div className={styles.pagination}>
-                    {[...Array(totalPages).keys()].map((_, index) => (
+                        <div className={styles.pagination}>
+                            {[...Array(totalPages).keys()].map((_, index) => (
+                                <button
+                                    key={index}
+                                    className={`${styles.paginationButton} ${
+                                        currentPage === index + 1 ? styles.active : ""
+                                    }`}
+                                    onClick={() => setCurrentPage(index + 1)}
+                                >
+                                    {index + 1}
+                                </button>
+                            ))}
+                        </div>
+                    </>
+                ) : (
+                    <div
+                        style={{
+                            textAlign: "center",
+                            padding: "20px",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            marginTop: "20vh",
+                        }}
+                    >
+                        <h2 style={{ fontWeight: "normal", color: "#C2C2C2", marginBottom: 20 }}>
+                            No videos uploaded yet.
+                        </h2>
                         <button
-                            key={index}
-                            className={`${styles.paginationButton} ${
-                                currentPage === index + 1 ? styles.active : ""
-                            }`}
-                            onClick={() => setCurrentPage(index + 1)}
+                            className={styles.addButton}
+                            onClick={navigateToUpload}
                         >
-                            {index + 1}
+                            <img
+                                src="/videos.png"
+                                alt="Add New Video"
+                                className={styles.buttonImage}
+                            />
+                            Upload Video
                         </button>
-                    ))}
-                </div>
+                    </div>
+                )}
             </div>
         </Layout>
     );

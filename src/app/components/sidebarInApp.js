@@ -79,6 +79,15 @@ const SidebarInApp = () => {
                         <img src="/analytics.png" alt="Analytics" className={styles.icon} />
                         <span>Analytics</span>
                     </li>
+                    <li
+                        className={`${styles.navItem} ${
+                            pathname === "/ab-testing" ? styles.active : ""
+                        }`}
+                        onClick={() => navigateTo("/ab-testing")}
+                    >
+                        <img src="/abtestIcon.png" alt="abtestIcon" className={styles.icon} />
+                        <span>A/B Testing</span>
+                    </li>
                 </ul>
             </nav>
             <div className={styles.profile}>

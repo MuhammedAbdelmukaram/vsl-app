@@ -13,7 +13,7 @@ const HeaderInApp = ({ title }) => {
 
     // Determine the title to display
     const currentPage = title
-        ? `Videos <img src="/arrowRight.svg" alt="Arrow" style="width: 12px; height: 12px; margin: 0 5px;"/> <span style="font-size: 18px; color: #ED6300;">${title}</span>` // Use arrow icon and style video name
+        ? `Videos <img src="/arrowRight.svg" alt="Arrow" style="width: 12px; height: 12px; margin: 0 5px;"/> <span style="font-size: 14px; font-weight: normal; color: #ED6300;">${title}</span>` // Use arrow icon and style video name
         : pathname === "/home"
             ? "Welcome <span style='font-weight: normal'>John Doe</span>"
             : capitalizeFirstLetter(pathname.replace("/", ""));
@@ -24,7 +24,7 @@ const HeaderInApp = ({ title }) => {
                 dangerouslySetInnerHTML={{
                     __html: currentPage,
                 }}
-                style={{ fontSize: "20px" }} // Make the header smaller
+                style={{ fontSize: "20px", display:"flex", alignItems:"center" }} // Make the header smaller
             ></h1>
             <div className={styles.actions}>
                 <div className={styles.helpIcon}>?</div>

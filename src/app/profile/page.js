@@ -10,6 +10,7 @@ const Page = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+    const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
     const [passwordForm, setPasswordForm] = useState({
         oldPassword: "",
         newPassword: "",
@@ -40,6 +41,7 @@ const Page = () => {
                 }
 
                 const data = await response.json();
+                console.log(data);
                 setProfile(data);
             } catch (err) {
                 setError(err.message);
@@ -66,6 +68,48 @@ const Page = () => {
     const handlePasswordChange = (e) => {
         const {name, value} = e.target;
         setPasswordForm((prev) => ({...prev, [name]: value}));
+    };
+
+    const calculateSubscriptionPrice = (plan, subscriptionEndDate) => {
+        if (!plan || !subscriptionEndDate) return null;
+
+        const currentDate = new Date();
+        const endDate = new Date(subscriptionEndDate);
+
+        const isYearly = endDate - currentDate > 2592000000 * 6; // More than ~6 months
+        if (plan === "Basic") return isYearly ? "$50/year" : "$60/month";
+        if (plan === "Pro") return isYearly ? "$100/year" : "$120/month";
+
+        return null;
+    };
+
+    const handleCancelSubscription = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch("/api/cancelSubscription", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({subscriptionId: profile.stripeSubscriptionId}),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to cancel subscription");
+            }
+
+            const data = await response.json();
+            setProfile((prev) => ({
+                ...prev,
+                subscriptionStatus: "canceled",
+                subscriptionEndDate: new Date().toISOString(), // Set to the current date
+            }));
+            alert("Subscription canceled successfully.");
+            setIsCancelModalOpen(false);
+        } catch (err) {
+            alert(`Error: ${err.message}`);
+        }
     };
 
     const handleSubmitPassword = async () => {
@@ -121,12 +165,13 @@ const Page = () => {
                         <div className={styles.planCards}>
                             <div className={styles.planCard} onClick={handleNavigateToPlans}>
                                 <div className={styles.planHeader}>
-                                    <span>{profile.plan || "Monthly Plan"}</span>
+                                    <span>Your Plan</span>
                                     <span className={styles.planStatus}>{profile.subscriptionStatus || "Active"}</span>
                                 </div>
                                 <h2 className={styles.planTitle}>{profile.plan || "Basic Plan"}</h2>
                                 <p className={styles.planPrice}>
-                                    {profile.subscriptionEndDate ? `$${profile.subscriptionPrice}/month` : "$59/month"}
+                                    {calculateSubscriptionPrice(profile.plan, profile.subscriptionEndDate) ||
+                                        "$59/month"}
                                 </p>
                             </div>
 
@@ -137,6 +182,15 @@ const Page = () => {
                                         ? new Date(profile.subscriptionEndDate).toLocaleDateString()
                                         : "Oct 26, 2024"}
                                 </h2>
+
+                                <div className={styles.cancelWrapper}>
+                                    <button
+                                        className={styles.cancelButton}
+                                        onClick={() => setIsCancelModalOpen(true)}
+                                    >
+                                        Cancel Subscription
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -255,6 +309,31 @@ const Page = () => {
                             </button>
                             <button onClick={handleSubmitPassword} className={styles.saveButton}>
                                 Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {isCancelModalOpen && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modal}>
+                        <h2>Are you sure?</h2>
+                        <p>
+                            Are you sure you want to cancel your subscription? This action cannot be undone.
+                        </p>
+                        <div className={styles.modalActions}>
+                            <button
+                                onClick={() => setIsCancelModalOpen(false)}
+                                className={styles.cancelButton}
+                            >
+                                No, Keep Subscription
+                            </button>
+                            <button
+                                onClick={handleCancelSubscription}
+                                className={styles.confirmButton}
+                            >
+                                Yes, Cancel Subscription
                             </button>
                         </div>
                     </div>

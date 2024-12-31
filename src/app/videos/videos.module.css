@@ -21,9 +21,11 @@
     align-items: center;
     gap: 10px;
     font-size: 14px;
-    background-color: #D45900;
-    color: white;
-    border: none;
+    background-color: rgba(237, 99, 0, 0.56);
+    color: #FFDAC6;
+    border: 1px solid #D45900;
+    max-width: 300px;
+
     font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
@@ -52,7 +54,7 @@
 .filters {
     display: flex;
     gap: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .filterButton {
@@ -85,7 +87,7 @@
 .videoGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* Always 4 columns */
-    gap: 60px; /* Consistent gap between rows */
+    gap: 20px; /* Consistent gap between rows */
     justify-content: center; /* Center the grid within the container */
     min-height: calc(3 * 200px + 2 * 60px); /* 3 rows of 200px height with 2 gaps (60px) */
 }
@@ -105,8 +107,16 @@
 }
 
 .videoCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+
+
+}
+
+.title{
+
+}
+
+.title:hover{
+    text-decoration: underline;
 }
 
 .videoThumbnail {
@@ -205,3 +215,50 @@
         min-height: calc(12 * 200px + 11 * 60px); /* 12 rows with gaps */
     }
 }
+
+
+.videoCard {
+    background: #181819;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 10px;
+    text-align: center;
+    transition: border-color 0.3s;
+}
+
+.videoCard.selected {
+    border-color: #ff6600;
+}
+
+.abTesting {
+    margin-top: 20px;
+    padding: 20px;
+    background: #1a1a1a;
+    border-radius: 8px;
+}
+
+.sliders {
+    margin: 20px 0;
+}
+
+.sliderLabel {
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.publishButton {
+    background: #ff6600;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.publishButton:disabled {
+    background: #333;
+    cursor: not-allowed;
+}
+

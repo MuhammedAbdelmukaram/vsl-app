@@ -40,6 +40,71 @@
     transform: translate(50%, 50%);
     opacity: 0.6; /* Softer glow */
 }
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #262626;
+    color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    width: 370px;
+}
+
+.modal h3 {
+    margin-bottom: 10px;
+}
+
+.modal p {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.modalActions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.confirmButton {
+    background: #d45900;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.confirmButton:hover {
+    background: #f16200;
+}
+
+.cancelButton {
+    background: #444;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.cancelButton:hover {
+    background: #555;
+}
 
 
 

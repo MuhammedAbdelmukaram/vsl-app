@@ -14,18 +14,58 @@ const PlanContent = () => {
     const billingPeriod = searchParams.get("billingPeriod");
 
     useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const response = await fetch("/api/getUserDetails", {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch user details");
+                }
+
+                const user = await response.json();
+                console.log("User details:", user);
+                return user;
+            } catch (error) {
+                console.error("Error fetching user details:", error);
+                return null;
+            }
+        };
+
         const handleCheckout = async () => {
             if (priceId && planName && billingPeriod) {
                 const stripe = await stripePromise;
 
                 try {
+                    // Fetch user details
+                    const userDetails = await fetchUserDetails();
+
+                    if (!userDetails) {
+                        console.error("User details not available");
+                        router.push("/pricing");
+                        return;
+                    }
+
                     const response = await fetch("/api/create-checkout-session", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                             Authorization: `Bearer ${localStorage.getItem("token")}`,
                         },
-                        body: JSON.stringify({ priceId, planName, billingPeriod }),
+                        body: JSON.stringify({
+                            priceId,
+                            planName,
+                            billingPeriod,
+                            metadata: {
+                                userId: userDetails._id, // From API response
+                                email: userDetails.email, // From API response
+                                name: userDetails.name,   // From API response
+                                plan: planName
+                            },
+                        }),
                     });
 
                     const session = await response.json();

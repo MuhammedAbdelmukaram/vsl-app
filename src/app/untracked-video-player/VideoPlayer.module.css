@@ -1,7 +1,7 @@
 .playerWrapper {
     position: relative;
-    width: 100%;
     max-width: 900px;
+    min-width: 350px;
     aspect-ratio: 16 / 9;
     background-color: #000;
     overflow: hidden;

@@ -15,7 +15,7 @@ import TrafficSource from "@/app/components/analytics/TrafficSource";
 import General from "@/app/components/analytics/General";
 
 
-const EmbedModal = ({ isOpen, onClose, embedCode }) => {
+const EmbedModal = ({isOpen, onClose, embedCode}) => {
     const handleCopy = () => {
         navigator.clipboard.writeText(embedCode)
             .then(() => {
@@ -57,6 +57,8 @@ const VideoPage = () => {
     const [uploadedThumbnailUrl, setUploadedThumbnailUrl] = useState(null);
     const [uploadedExitThumbnailUrl, setUploadedExitThumbnailUrl] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [initialVideo, setInitialVideo] = useState(null); // State to store the initial video state
+
 
     // Fetch video data dynamically
     useEffect(() => {
@@ -74,6 +76,7 @@ const VideoPage = () => {
                 setVideo(data);
                 setUploadedThumbnailUrl(data.thumbnail);
                 setUploadedExitThumbnailUrl(data.exitThumbnail);
+                setInitialVideo(data);
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -85,6 +88,9 @@ const VideoPage = () => {
     }, [id]);
 
     // Handle input and checkbox changes
+
+    const hasChanges = JSON.stringify(video) !== JSON.stringify(initialVideo);
+
     const handleChange = (e) => {
         const {name, value, type, checked} = e.target;
 
@@ -134,12 +140,15 @@ const VideoPage = () => {
 
             if (!response.ok) throw new Error("Failed to update video");
             alert("Video updated successfully!");
+
+            setInitialVideo(video); // Update the initial state after saving
         } catch (err) {
             alert("Error updating video: " + err.message);
         } finally {
             setIsSaving(false);
         }
     };
+
 
     if (loading) return <Loader/>;
     if (error) return <div>Error: {error}</div>;
@@ -160,6 +169,21 @@ const VideoPage = () => {
             <div className={styles.pageContainer}>
                 {/* Upper Section */}
                 <div className={styles.upperSection}>
+                    <div className={styles.utilityButtons}>
+                        <button
+                            className={styles.embedButton}
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            Embed Code
+                        </button>
+                        <button
+                            className={`${styles.saveButton} ${!hasChanges ? styles.unactiveSave : ""}`}
+                            onClick={handleSave}
+                            disabled={!hasChanges || isSaving} // Disable if no changes or during saving
+                        >
+                            {isSaving ? "Saving..." : "Save"}
+                        </button>
+                    </div>
                     <div className={styles.videoDetails}>
                         <div style={{width: "fit-content"}}>
                             <div className={styles.videoInfo}>
@@ -203,7 +227,7 @@ const VideoPage = () => {
                                     <div
                                         key={key}
                                         className={`${styles.option} ${isDisabled ? styles.disabledOption : ""}`}
-                                        {...(isDisabled && { "data-tooltip": "Upload thumbnail first" })}
+                                        {...(isDisabled && {"data-tooltip": "Upload thumbnail first"})}
                                     >
                                         <input
                                             type="checkbox"
@@ -225,7 +249,6 @@ const VideoPage = () => {
                     </div>
 
 
-
                     <div className={styles.thumbnails}>
                         <div className={styles.thumbnailImages}>
                             <div className={styles.thumbnailWrapper}>
@@ -241,7 +264,7 @@ const VideoPage = () => {
                                     type="file"
                                     id="thumbnail-upload"
                                     accept="image/*"
-                                    style={{ display: "none" }} // Hide the input
+                                    style={{display: "none"}} // Hide the input
                                     onChange={(e) => handleThumbnailChange(e, "thumbnail")}
                                 />
                             </div>
@@ -258,26 +281,14 @@ const VideoPage = () => {
                                     type="file"
                                     id="exit-thumbnail-upload"
                                     accept="image/*"
-                                    style={{ display: "none" }} // Hide the input
+                                    style={{display: "none"}} // Hide the input
                                     onChange={(e) => handleThumbnailChange(e, "exitThumbnail")}
                                 />
                             </div>
                         </div>
                     </div>
 
-                    <button
-                        className={styles.embedButton}
-                        onClick={() => setIsModalOpen(true)}
-                    >
-                        Embed Code
-                    </button>
-                    <button
-                        className={styles.saveButton}
-                        onClick={handleSave}
-                        disabled={isSaving}
-                    >
-                        {isSaving ? "Saving..." : "Save"}
-                    </button>
+
                 </div>
 
 

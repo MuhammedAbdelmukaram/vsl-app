@@ -135,6 +135,21 @@
     background-color: #e55c00;
 }
 
+.currentPlanButton {
+    background-color: transparent!important;
+    color: white!important;
+    border: 1px solid #e55c00!important;
+    padding: 10px 20px!important;
+    border-radius: 5px!important;
+    font-size: 16px!important;
+     /* Keep the cursor consistent */
+    transition: background-color 0.3s ease!important;
+}
+
+.currentPlanButton:hover {
+    background-color: #181818 !important; /* No hover effect for current plan */
+}
+
 .proPlan {
     border: 1px solid #d45900;
 }

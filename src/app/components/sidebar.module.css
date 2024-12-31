@@ -43,7 +43,7 @@
     margin-top: 2px;
     gap: 10px;
     padding: 16px 10px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     border-radius: 8px;
     transition: background-color 0.2s, color 0.2s;
@@ -65,12 +65,13 @@
 }
 
 .badge {
-    background: #d45900;
-    color: #1a1a1a;
-    font-size: 0.75rem;
+    background: rgba(237, 99, 0, 0.56);
+    border: 1px solid #d45900;
+    color: #FFDAC6;
+    font-size: 0.60rem;
     padding: 2px 8px;
     border-radius: 3px;
-    font-weight: bold;
+    font-weight: normal;
     margin-left: auto;
 }
 
