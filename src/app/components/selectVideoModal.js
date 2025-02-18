@@ -1,6 +1,6 @@
 "use client";
 import React, {useState, useEffect} from "react";
-import styles from "./upload.module.css";
+import styles from "../upload/upload.module.css";
 import ColorPicker from "@/app/components/colorPicker";
 
 const StepTwo = ({
