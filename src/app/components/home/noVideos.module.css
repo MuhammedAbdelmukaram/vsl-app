@@ -1,0 +1,271 @@
+.noVideosContainer {
+    margin-left: 260px;
+    max-width: 75vw;
+    padding: 20px;
+}
+
+.started{
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 2px;
+    margin-bottom: 14px;
+
+}
+/* Tutorial Section */
+/* Tutorial Section */
+.tutorialBox {
+    display: flex;
+    width: 100%;
+    align-items: stretch; /* Ensures children expand equally */
+    background-color: #131313;
+    border-radius: 8px;
+    padding: 0px;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.25); /* White with 25% opacity */
+}
+
+
+.tutorialImage {
+    width: 312px;
+    border-radius: 6px 0px 0px 6px;
+    margin-right: 20px;
+    object-fit: cover; /* Ensures the image scales properly */
+}
+
+.tutorialContent {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between; /* Distributes content evenly */
+    align-items: flex-start; /* Aligns content to the left */
+    min-height: 100%;
+    padding: 20px 40px 40px 10px; /* Optional padding for better spacing */
+}
+
+
+.tutorialTitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.tutorialDescription {
+    color: #B0B0B0;
+    width: 70%;
+    line-height: 130%;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.divider{
+    height: 1px;
+    width: 100%;
+    background-color: #575757;
+    margin-top: 40px;
+    margin-bottom: 28px;
+}
+
+.watchTutorial {
+    align-self: flex-end;
+    background-color: #fff;
+    color: black;
+    border: none;
+    font-size: 12px;
+    padding: 14px 26px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.setupGuideHeading{
+    font-weight: bold;
+    font-size: 20px;
+
+    margin-top: 24px;
+    margin-bottom: 12px;
+}
+/* Progress Bar */
+.progressSection {
+    margin-bottom: 30px;
+}
+
+.progressText {
+    color: white;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.progressBar {
+    width: 100%;
+    height: 9px;
+    margin-top: 14px;
+    background-color: #333;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progressFill {
+    width: 33%;
+    height: 100%;
+    background-color: #e76100;
+}
+
+/* Setup Guide Section */
+.setupGuide {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardSelected{
+
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    background-color: #131313;
+    border: 1px solid #D45900;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.card {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    background-color: #131313;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.25);
+    position: relative;
+}
+
+.stepNumber {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #e76100;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardImage {
+    width: 9vw;
+    margin-bottom: 10px;
+}
+.cardSelected h3 {
+    font-size: 18px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.cardSelected p {
+    color: #c2c2c2;
+    font-size: 12px;
+    width: 75%;
+    margin-bottom: 10px;
+    min-height: 42px;
+}
+
+.card h3 {
+    font-size: 18px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #c2c2c2;
+    font-size: 12px;
+    width: 75%;
+    margin-bottom: 10px;
+    min-height: 42px;
+}
+
+.uploadButton {
+    background-color: #e76100;
+    color: black;
+    border: none;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.readMore {
+    background-color: #333;
+    color: #c2c2c2;
+    border: none;
+    padding: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+}
+
+
+.metric {
+    margin-top: 12px;
+    background-color: rgba(237, 99, 0, 0.56);
+    color: #FFDAC6;
+    border: 1px solid #D45900;
+    align-self: flex-end;
+
+    padding: 4px 14px;
+    height: fit-content;
+
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+
+.metric:hover {
+    background-color: #c05710;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+
+    transition: all 0.3s ease;
+}
+
+
+.metric:disabled,
+.metric.disabled {
+    background-color: rgba(100, 100, 100, 0.5); /* Dimmed gray */
+    color: rgba(255, 255, 255, 0.3); /* Faded text */
+    border: 1px solid rgba(150, 150, 150, 0.4); /* Softer border */
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.6; /* Slight transparency */
+}
+
+.metric:disabled:hover,
+.metric.disabled:hover {
+    background-color: rgba(100, 100, 100, 0.5); /* Prevent hover effects */
+    box-shadow: none;
+    transition: none;
+}
+
+
+
+.metric:hover {
+    background-color: #c05710;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+
+    transition: all 0.3s ease;
+}

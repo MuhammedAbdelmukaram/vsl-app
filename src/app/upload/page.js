@@ -5,7 +5,7 @@ import styles from "./upload.module.css";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
-import { uploadVideoToR2, handleThumbnailUpload } from "@/lib/uploadHelpers";
+import { uploadVideoToR2, handleThumbnailUpload } from "@/lib/uploadHelpers.mjs";
 
 const UploadPage = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -136,6 +136,7 @@ const UploadPage = () => {
             {currentStep === 2 && (
                 <StepTwo
                     videoId={videoId}
+                    videoUrl={uploadedVideoUrl}
                     token={token}
                     minutes={minutes}
                     seconds={seconds}

@@ -23,13 +23,22 @@ const VideoPlayer = ({
                          maxWidth = "800px",
                          aspectRatio = "16 / 9",
                          brandColor = "#ffffff",
+                         border = false,  // ✅ Enables/disables border
+                         borderWidth = "0px", // ✅ Border width
+                         borderRadius = "0px", // ✅ Border radius
+                         borderColor = "#ffffff", // ✅ Border color
+                         fullScreen= false,
+                         exitThumbnailButtons= false,
+                         theatreView= false
                      }) => {
     const playerRef = useRef(null);
+    const clickTimeoutRef = useRef(null);
+    const isDoubleClickRef = useRef(false);
 
     const [playing, setPlaying] = useState(autoPlay);
     const [muted, setMuted] = useState(true);
     const [progress, setProgress] = useState(0);
-    const [showOverlay, setShowOverlay] = useState(autoPlay || showThumbnail); // Initial overlay
+    const [showOverlay, setShowOverlay] = useState(autoPlay || showThumbnail);
     const [showExit, setShowExit] = useState(false);
 
     useEffect(() => {
@@ -48,7 +57,7 @@ const VideoPlayer = ({
     };
 
     const handleOverlayClick = (e) => {
-        e.stopPropagation();
+        if (e) e.stopPropagation();
         setShowOverlay(false);
         setMuted(false);
         setPlaying(true);
@@ -58,34 +67,64 @@ const VideoPlayer = ({
     const handlePause = () => {
         if (showExitThumbnail && exitThumbnail) {
             setShowExit(true);
-            setPlaying(false); // Pause the video
+            setPlaying(false);
         }
     };
 
     const handleExitThumbnailClick = (e) => {
-        if (e) {
-            e.stopPropagation(); // Prevent triggering wrapper click
-        }
+        if (e?.stopPropagation) e.stopPropagation();
         setShowExit(false);
-        setPlaying(true); // Resume playback when exit thumbnail is clicked
+        setPlaying(true);
     };
 
+    const handleSeek = (direction) => {
+        if (playerRef.current) {
+            const currentTime = playerRef.current.getCurrentTime();
+            const duration = playerRef.current.getDuration();
 
-    const handleWrapperClick = (e) => {
-        e.stopPropagation(); // Prevent conflicts when clicking on ExitThumbnail
-        if (showExit) {
-            setShowExit(false);
-            setPlaying(true);
+            if (direction === "backward") {
+                playerRef.current.seekTo(Math.max(0, currentTime - 5));
+            } else if (direction === "forward") {
+                playerRef.current.seekTo(Math.min(duration, currentTime + 5));
+            }
+        }
+    };
+
+    const handleClick = (e, direction) => {
+        if (e) e.stopPropagation();
+
+        if (clickTimeoutRef.current) {
+            clearTimeout(clickTimeoutRef.current);
+        }
+
+        if (isDoubleClickRef.current) {
+            // Second click detected within the delay -> Double Click Action (Seek)
+            isDoubleClickRef.current = false;
+            handleSeek(direction);
         } else {
-            setPlaying((prev) => !prev);
+            // First click -> Wait for possible second click
+            isDoubleClickRef.current = true;
+            clickTimeoutRef.current = setTimeout(() => {
+                if (isDoubleClickRef.current) {
+                    // No second click detected -> Toggle Play/Pause
+                    setPlaying((prev) => !prev);
+                }
+                isDoubleClickRef.current = false;
+            }, 200);
         }
     };
 
     return (
         <div
             className={styles.playerWrapper}
-            style={{ width, maxWidth, aspectRatio }}
-            onClick={handleWrapperClick}
+            style={{
+                width,
+                maxWidth,
+                aspectRatio,
+                position: "relative",
+                borderRadius: borderRadius,
+                border: border ? `${borderWidth} solid ${borderColor}` : "none",
+            }}
         >
             <ReactPlayer
                 ref={playerRef}
@@ -110,7 +149,6 @@ const VideoPlayer = ({
                 />
             )}
 
-            {/* Display exit thumbnail when conditions are met */}
             {showExit && showExitThumbnail && exitThumbnail && (
                 <ExitThumbnail
                     exitThumbnail={exitThumbnail}
@@ -119,6 +157,48 @@ const VideoPlayer = ({
             )}
 
             <ProgressBar progress={progress} brandColor={brandColor} />
+
+            {/* Left Side Click for Backward */}
+            <div
+                onClick={(e) => handleClick(e, "backward")}
+                style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "25%",
+                    height: "100%",
+                    background: "rgba(255, 0, 0, 0.0)", // Make transparent after debugging
+                    cursor: "pointer",
+                }}
+            ></div>
+
+            {/* Center Area for Play/Pause */}
+            <div
+                onClick={(e) => handleClick(e, "pause")}
+                style={{
+                    position: "absolute",
+                    top: 0,
+                    left: "25%",
+                    width: "50%",
+                    height: "100%",
+                    background: "rgba(0, 255, 0, 0.0)", // Make transparent after debugging
+                    cursor: "pointer",
+                }}
+            ></div>
+
+            {/* Right Side Click for Forward */}
+            <div
+                onClick={(e) => handleClick(e, "forward")}
+                style={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    width: "25%",
+                    height: "100%",
+                    background: "rgba(0, 0, 255, 0.0)", // Make transparent after debugging
+                    cursor: "pointer",
+                }}
+            ></div>
         </div>
     );
 };

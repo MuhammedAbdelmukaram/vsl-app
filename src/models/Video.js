@@ -9,14 +9,23 @@ const VideoSchema = new mongoose.Schema({
     videoUrl: { type: String, required: true }, // Uploaded video URL
     thumbnail: { type: String }, // Initial Thumbnail URL
     exitThumbnail: { type: String }, // Exit Thumbnail URL
-
+    playerUrl: { type: String, required: false },
+    playerEmbedCode: { type: String },
     status:{type:String},
+    length:{type:String},
     // Options
     options: {
         fastProgressBar: { type: Boolean, default: false }, // Enable fast progress bar
         autoPlay: { type: Boolean, default: false }, // Auto-play enabled
         showThumbnail: { type: Boolean, default: false }, // Show initial thumbnail
         showExitThumbnail: { type: Boolean, default: false }, // Show exit thumbnail
+        border: { type: Boolean, default: false },
+        borderWidth: { type: String, default: "0px" },
+        borderRadius: { type: String, default: "0px" },
+        borderColor: { type: String, default: "#ffffff" },
+        exitThumbnailButtons: { type: Boolean, default: false },
+        fullScreen: { type: Boolean, default: false },
+        theatreView: { type: Boolean, default: false },
     },
 
     // Customizable Video Settings

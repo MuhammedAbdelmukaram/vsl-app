@@ -33,3 +33,45 @@
     font-family: "Courier New", Courier, monospace;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+.hiddenColorInput {
+    position: absolute;
+    opacity: 0;  /* Makes it invisible but still interactable */
+    width: 32px;  /* Same size as button */
+    height: 32px;
+    cursor: pointer;
+}
+
+.disabledColor{
+    background-color: #1a1a1a;
+    border: none;
+    display: none;
+}
+
+.disabledInput {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #222; /* Darker background to indicate disabled state */
+    border: 1px solid #444; /* Dimmed border */
+    color: #888; /* Greyed-out text */
+}
+
+.colorButton {
+    width: 32px;
+    height: 32px;
+
+    border: 1px solid #444;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.colorHexInput {
+    width: 80px;
+    padding: 4px;
+    text-align: center;
+    font-size: 14px;
+    border: 1px solid #666;
+    background: #222;
+    color: white;
+    border-radius: 4px;
+}

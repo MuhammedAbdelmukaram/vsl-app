@@ -108,6 +108,9 @@ const SidebarInApp = () => {
                     <div className={styles.menuItem} onClick={() => navigateTo("/plans")}>
                         Plans
                     </div>
+                    <div className={styles.menuItem} onClick={() => navigateTo("/integrations")}>
+                        Integrations
+                    </div>
                     <div className={styles.menuItem} onClick={handleLogout}>
                         Logout
                     </div>

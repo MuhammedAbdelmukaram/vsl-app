@@ -126,12 +126,14 @@
 .activeStep {
     background: #D45900;
 }
-
-.stepContainer {
-    width: 100%;
-    max-width: 400px;
+.container{
+    width: 40vw;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
 
 .title {
     font-size: 24px;
@@ -537,6 +539,269 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
+}
+
+.sliderThing{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+.borderWidthGroup {
+    display: flex;
+    gap: 8px;
+}
+
+.activeButton {
+    background: #ff6600 !important; /* Ensures it stays orange */
+    border: 1px solid #ff6600 !important;
+    color: #fff !important;
+}
+.disabledInput {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.borderWidthButton {
+    padding: 8px 12px;
+    background: #222;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.borderWidthButton:hover {
+    background: #333;
+}
+
+
+
+/* Step Container */
+.stepContainerOne {
+
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: white;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+
+.stepContainer {
+
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: white;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Title */
+.title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Tab Navigation */
+.tabNavigation {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 2px solid #333;
+
+}
+
+.tabButton {
+    flex: 1;
+    padding: 12px;
+    font-size: 1rem;
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out, border-bottom 0.3s ease-in-out;
+    border-bottom: 2px solid transparent;
+}
+
+.tabButton:hover {
+    color: #ff6600;
+}
+
+.activeTab {
+    color: #ff6600;
+    border-bottom: 2px solid #ff6600;
+    font-weight: bold;
+}
+
+/* Tab Content */
+.tabContent {
+    padding: 20px;
+    background: #151515;
+    width: 100%;
+    border-radius: 6px;
+}
+
+/* Checkbox Wrapper */
+.checkboxWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.checkboxWrapper input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Inputs */
+.textInputs {
+    margin: 15px 0;
+}
+
+.textInputs label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.textInputs input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background: #111;
+    color: white;
+    font-size: 1rem;
+}
+
+.textInputs input:focus {
+    border-color: #ff6600;
+    outline: none;
+}
+
+/* Border Width Buttons */
+.borderWidthGroup {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.borderWidthButton {
+    padding: 8px 12px;
+    background: #333;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.borderWidthButton:hover {
+    background: #444;
+}
+
+.activeButton {
+    background: #ff6600;
+    border: 1px solid #ff6600;
+    color: white;
+}
+
+/* Sliders */
+.sliderThing {
+    margin-top: 15px;
+}
+
+.sliderThing input[type="range"] {
+    width: 100%;
+    accent-color: #ff6600;
+}
+
+.borderWidthGroup span {
+    background: #444;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    text-align: center;
+    color: white;
+}
+
+/* Color Picker */
+.colorPickerContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.colorButton {
+    width: 32px;
+    height: 32px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.colorHexInput {
+    width: 80px;
+    text-align: center;
+    border: 1px solid #444;
+    padding: 5px;
+    background: #222;
+    color: white;
+    border-radius: 5px;
+}
+
+/* Buttons */
+.buttonsContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.backButton,
+.nextButton {
+    padding: 12px 18px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.backButton {
+    background: #444;
+    color: white;
+    border: none;
+}
+
+.backButton:hover {
+    background: #666;
+}
+
+.nextButton {
+    background: #ff6600;
+    color: white;
+    border: none;
+}
+
+.nextButton:hover {
+    background: #e05500;
+}
+
+
+.borderWidthButton:active {
+    background: #ff6600; /* Highlighted when selected */
+    border: 1px solid #ff6600;
+    color: #fff
 }
 
 .inputLabel {

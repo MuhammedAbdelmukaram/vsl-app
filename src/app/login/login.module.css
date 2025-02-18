@@ -2,7 +2,6 @@
     display: flex;
     min-height: 100vh;
     background-color: #181818; /* Dark background */
-    font-family: Arial, Helvetica, sans-serif;
     position: relative; /* To position pseudo-elements */
     overflow: hidden; /* Prevent gradients from affecting layout */
 }
@@ -41,12 +40,73 @@
 }
 
 .leftSection {
-    flex: 1;
     background-color: rgba(212, 89, 0, 0.6); /* Brown background with 60% transparency */
+    flex: 1 1 50%; /* Take up half of the space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 20px 195px 20px;
+    text-align: center;
 }
 
+.marketingContent{
+    padding: 4rem;
+}
+
+.marketingContent h1 {
+    font-size: 4em;
+    text-align: left;
+    margin-bottom: 20px; /* Spacing between elements */
+}
+
+.marketingContent p {
+    font-size: 1em; /* Adjust based on your design */
+    margin-bottom: 10px; /* Spacing between elements */
+    text-align: left;
+}
+
+
+.progressBarContainer {
+    width: 100%;
+    background-color: #0a0a0a;
+    border-radius: 2px;
+}
+
+.progressBar {
+    height: 4px;
+    background-color: #4CAF50; /* Adjust the color as needed */
+    width: 0; /* Initial width */
+    border-radius: 2px;
+}
+
+.progressBarContainer {
+    width:86%;
+    background-color: #c9c9c9;
+    height: 4px; /* Set the height of your progress bar */
+    overflow: hidden; /* Ensure the width animation is contained within the bar */
+}
+
+@keyframes fillBar {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.progressBarStart {
+    height: 4px;
+    background-color: #ffffff; /* Adjust the color as needed */
+    animation: fillBar 5s linear forwards; /* Adjust the time to match your interval */
+}
+
+.progressBarReset {
+    height: 4px;
+    background-color: #4CAF50;
+    width: 0%; /* Reset the progress bar */
+}
+
+
 .rightSection {
-    flex: 1;
+    flex: 1 1 50%;
     display: flex;
     flex-direction: column;
     align-items: center;

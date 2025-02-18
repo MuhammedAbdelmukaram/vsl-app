@@ -33,7 +33,7 @@
 }
 
 .helpIcon {
-    background: #ffffff;
+    background: #d05702;
     color: #000000;
     border-radius: 50%;
     width: 16px;
@@ -44,4 +44,9 @@
     justify-content: center;
     cursor: pointer;
     font-weight: bold;
+    transition: background 0.3s;
+}
+
+.helpIcon:hover{
+    background: #ef731c;
 }

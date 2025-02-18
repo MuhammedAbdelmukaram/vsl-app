@@ -51,12 +51,7 @@ const General = () => {
             metric: "",
             trendData: [100, 200, 300, 400, 435],
         },
-        {
-            label: "CTA Clicks",
-            value: "253",
-            metric: "",
-            trendData: [50, 150, 200, 250, 100],
-        },
+
         {
             label: "Play Rate",
             value: "67.2",

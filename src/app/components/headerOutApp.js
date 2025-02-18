@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import {useState} from "react";
 import Image from "next/image";
 import styles from "./headerOutApp.module.css";
 
@@ -34,9 +34,15 @@ const HeaderOutApp = () => {
 
             {/* Navigation links */}
             <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>
-                <a href="pricing" className={styles.navLink}>Pricing</a>
-                <a href="#testimonials" className={styles.navLink}>Testimonials</a>
-                <a href="login" className={styles.navLink}>Login</a>
+                <div className={styles.navGap}>
+
+
+                    <a href="pricing" className={styles.navLink}>Pricing</a>
+                    <a href="login" className={styles.navLink}>Login</a>
+                </div>
+                <div style={{height:"55px", width:1, backgroundColor:"#5b5b5b"}}>
+
+                </div>
                 <a href="signup" className={styles.bookCall}> Try it now</a>
             </nav>
         </header>

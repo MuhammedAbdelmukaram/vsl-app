@@ -77,7 +77,7 @@ const StepOne = ({
     };
 
     return (
-        <div className={styles.stepContainer}>
+        <div className={styles.stepContainerOne}>
             <p className={styles.title}>Upload Your VSL</p>
             <div className={styles.uploadSection}>
                 {/* Video Upload */}

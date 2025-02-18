@@ -2,8 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./login.module.css";
+import {motion} from "framer-motion";
 
 const LoginPage = () => {
+    const [contentIndex, setContentIndex] = useState(0);
+    const [progress, setProgress] = useState(0);
+    const [resetProgressBar, setResetProgressBar] = useState(false);
+
     const router = useRouter();
     const [queryParams, setQueryParams] = useState({
         redirectTo: "/home", // Default values
@@ -22,6 +27,18 @@ const LoginPage = () => {
         });
     }, []);
 
+    useEffect(() => {
+        setResetProgressBar(false); // Start the animation by setting it to false
+        const timer = setTimeout(() => {
+            setContentIndex(
+                (prevIndex) => (prevIndex + 1) % marketingContents.length
+            );
+            setResetProgressBar(true); // Reset the progress bar after 5 seconds
+        }, 5000);
+
+        return () => clearTimeout(timer);
+    }, [contentIndex]);
+
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -32,6 +49,34 @@ const LoginPage = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
+
+    const textVariants = {
+        initial: {
+            opacity: 0,
+            x: -1000, // Enter from the right
+        },
+        in: {
+            opacity: 1,
+            x: 0,
+        },
+        out: {
+            opacity: 0,
+            x: 0, // Exit to the left
+        },
+    };
+
+    const marketingContents = [
+        {
+            title: "Score Some Awesome Gigs",
+            text: "Sign up, kick back, and watch the opportunities roll in.",
+            smallText: "200+ companies hiring via DealFuel.",
+        },
+        {
+            title: "Discover Exciting Opportunities",
+            text: "Join us today and unlock a world of endless possibilities.",
+            smallText: "Explore countless job openings from leading companies.",
+        },
+    ];
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -72,7 +117,38 @@ const LoginPage = () => {
 
     return (
         <div className={styles.page}>
-            <div className={styles.leftSection}></div>
+            <div className={styles.leftSection}>
+                <motion.div
+                    key={contentIndex}
+                    initial="initial"
+                    animate="in"
+                    exit="out"
+                    variants={textVariants}
+                    transition={{type: "tween", duration: 0.5}}
+                >
+                    <div className={styles.marketingContent}>
+                        <h1>{marketingContents[contentIndex].title}</h1>
+                        <p>{marketingContents[contentIndex].text}</p>
+                        <p className={styles.smallText}>
+                            {marketingContents[contentIndex].smallText}
+                        </p>
+                    </div>
+                </motion.div>
+                <div className={styles.progressBarContainer}>
+                    <div
+                        key={resetProgressBar}
+                        className={
+                            resetProgressBar
+                                ? styles.progressBarReset
+                                : styles.progressBarStart
+                        }
+                    ></div>
+                </div>
+
+
+            </div>
+
+
             <div className={styles.rightSection}>
                 <div className={styles.formContainer}>
                     <h1>Welcome Back!</h1>

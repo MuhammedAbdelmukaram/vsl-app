@@ -559,12 +559,12 @@ const Page = () => {
                                                         alt={video.name}
                                                         className={styles.modalThumbnail}
                                                     />
-                                                    <p>{video.name}</p>
+                                                    <p className={styles.videoName}>{video.name}</p>
                                                 </div>
                                             ))}
                                         </div>
                                         <button
-                                            className={styles.closeModal}
+                                            className={styles.metric}
                                             onClick={() => setIsModalOpen(false)}
                                         >
                                             Close

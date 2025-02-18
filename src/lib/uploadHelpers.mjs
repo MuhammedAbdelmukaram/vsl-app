@@ -1,6 +1,5 @@
 import { decodeJwt } from "jose";
 
-// Function to upload video file to R2
 export const uploadVideoToR2 = async (file, setVideoId, setUploadedVideoUrl, setUploadStatus) => {
     try {
         const token = localStorage.getItem("token");
@@ -87,6 +86,71 @@ export const saveVideoToDB = async (videoUrl, token, videoName) => {
     }
 };
 
+
+
+const uploadFileToR2Alt = async (file, folder, token) => {
+    try {
+        if (!file.content || !file.name) {
+            throw new Error("Invalid file content or name");
+        }
+
+        const decodedToken = decodeJwt(token);
+        const userId = decodedToken?.id;
+        if (!userId) {
+            throw new Error("User ID not found in token payload.");
+        }
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/upload-video`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                fileName: file.name,
+                fileType: file.type,
+                folder,
+                userId, // Pass userId explicitly
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch signed URL: ${await response.text()}`);
+        }
+
+        const { signedUrl, uploadUrl } = await response.json();
+
+        console.log("SINGGggGED", signedUrl)
+        console.log("UPLOAAaADED",uploadUrl)
+
+        // Upload the raw file content to the signed URL
+        const uploadResponse = await fetch(signedUrl, {
+            method: "PUT",
+            headers: { "Content-Type": file.type },
+            body: file.content, // This should be a Buffer or Blob
+        });
+
+        // Construct the custom domain URL
+        const customDomainUrl = uploadUrl.replace(
+            "https://pub-c376537ae6c646e39fabf6d97ec84d7b.r2.dev",
+            "https://cdn.vslapp.pro"
+        );
+
+        if (!uploadResponse.ok) {
+            throw new Error(`Failed to upload file: ${await uploadResponse.text()}`);
+        }
+
+        console.log(`File uploaded successfully to: ${uploadUrl}`);
+        return customDomainUrl;
+    } catch (error) {
+        console.error("Error in uploadFileToR2Alt:", error);
+        throw error;
+    }
+};
+
+
+
+
 // General function to upload any file to R2
 export const uploadFileToR2 = async (file, folder) => {
     try {
@@ -138,6 +202,75 @@ export const uploadFileToR2 = async (file, folder) => {
     }
 };
 
+export const uploadFileToR2WithToken = async (
+    file,
+    folder,
+    token,
+    videoId,
+    setUploadedPlayerUrl
+) => {
+    try {
+        if (!file || !videoId) throw new Error("No file or video ID available");
+        if (!token) throw new Error("Token is required for upload.");
+
+        const decodedToken = decodeJwt(token);
+        const userId = decodedToken?.id;
+        if (!userId) {
+            throw new Error("User ID not found in token payload.");
+        }
+
+        console.log("Starting uploadFileToR2WithToken...");
+        console.log("File received:", file);
+        console.log("Folder:", folder);
+        console.log("Token:", token);
+        console.log("Video ID:", videoId);
+
+        // Pass userId to `uploadFileToR2Alt`
+        const uploadUrl = await uploadFileToR2Alt(file, folder, token, userId);
+        console.log("Upload URL received:", uploadUrl);
+
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+        const apiUrl = `${baseUrl}/api/putVideoPlayer`;
+
+        const payload = { videoId, playerUrl: uploadUrl };
+        console.log("Payload sent to /api/putVideoPlayer:", payload);
+
+        const updateResponse = await fetch(apiUrl, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload),
+        });
+
+        console.log("Response from /api/putVideoPlayer:", updateResponse);
+        if (!updateResponse.ok) {
+            const errorText = await updateResponse.text();
+            console.error("Error response from /api/putVideoPlayer:", errorText);
+            throw new Error("Failed to update video player URL");
+        }
+
+        const responseBody = await updateResponse.json();
+        console.log("Response body from /api/putVideoPlayer:", responseBody);
+
+        console.log(uploadUrl)
+
+       
+        console.log(`Player URL updated successfully: ${uploadUrl}`);
+        return uploadUrl;
+    } catch (error) {
+        console.error("Error in uploadFileToR2WithToken:", error);
+        throw error;
+    }
+};
+
+
+
+
+
+
+
 
 // Function to handle thumbnail uploads
 export const handleThumbnailUpload = async (
@@ -180,3 +313,24 @@ export const handleThumbnailUpload = async (
         console.error("Error updating thumbnail:", error);
     }
 };
+
+
+export const generateEmbedScript = (videoId, playerUrl) => {
+    if (!videoId || !playerUrl) throw new Error("Video ID and Player URL are required to generate embed script.");
+
+    return `
+        <link rel="preload" href="${playerUrl}" as="script">
+        <script>
+            var scriptId = "scr_video_player_${videoId}"; // Unique script ID per video
+            if (!document.getElementById(scriptId)) {
+                var s = document.createElement("script");
+                s.id = scriptId;
+                s.src = "${playerUrl}";
+                s.async = true;
+                document.head.appendChild(s);
+            }
+        </script>
+    `;
+};
+
+

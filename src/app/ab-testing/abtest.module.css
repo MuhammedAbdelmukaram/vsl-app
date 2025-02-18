@@ -125,7 +125,7 @@
     background-color: rgba(237, 99, 0, 0.56);
     color: #FFDAC6;
     border: 1px solid #D45900;
-
+    align-self: flex-end;
 
     padding: 4px 14px;
     height: fit-content;
@@ -323,6 +323,35 @@
     background-color: #e65c00;
 }
 
+.paginationControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.pageButton {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pageButton:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+.pageIndicator {
+    color: #fff;
+    font-size: 14px;
+}
+
+
 /* Modal Section */
 .modalOverlay {
     position: fixed;
@@ -338,13 +367,17 @@
 }
 
 .modal {
-    background: #1a1a1a;
-    padding: 20px;
+    background: #131313;
+    border: 1px solid #363636;
+    padding: 16px;
     border-radius: 8px;
-    width: 90%;
-    max-width: 500px;
-    text-align: center;
-    color: #fff;
+    display: flex;
+    width: 36vw;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+
 }
 
 .modal h3 {
@@ -355,7 +388,7 @@
 .videoList {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 10px;
+    gap: 16px;
     margin-bottom: 20px;
 }
 .selectedVideo img,
@@ -366,7 +399,13 @@
     border-radius: 8px;
     background-color: #333; /* Optional: Add a background color for empty areas */
 }
-
+.videoName{
+    padding: 6px 6px;
+    font-size: 13px;
+    font-weight: normal;
+    color: #f1f1f1;
+    height: 100%;
+}
 .actionButtons {
     display: flex;
     align-self: flex-end;
@@ -453,20 +492,24 @@
 }
 
 .modalVideoCard {
+    background: #131313;
+    border: 1px solid #363636;
+    cursor: pointer;
+    padding: 0px 0px 16px 0px;
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    background-color: #222;
-    border-radius: 8px;
-    padding: 10px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+
 }
 
 .modalVideoCard:hover {
-    transform: scale(1.01);
-    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
+    background: #222;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    transform: translateY(-3px);
+    transition: all 0.1s ease;
 }
 
 .modalThumbnail {
@@ -488,6 +531,32 @@
 
 .closeModal:hover {
     background-color: #e65c00;
+}
+
+.metric {
+    background-color: rgba(237, 99, 0, 0.56);
+    color: #FFDAC6;
+    border: 1px solid #D45900;
+
+
+    padding: 4px 14px;
+    height: fit-content;
+
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+
+.metric:hover {
+    background-color: #c05710;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+
+    transition: all 0.3s ease;
 }
 
 

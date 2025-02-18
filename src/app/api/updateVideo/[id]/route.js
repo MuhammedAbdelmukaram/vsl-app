@@ -1,8 +1,16 @@
 import dbConnect from "@/lib/dbConnect";
 import Video from "@/models/Video";
 
-export async function PUT(request, { params }) {
-    const { id } = params;
+export async function PUT(request, context) {
+    const { params } = context; // Await context before accessing params
+    const id = params?.id;
+
+    if (!id) {
+        return new Response(
+            JSON.stringify({ message: "Video ID is required" }),
+            { status: 400 }
+        );
+    }
 
     try {
         await dbConnect();

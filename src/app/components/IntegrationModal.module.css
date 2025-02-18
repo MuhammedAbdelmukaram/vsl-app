@@ -1,0 +1,153 @@
+/* Modal Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalInner{
+    position: relative;
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 120px;
+    padding: 35px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid #575757;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    min-width: 450px;
+    max-width: 90%;
+    color: white;
+}
+
+.xButton {
+    cursor: pointer;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.xButton:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* Modal Container */
+.modal {
+
+}
+
+/* Modal Title */
+.title {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+.select{
+    width: 400px;
+    cursor: pointer;
+}
+.metric {
+    margin-top: 32px;
+    background-color: rgba(237, 99, 0, 0.56);
+    color: #FFDAC6;
+    border: 1px solid #D45900;
+    align-self: flex-end;
+
+    padding: 4px 14px;
+    height: fit-content;
+
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+
+.metric:hover {
+    background-color: #c05710;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+
+    transition: all 0.3s ease;
+}
+
+
+.metric:disabled,
+.metric.disabled {
+    background-color: rgba(100, 100, 100, 0.5); /* Dimmed gray */
+    color: rgba(255, 255, 255, 0.3); /* Faded text */
+    border: 1px solid rgba(150, 150, 150, 0.4); /* Softer border */
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.6; /* Slight transparency */
+}
+
+.metric:disabled:hover,
+.metric.disabled:hover {
+    background-color: rgba(100, 100, 100, 0.5); /* Prevent hover effects */
+    box-shadow: none;
+    transition: none;
+}
+
+
+
+.metric:hover {
+    background-color: #c05710;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+
+    transition: all 0.3s ease;
+}
+
+/* Save Button */
+.saveButton {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background: #ED6300;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.saveButton:hover {
+    background: #c65200;
+}
+
+/* React Select Option Styling */
+.option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.optionLogo {
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+}
+
+/* Selected Integration Styling */
+.singleValue {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

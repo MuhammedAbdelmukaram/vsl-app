@@ -1,9 +1,12 @@
+.page{
+  background: #1B1B1B
+}
+
 .container {
   text-align: center;
   color: #fff;
   min-height: 90vh;
   height: fit-content;
-  background: linear-gradient(180deg, #000000, #3a1f00);
   padding: 10px 20px 60px 20px;
   display: flex;
   flex-direction: column;
@@ -13,7 +16,9 @@
   overflow-x: hidden;
 
 }
-
+.headerHelper{
+  padding-top: 20px;
+}
 .eyebrow{
   margin-bottom: 12px;
 }

@@ -1,0 +1,177 @@
+/* Modal Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Container */
+.modal {
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: left;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    min-width: 400px;
+    max-width: 90%;
+    color: white;
+}
+
+/* Title */
+.title {
+    font-size: 18px;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.title::before {
+    content: "•";
+    color: #ED6300;
+    font-size: 22px;
+}
+
+/* Select Styling */
+.select {
+    width: 100%;
+}
+
+/* Selected Video Styling */
+.singleValue {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Dropdown Option */
+.option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Video Thumbnail */
+.optionThumbnail {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+}
+
+/* Embed Box */
+.embedBox {
+    background: #252525;
+    padding: 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid #333;
+}
+
+.embedBox p {
+    margin: 0;
+    color: white;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.copyText {
+    font-size: 12px;
+    color: #ED6300;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Preview Box */
+.previewBox {
+    background: #252525;
+    height: 100px;
+    border-radius: 6px;
+    border: 1px solid #333;
+}
+
+/* Step Indicators */
+.steps {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.step {
+    width: 24px;
+    height: 24px;
+    background: #ED6300;
+    color: white;
+    text-align: center;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Footer */
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Connection Status */
+.status {
+    font-size: 14px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.redDot {
+    width: 8px;
+    height: 8px;
+    background: red;
+    border-radius: 50%;
+}
+
+/* Buttons */
+.testButton, .syncButton {
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.testButton {
+    background: none;
+    color: white;
+    border: 1px solid white;
+}
+
+.testButton:hover {
+    background: white;
+    color: black;
+}
+
+.syncButton {
+    background: #ED6300;
+    color: white;
+}
+
+.syncButton:hover {
+    background: #c65200;
+}

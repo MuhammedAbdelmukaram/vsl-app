@@ -1,4 +1,3 @@
-// models/User.js
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
@@ -6,7 +5,8 @@ const UserSchema = new mongoose.Schema(
         name: { type: String, required: true },
         email: { type: String, required: true, unique: true },
         password: { type: String, required: true }, // Hashed password
-        phoneNumber:{type:String},
+        phoneNumber: { type: String },
+
         // Plan and Subscription Details
         plan: {
             type: String,
@@ -35,7 +35,6 @@ const UserSchema = new mongoose.Schema(
             },
         ],
 
-
         // Usage Metrics
         videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }], // User's videos
         totalVideos: { type: Number, default: 0 }, // Count of videos uploaded
@@ -49,6 +48,10 @@ const UserSchema = new mongoose.Schema(
             contactEmail: { type: String },
             notes: { type: String },
         },
+
+        // User Preferences
+        favoredIntegrations: [{ type: String }], // Array to store user’s favored integrations
+        isFirstTimeLogin: { type: Boolean, default: true }, // Track if user is logging in for the first time
 
         // Misc
         isActive: { type: Boolean, default: true }, // Account active status

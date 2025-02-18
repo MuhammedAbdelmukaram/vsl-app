@@ -2,7 +2,6 @@
     display: flex;
     min-height: 100vh;
     background-color: #181818; /* Dark background */
-    font-family: Arial, Helvetica, sans-serif;
     position: relative; /* To position pseudo-elements */
     overflow: hidden; /* Prevent gradients from affecting layout */
 }

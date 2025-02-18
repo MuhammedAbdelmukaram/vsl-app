@@ -25,7 +25,7 @@ const LowerSection = ({ data }) => {
 
     return (
         <div className={styles.lowerSection}>
-            <h2>Video Performance</h2>
+            <h2>Video Manager</h2>
             <div className={styles.table}>
                 {paginatedData.map((video, index) => (
                     <div

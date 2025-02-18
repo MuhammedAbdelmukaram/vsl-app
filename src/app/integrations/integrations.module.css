@@ -1,0 +1,177 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Create 3 columns of equal width */
+    gap: 16px; /* Add spacing between the items */
+    margin-left: 220px;
+    padding: 24px; /* Add some padding around the grid */
+
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        grid-template-columns: repeat(2, 1fr); /* Adjust to 2 columns on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .wrapper {
+        grid-template-columns: 1fr; /* Adjust to 1 column on very small screens */
+    }
+}
+
+.imageHeadline{
+    gap: 16px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+.selectedIntegration {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: fit-content;
+    gap: 10px;
+    background: #131313;
+    border: 1px solid #363636;
+    padding: 26px;
+    border-radius: 8px;
+    flex: 1;
+    text-align: center;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.metric {
+    background-color: rgba(237, 99, 0, 0.56);
+    color: #FFDAC6;
+    border: 1px solid #D45900;
+
+
+    padding: 4px 14px;
+    height: fit-content;
+
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.selectedVideoActive{
+    border: 1px solid #d45900;
+}
+
+.metric:hover {
+    background-color: #c05710;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+
+    transition: all 0.3s ease;
+}
+
+
+
+
+
+
+.photo {
+    width: 60px;
+    border-radius: 6px;
+    padding: 8px;
+    height: 60px;
+    background-color: #ffffff;
+    object-fit: contain;
+    margin-bottom: 16px;
+}
+
+.headline {
+    font-size: 16px;
+    color: #ffffff;
+
+}
+/* Green Circle for "Connected" status */
+.greenCircle {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #3c763d;
+}
+
+.redCircle{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #961d28;
+}
+
+/* Disabled Button */
+.addButton:disabled {
+    background-color: #ccc;
+    color: #666;
+    border-color: #aaa;
+    cursor: not-allowed;
+}
+
+
+.addButton{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    background-color: rgba(237, 99, 0, 0.56);
+    color: #FFDAC6;
+    border: 1px solid #D45900;
+    max-width: 300px;
+    margin-top: 4px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px 26px;
+    transition: background-color 0.2s ease;
+}
+
+.addButton:hover{
+    background-color: #e76100;
+}
+
+
+.buttonImage {
+    width: 24px; /* Adjust size as needed */
+    height: 24px;
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* Converts it to white */
+}
+.status {
+    position: absolute;
+    display: inline-block;
+    top:12px;
+    right: 12px;
+    margin-top: 8px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.status.online {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.status.offline {
+    background-color: #f2dede;
+    color: #a94442;
+}
+
+.description {
+    margin-top: 8px;
+    color: #ececec;
+    align-self: flex-start;
+    font-size: 1rem;
+}

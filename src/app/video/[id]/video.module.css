@@ -34,6 +34,13 @@
     border-radius: 8px;
 }
 
+.rtlInput {
+    text-align: right;
+    direction: rtl; /* Right-to-left text */
+    font-family: monospace; /* Aligns digits neatly */
+}
+
+
 .videoInfo{
     display: flex;
     width: 100%;
@@ -318,7 +325,6 @@
 .inputs {
     display: flex;
     gap: 50px;
-    flex-wrap: wrap;
 }
 
 .inputGroup {
@@ -328,6 +334,13 @@
     gap: 10px;
 }
 
+.sliderThing{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
 .inputGroup input {
     padding: 10px;
     background: #222;
@@ -335,6 +348,79 @@
     border-radius: 5px;
     color: #fff;
 }
+
+.inputGroup .small {
+    padding: 10px;
+    background: #222;
+    width: 98px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.disabledInput {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #222; /* Darker background to indicate disabled state */
+    border: 1px solid #444; /* Dimmed border */
+    color: #888; /* Greyed-out text */
+}
+
+.toggleButton {
+    padding: 8px 16px;
+    background: #222;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.toggleButton:hover {
+    background: #333;
+}
+
+.disabledButton {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #222;
+    color: #888;
+    border: 1px solid #444;
+}
+
+.borderWidthGroup {
+    display: flex;
+    gap: 8px;
+}
+
+.borderWidthButton {
+    padding: 8px 12px;
+    background: #222;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.borderWidthButton:hover {
+    background: #333;
+}
+
+.activeButton {
+    background: #ff6600; /* Highlighted when selected */
+    border: 1px solid #ff6600;
+    color: #fff;
+}
+
+.disabledButton {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #222;
+    color: #888;
+    border: 1px solid #444;
+}
+
 
 .timeInputs{
     display: flex;

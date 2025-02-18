@@ -1,0 +1,32 @@
+.retentionContainer {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.header h3 {
+    font-size: 16px;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.toggleButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.graph {
+    height: 300px;
+    position: relative;
+}

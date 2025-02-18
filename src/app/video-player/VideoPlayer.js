@@ -1,46 +1,52 @@
-"use client";
-
-import React, {useState, useRef, useEffect} from "react";
-import dynamic from "next/dynamic";
+import React, { useState, useRef, useEffect } from "react";
 import ProgressBar from "./ProgressBar";
 import Overlay from "./Overlay";
 import ExitThumbnail from "./ExitThumbnail";
-import {adjustedExponentialProgress} from "./utils";
-import styles from "./VideoPlayer.module.css";
+import { adjustedExponentialProgress } from "./utils";
+import * as styles from "./VideoPlayer.module.css";
+import FilePlayer from "react-player/file";
 
-const ReactPlayer = dynamic(() => import("react-player"), {ssr: false});
 
 const VideoPlayer = ({
                          videoId,
                          url,
+                         autoPlay ,
                          autoPlayText = "Click to Watch",
                          thumbnail,
                          exitThumbnail,
-                         showThumbnail = false,
-                         showExitThumbnail = false,
+                         fastProgressBar,
+                         showThumbnail,
+                         showExitThumbnail,
                          width = "100%",
                          maxWidth = "800px",
-                         aspectRatio = "16 / 9",
+                         aspectRatio = "",
                          brandColor = "#ffffff",
                      }) => {
     const playerRef = useRef(null);
     const menuRef = useRef(null);
-    const [playing, setPlaying] = useState(true);
+    const [playing, setPlaying] = useState(autoPlay); // 🔥 Always start as false to prevent autoplay issues
     const [muted, setMuted] = useState(true);
     const [progress, setProgress] = useState(0);
-    const [showOverlay, setShowOverlay] = useState(true);
+    const [showOverlay, setShowOverlay] = useState(autoPlay || showThumbnail); // 🔥 Always start with the overlay visible
     const [showExit, setShowExit] = useState(false);
+
     const [viewLogged, setViewLogged] = useState(false);
     const [contextMenuVisible, setContextMenuVisible] = useState(false);
-    const [contextMenuPosition, setContextMenuPosition] = useState({x: 0, y: 0});
+    const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
+
+    useEffect(() => {
+        if (autoPlay) {
+            setShowOverlay(true);
+        } else if (showThumbnail && thumbnail) {
+            setShowOverlay(true);
+        } else {
+            setShowOverlay(false);
+        }
+    }, [autoPlay, showThumbnail, thumbnail]);
 
     useEffect(() => {
         const handleClickOutside = (e) => {
-            if (
-                contextMenuVisible &&
-                menuRef.current &&
-                !menuRef.current.contains(e.target)
-            ) {
+            if (contextMenuVisible && menuRef.current && !menuRef.current.contains(e.target)) {
                 setContextMenuVisible(false);
             }
         };
@@ -53,7 +59,8 @@ const VideoPlayer = ({
     }, [contextMenuVisible]);
 
     const handleProgress = (state) => {
-        setProgress(adjustedExponentialProgress(state.played));
+        const progressValue = adjustedExponentialProgress(state.played, fastProgressBar);
+        setProgress(progressValue);
     };
 
     const logView = async () => {
@@ -61,8 +68,8 @@ const VideoPlayer = ({
             try {
                 const response = await fetch("http://localhost:3000/api/analytics/view", {
                     method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({videoId}),
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ videoId }),
                 });
 
                 if (response.ok) {
@@ -80,53 +87,62 @@ const VideoPlayer = ({
         setMuted(false);
         setPlaying(true);
         if (playerRef.current) playerRef.current.seekTo(0);
-        logView();
     };
 
     const handlePause = () => {
-        if (showExitThumbnail) setShowExit(true);
+        if (showExitThumbnail && exitThumbnail) {
+            setShowExit(true);
+            setPlaying(false); // Pause the video
+        }
     };
 
-    const handleExitThumbnailClick = () => {
+    const handleExitThumbnailClick = (e) => {
+        if (e) {
+            e.stopPropagation();
+        }
         setShowExit(false);
-        setPlaying(true);
+        setPlaying(true); // Resume playback
     };
 
-    const handleWrapperClick = () => {
-        if (!showExit) setPlaying((prev) => !prev);
+    const handleWrapperClick = (e) => {
+        e.stopPropagation();
+        if (showExit) {
+            setShowExit(false);
+            setPlaying(true);
+        } else {
+            setPlaying((prev) => !prev);
+        }
     };
 
     const handleContextMenu = (e) => {
         e.preventDefault();
         setContextMenuVisible(true);
 
-        // Calculate the position relative to the viewport
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
 
-        const menuWidth = 150; // Approximate width of your menu
-        const menuHeight = 40; // Approximate height of your single menu item
+        const menuWidth = 150;
+        const menuHeight = 40;
 
         const x = Math.min(e.clientX, viewportWidth - menuWidth);
         const y = Math.min(e.clientY, viewportHeight - menuHeight);
 
-        setContextMenuPosition({x, y});
+        setContextMenuPosition({ x, y });
     };
 
     const handleMenuClick = () => {
-        window.open("https://vslapp.com", "_blank");
+        window.open("https://vslplayer.io", "_blank");
         setContextMenuVisible(false);
     };
 
     return (
-        <body style={{backgroundColor:"transparent", display:"flex",justifyContent:"center"}}>
         <div
             className={styles.playerWrapper}
-            style={{width, maxWidth, aspectRatio}}
+            style={{ width, maxWidth, aspectRatio }}
             onClick={handleWrapperClick}
-            onContextMenu={handleContextMenu} // Disable default menu
+            onContextMenu={handleContextMenu}
         >
-            <ReactPlayer
+            <FilePlayer
                 ref={playerRef}
                 url={url}
                 playing={playing}
@@ -134,7 +150,7 @@ const VideoPlayer = ({
                 onProgress={handleProgress}
                 onPause={handlePause}
                 onStart={logView}
-                progressInterval={50}
+                progressInterval={fastProgressBar ? 25 : 50}
                 width="100%"
                 height="100%"
                 className={styles.reactPlayer}
@@ -143,33 +159,24 @@ const VideoPlayer = ({
 
             {showOverlay && (
                 <Overlay
-                    thumbnail={showThumbnail ? thumbnail : null}
+                    thumbnail={thumbnail}
+                    showThumbnail={!autoPlay && showThumbnail}
                     autoPlayText={autoPlayText}
                     handleClick={handleOverlayClick}
                 />
             )}
 
-            {showExit && exitThumbnail && (
-                <ExitThumbnail exitThumbnail={exitThumbnail} handleClick={handleExitThumbnailClick}/>
+            {showExit && showExitThumbnail && exitThumbnail && (
+                <ExitThumbnail
+                    exitThumbnail={exitThumbnail}
+                    handleClick={handleExitThumbnailClick}
+                />
             )}
 
-            <ProgressBar progress={progress} brandColor={brandColor}/>
+            <ProgressBar progress={progress} brandColor={brandColor} />
 
-            {/* Custom Context Menu */}
-            {contextMenuVisible && (
-                <ul
-                    ref={menuRef}
-                    className={styles.contextMenu}
-                    style={{
-                        top: `${contextMenuPosition.y}px`,
-                        left: `${contextMenuPosition.x}px`,
-                    }}
-                >
-                    <li onClick={handleMenuClick}>Powered by VSLapp</li>
-                </ul>
-            )}
+
         </div>
-        </body>
     );
 };
 

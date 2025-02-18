@@ -14,6 +14,15 @@ const nextConfig = {
             },
         ],
     },
+    webpack: (config) => {
+        // Exclude TypeScript declaration files (.d.ts)
+        config.module.rules.push({
+            test: /\.d\.ts$/,
+            use: 'ignore-loader', // Ignore these files during the build
+        });
+
+        return config;
+    },
 };
 
 export default nextConfig;

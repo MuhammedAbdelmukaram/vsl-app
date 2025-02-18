@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./VideoPlayer.module.css";
+import * as styles from "./VideoPlayer.module.css";
 
 const PlayButton = () => (
     <button className={styles.playButton}>

@@ -32,10 +32,10 @@ export async function POST(request) {
             Bucket: process.env.R2_BUCKET_NAME,
             Key: key,
             ContentType: fileType,
+            CacheControl: "no-cache, no-store, must-revalidate",
         });
 
         const signedUrl = await getSignedUrl(r2Client, command, { expiresIn: 2 * 60 * 60 }); // 2 hours
-
         const uploadUrl = `${process.env.R2_PUBLIC_URL}/${key}`;
 
         // Return signed and public URLs

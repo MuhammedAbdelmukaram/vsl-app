@@ -11,7 +11,10 @@ export async function GET(request, context) {
         const video = await Video.findById(id);
 
         if (!video) {
-            return NextResponse.json({ error: "Video not found" }, { status: 404 });
+            return new Response(
+                JSON.stringify({ error: "Video not found" }),
+                { status: 404, headers: { "Content-Type": "application/json" } }
+            );
         }
 
         return NextResponse.json({
