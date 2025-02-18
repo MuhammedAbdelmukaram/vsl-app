@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
-import HelpModal from "./HelpModal"; // Import the new modal component
+import HelpModal from "./helpModal"; // Import the new modal component
 import styles from "./header.module.css";
 
 const capitalizeFirstLetter = (string) => {
