@@ -1,0 +1,141 @@
+.layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Creates 2 columns */
+    grid-template-rows: repeat(2, auto); /* Creates 2 rows */
+    gap: 2px; /* Adjust spacing between elements */
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    max-width: 1200px; /* Adjust based on your design */
+    margin: auto;
+}
+
+
+
+
+.container {
+    background-color: #d45900;
+    padding: 40px 76px;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+    width: 100%;
+    max-width: 900px;
+
+}
+
+.container2 {
+    background-color: #181818;
+    padding: 40px 76px;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+    width: 100%;
+    max-width: 900px;
+
+}
+
+.containerSmall {
+    background-color: #d45900;
+    padding: 40px 76px;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+    width: 100%;
+    max-width: 900px;
+    height: 100%;
+
+}
+
+.separator{
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+}
+.bottomImage{
+    margin-top: 40px;
+    margin-right: 50px;
+}
+.heading {
+    font-size: 28px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.percentage {
+    font-size: 40px;
+}
+
+.percentageSpecial{
+    font-size: 50px;
+    background-color: #1a1a1a;
+    padding: 4px;
+}
+.headingSpecial{
+    text-align: left;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.row{
+    width: 100%;
+
+    display: flex;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.section {
+    display: flex;
+    align-items: center;
+    min-width: 250px;
+
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+}
+
+.text {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.subtext {
+    max-width: 200px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.parenthesis {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.graphic {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px 0;
+}
+
+.explanation{
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.description {
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+}

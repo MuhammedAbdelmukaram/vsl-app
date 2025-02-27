@@ -1,0 +1,104 @@
+.container {
+
+    color: white;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.title {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.subtitle {
+    font-size: 16px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    gap: 4vw;
+    align-items: flex-start;
+    margin-top: 40px;
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.featureTitle {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.featureDescription {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.videoPlaceholder {
+    width: 500px;
+    height: 375px;
+    background: white;
+    border-radius: 10px;
+}
+
+.quoteSection {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 6vw;
+}
+
+.quoteBox {
+    width: 200px;
+    height: 200px;
+    background: white;
+    margin-bottom: 20px;
+}
+
+.quote {
+    font-size: 36px;
+    max-width: 600px;
+    margin-bottom: 50px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.author {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #fff;
+    font-weight: bold;
+}
+
+.position {
+    margin-left: 5px;
+    opacity: 0.6;
+    font-size: 0.8rem;
+    font-weight: normal;
+}

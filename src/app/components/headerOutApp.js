@@ -19,7 +19,7 @@ const HeaderOutApp = () => {
                     alt="Logo"
                     width={40} // Base width
                     height={40} // Base height
-                    layout="intrinsic" // Ensures the image respects its aspect ratio
+
                     className={styles.logoImage}
                 />
             </div>

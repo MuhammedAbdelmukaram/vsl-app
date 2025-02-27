@@ -1,105 +1,310 @@
-.page{
-  background: #1B1B1B
+.page {
+    background: #1B1B1B;
+    position: relative;
 }
 
 .container {
-  text-align: center;
-  color: #fff;
-  min-height: 90vh;
-  height: fit-content;
-  padding: 10px 20px 60px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow-y: hidden;
-  overflow-x: hidden;
 
-}
-.headerHelper{
-  padding-top: 20px;
-}
-.eyebrow{
-  margin-bottom: 12px;
+    text-align: center;
+    color: #fff;
+    height: fit-content;
+    padding: 100px 8vw 100px 8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
-.eyebrowText{
-  font-weight: bold;
-  font-size: 14px;
-  color: #d45900;
+.gradient{
+    position: absolute;
+    z-index: 1;
+    top: -420px;
+    left: 100px;
+    width: 100%;
 }
 
-.eyebrowUnderline{
-  margin-top: 2px;
-  height: 3px;
-  width: 100%;
-  background-color: #d45900;
+.gradient2{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 370px;
+    right: -1267px;
+}
+.gradient3{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 570px;
+    left: -267px;
+}
+
+
+.logo{
+    width: 100%;
+}
+
+
+.arrowContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.textsRight{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.featuresOrange{
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #D45900;
+}
+
+.italic{
+    font-size: 12px;
+    font-style: italic;
+}
+
+.arrow{
+    width: 50px;
+    height: 1px;
+    background-color: #fff;
+    position: relative;
+}
+
+.arrow::after {
+    content: "";
+    position: absolute;
+    right: -10px;
+    top: -6px;
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 10px solid #ffffff;
+}
+
+.boxImg{
+
+}
+
+.boxText{
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.boxes{
+    display: flex;
+    gap: 30px;
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: rgba(143, 143, 143, 0.44);
+    border:1px solid #939393;
+    border-radius: 21px;
+    justify-content: center;
+    height: 116px;
+    width: 116px;
+}
+
+.topside {
+    display: flex;
+    gap: 16px;
+    z-index: 2;
+    justify-content: center; /* Ensures content is centered */
+    align-items: center; /* Aligns items vertically */
+}
+
+.topside > div {
+    flex: 1; /* Makes each child take up equal space */
+    min-width: 41vw;
+    max-width: 41vw;
+}
+
+.leftSide{
+    min-width: 740px;
+}
+
+.headerHelper {
+    background-color: #1B1B1B;
+    position: inherit;
+    z-index: 2;
+    padding-top: 20px;
+}
+
+.science{
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 100px;
+
+}
+
+.headline{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 24px;
+}
+
+.eyebrow {
+    margin-bottom: 12px;
+}
+
+.eyebrow2 {
+    margin-bottom: 16px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.heading2{
+    font-size: 48px;
+    font-weight: bold;
+}
+.eyebrowText {
+    font-weight: bold;
+    font-size: 14px;
+    color: #d45900;
+}
+
+.eyebrowUnderline {
+    margin-top: 2px;
+    height: 3px;
+    width: 100%;
+    background-color: #d45900;
 }
 
 
 .heading {
-  font-size: 56px;
-  font-weight: 700;
-  margin-bottom: 16px;
-  line-height: 1.1;
-  min-height: 124px;
+    font-size: 48px;
+    max-width: 740px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-align: left;
+    line-height: 1.1;
+    min-height: 186px;
 
+
+}
+
+@media (min-width: 1810px) {
+    .heading {
+        min-height: 160px!important;
+    }
 }
 
 .subtitles {
-  font-size: 1rem;
-  margin-bottom: 0px;
-  margin-bottom: 40px;
-  color: #FFFFFF;
-  overflow-x: hidden;
+    font-size: 16px;
+    width: 92%;
+    margin-bottom: 40px;
+    color: #EBEBEB;
+    font-weight: normal;
+    text-align: left;
+    overflow-x: hidden;
+}
+
+.companies {
+    position: inherit;
+    z-index: 2!important;
+    margin: 0px ;
 }
 
 .bookCall {
-  margin-top: 32px;
-  background-color: #d45900;
-  color: #fff;
-  border: none;
-  padding: 20px 50px;
-  font-size: 1rem;
-  font-weight: 700;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-bottom: 10px;
-  overflow-x: hidden;
+    z-index: 2;
+    margin-top: 92px;
+    background-color: #d45900;
+    color: #fff;
+    border: none;
+    padding: 21px 164px;
+    font-size: 26px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+    overflow-x: hidden;
 }
 
-.bookCall:hover{
-  background-color: #ef6200;
+.bookCall:hover {
+    background-color: #ef6200;
 }
 
 .break {
-  display: inline;
+    display: inline;
+}
+.smallText{
+
+}
+.person {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    background-color: #fff;
+    overflow: hidden; /* Ensures no part of the image sticks out */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Ensures the image fills the div and is cropped */
+.person img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Crops and centers the image */
+}
 
+.smallReview{
+    position: inherit;
+    z-index: 2!important;
+    margin: 0px 10vw 16px 10vw;
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+.checks {
+    z-index: 2;
+    display: flex;
+    color: #B2B2B2;
+    gap: 74px;
+    margin-top: 12px;
+}
 
 .main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
 }
 
 .main h1 {
-  font-size: 2.5rem;
+    font-size: 2.5rem;
 }
 
 .main p {
-  font-size: 1.25rem;
+    font-size: 1.25rem;
 }
 
 .footer {
-  text-align: center;
-  padding: 10px 0;
-  font-size: 0.9rem;
-  background-color: #1a1a1a;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.9rem;
+    background-color: #1a1a1a;
 }
