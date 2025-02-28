@@ -15,6 +15,7 @@ import TestimonialSection from "@/app/components/lander/testimonialSection";
 import StepsSection from "@/app/components/lander/StepsSection";
 import VideoAnalyticsSection from "@/app/components/lander/VideoAnalyticsSection";
 import ToolsSection from "@/app/components/lander/ToolsSection";
+import Integrations from "@/app/components/lander/Integrations";
 
 const Page = () => {
     const router = useRouter();
@@ -88,7 +89,7 @@ const Page = () => {
                                 }}
                                 onInit={(typewriter) => {
                                     typewriter
-                                        .typeString("Increase Your VSL Conversions  23% ")
+                                        .typeString("Increase VSL Conversions  23% ")
                                         .pauseFor(250)
                                         .typeString(' <span style="color: #d45900;">By switching your video player </span>')
                                         .start();
@@ -111,64 +112,52 @@ const Page = () => {
 
                         </motion.p>
                         <div className={styles.boxes}>
-
                             <div className={styles.box}>
-
                                 <Image src="/Hero1.png" alt="Clock Icon" width={72} height={72}
                                        className={styles.boxImg}/>
                                 <p className={styles.boxText}>Smart Progress Bar</p>
                             </div>
                             <div className={styles.box}>
-
                                 <Image src="/Hero2.png" alt="Clock Icon" width={72} height={72}
                                        className={styles.boxImg}/>
                                 <p className={styles.boxText}>Auto-Play</p>
                             </div>
                             <div className={styles.box}>
-
                                 <Image src="/Hero3.png" alt="Clock Icon" width={72} height={72}
                                        className={styles.boxImg}/>
                                 <p className={styles.boxText}>Exit Thumbnails</p>
                             </div>
                             <div className={styles.arrowContainer}>
-                                <div className={styles.arrow}>
-
-                                </div>
+                                <div className={styles.arrow}></div>
                             </div>
-
                             <div className={styles.textsRight}>
                                 <p className={styles.featuresOrange}>+10 more features</p>
                                 <p className={styles.italic}>Made to increase <br/>conversions</p>
                             </div>
-
                         </div>
 
 
                     </div>
                     {/* Load the external script */}
-                    <div style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: "100%",
+                    <div className={styles.outer}>
 
-                    }}>
-
-                        <div
-                            id="vid_676726228f714081916a35b3" // Must match `VIDEO_CONFIG.videoId`
-                            style={{
-                                position: "relative",
-                                width: "100%",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                        ></div>
-                        <Script
-                            id="scr_video_player_676726228f714081916a35b3"
-                            src="https://pub-c376537ae6c646e39fabf6d97ec84d7b.r2.dev/players/676726228f714081916a35b3/67554f799c85ed4fd8c891e2-676726228f714081916a35b3-player.bundle.js"
-                            strategy="afterInteractive"
-                        />
+                        <div className={styles.glowingBorder}>
+                            <div
+                                id="vid_676726228f714081916a35b3" // Must match `VIDEO_CONFIG.videoId`
+                                style={{
+                                    position: "relative",
+                                    width: "100%",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            ></div>
+                            <Script
+                                id="scr_video_player_676726228f714081916a35b3"
+                                src="https://pub-c376537ae6c646e39fabf6d97ec84d7b.r2.dev/players/676726228f714081916a35b3/67554f799c85ed4fd8c891e2-676726228f714081916a35b3-player.bundle.js"
+                                strategy="afterInteractive"
+                            />
+                        </div>
                     </div>
 
                 </div>
@@ -271,6 +260,8 @@ const Page = () => {
                 <Science/>
             </div>
             <TestimonialSection/>
+
+            <Integrations/>
             <ToolsSection/>
 
             <VideoAnalyticsSection/>

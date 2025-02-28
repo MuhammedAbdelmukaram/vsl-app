@@ -1,15 +1,71 @@
 .pricingPage {
-
-
+    position: relative;
+    background:#1b1b1b;
     color: #fff;
-   background: linear-gradient(180deg, #000000, #3a1f00);;
+
     text-align: center;
     min-height: 100vh;
 }
 
+
+.gradient3{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 50px;
+    left: -800px;
+}
+
+
 .container {
+    padding-top: 70px;
     max-width: 1000px;
     margin: 0 auto;
+}
+
+.eyebrow{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.text{
+    font-size: 14px;
+}
+
+.innerContainer{
+    z-index: 2;
+    margin-top: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(69, 69, 69, 0.3);
+
+}
+
+.checks{
+    margin-right:55px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.checkpoint{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.checkpoint p{
+    color: #dbdbdb;
+    font-size: 13px;
+}
+
+.highlight{
+    font-weight: bold;
+}
+
+.highlightText{
+    color:#d45900 ;
 }
 
 .title {
@@ -46,44 +102,87 @@
 }
 
 .pricingCards {
+
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 30px;
+    gap: 0px;
     flex-wrap: wrap;
 }
-
-.card {
-    background-color: rgba(19, 19, 19, 0.3);
-    border: 1px solid #444;
+.cardS{
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid #ff6600;
     border-radius: 15px;
-    padding: 30px 20px;
+    padding: 40px 30px 70px 30px;
     width: 350px;
     text-align: center;
     position: relative;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.card .planName {
-    font-size: 1.8rem;
+.offer{
+    background-color: #1F1F1F;
+    border: 1px solid #ff6600;
+    border-radius: 24px;
+    padding: 6px 22px;
+    position: absolute;
+    top:-12px;
+    right: -12px;
+}
+
+.offerText{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.card {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid #444;
+    border-radius: 15px;
+    height: fit-content;
+    padding: 40px 30px;
+    width: 350px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.planName {
+    margin-top: 36px;
+    font-size: 24px;
     font-weight: 700;
     margin-bottom: 20px;
 }
 
-.card .priceOld {
+.prices{
+    margin-top: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.priceOld {
     font-size: 1.2rem;
     color: #888;
     text-decoration: line-through;
     margin-bottom: 5px;
 }
 
-.card .priceNew {
+.priceNew {
     font-size: 2.4rem;
-    font-weight: 800;
-    color: #ff6600;
+    font-weight: 400;
+    color: #ffffff;
     margin-bottom: 20px;
 }
+.month{
+    margin-left: 0px;
+    font-size: 16px;
+    color: #b3b3b3;
+}
 
-.card .features {
+.features {
     list-style: none;
     padding: 0;
     margin: 0 0 30px 0;
@@ -92,23 +191,31 @@
     text-align: left;
 }
 
-.card .features li {
+.features li {
     margin-bottom: 10px;
 }
 
-.card .startButton {
+.startButton {
+    margin-top: 28px;
     background-color: #ff6600;
     color: #fff;
     border: none;
     padding: 15px 30px;
-    font-size: 1.2rem;
+    font-size: 13px;
     font-weight: 700;
-    border-radius: 30px;
+    border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.card .startButton:hover {
+.headerHelper {
+    background-color: #1B1B1B;
+    position: inherit;
+    z-index: 2;
+    padding-top: 20px;
+}
+
+.startButton:hover {
     background-color: #e55c00;
 }
 
