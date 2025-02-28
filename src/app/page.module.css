@@ -40,7 +40,58 @@
     left: -267px;
 }
 
+.gradient4{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 870px;
+    right: -1267px;
+}
+.gradient5{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 1170px;
+    left: -367px;
+}
 
+
+.gradient6{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 1870px;
+    right: -1267px;
+}
+.gradient7{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 3170px;
+    left: -367px;
+}
+
+.gradient8{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 3170px;
+    right: -1267px;
+}
+.gradient9{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 4170px;
+    left: -367px;
+}
+.gradient10{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 4970px;
+    right: -1267px;
+}
 .logo{
     width: 100%;
 }
@@ -192,6 +243,7 @@
     width: 100%;
     flex-direction: column;
     margin-bottom: 100px;
+    z-index: 2;
 
 }
 
@@ -268,6 +320,7 @@
 }
 
 .bookCall {
+    position: relative;
     z-index: 2;
     margin-top: 92px;
     background-color: #d45900;
@@ -281,6 +334,14 @@
     transition: background-color 0.3s ease;
     margin-bottom: 10px;
     overflow-x: hidden;
+}
+.relative{
+    position: relative;
+}
+.arrow2{
+    position: absolute;
+    top: 36px;
+    right: -110px;
 }
 
 .bookCall:hover {

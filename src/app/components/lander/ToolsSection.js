@@ -82,7 +82,7 @@ const ToolsSection = () => {
                 </div>
             </div>
 
-            {/* Growth Playbook Section */}
+            {/* Growth Playbook Section
             <div className={styles.growthPlaybook}>
                 <h3>Growth Playbook</h3>
                 <p>Proven techniques to maximize watch time and action rates</p>
@@ -95,6 +95,7 @@ const ToolsSection = () => {
                     ))}
                 </div>
             </div>
+            */}
         </section>
     );
 };

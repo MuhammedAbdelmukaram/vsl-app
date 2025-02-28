@@ -1,0 +1,36 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #121212;
+    color: #ffffff;
+    padding: 30px 9vw;
+    margin-top: 110px;
+    font-size: 14px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+.right {
+    display: flex;
+    gap: 20px;
+}
+
+.right a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.right a:hover {
+    text-decoration: underline;
+}

@@ -35,6 +35,17 @@
 
 }
 
+.container3 {
+    background-color: #181818;
+    padding: 40px 76px;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+    width: 100%;
+    max-width: 900px;
+
+}
+
 .containerSmall {
     background-color: #d45900;
     padding: 40px 76px;
@@ -138,4 +149,19 @@
     font-size: 14px;
     font-weight: bold;
     margin-top: 10px;
+}
+@media (min-width: 1550px) {
+    .container3{
+        display: none;
+    }
+}
+
+@media (max-width: 1550px) {
+    .layout {
+        gap: 10px;
+        grid-template-columns: 1fr; /* 1-column layout */
+    }
+    .container2{
+        display: none;
+    }
 }

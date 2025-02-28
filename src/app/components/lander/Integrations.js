@@ -5,7 +5,7 @@ import Image from "next/image";
 const Integrations = () => {
     return (
         <div>
-            <p className={styles.smallText}>Integrates with <span style={{fontWeight:"bold"}}> 100+ website builders </span> </p>
+            <p className={styles.smallText}>Integrates with <span style={{fontWeight:"bold", textAlign:"center"}}> 100+ website builders </span> </p>
             <div className={styles.integrationContainer}>
                 <div className={styles.logoIcon}>
                     <Image src="/s1.svg" alt="Integration 1" height={50} width={50}/>

@@ -16,6 +16,7 @@ import StepsSection from "@/app/components/lander/StepsSection";
 import VideoAnalyticsSection from "@/app/components/lander/VideoAnalyticsSection";
 import ToolsSection from "@/app/components/lander/ToolsSection";
 import Integrations from "@/app/components/lander/Integrations";
+import Footer from "@/app/components/lander/Footer";
 
 const Page = () => {
     const router = useRouter();
@@ -63,6 +64,78 @@ const Page = () => {
                         className={styles.logo}
                     />
                 </div>
+
+                <div className={styles.gradient4}>
+                    <Image
+                        src="/gradient.svg"
+                        alt="Partner 4"
+                        width={1200}
+                        height={1200}
+                        className={styles.logo}
+                    />
+                </div>
+
+                <div className={styles.gradient5}>
+                    <Image
+                        src="/gradient.svg"
+                        alt="Partner 4"
+                        width={1200}
+                        height={1200}
+                        className={styles.logo}
+                    />
+                </div>
+
+                <div className={styles.gradient6}>
+                    <Image
+                        src="/gradient.svg"
+                        alt="Partner 4"
+                        width={1200}
+                        height={1200}
+                        className={styles.logo}
+                    />
+                </div>
+
+                <div className={styles.gradient7}>
+                    <Image
+                        src="/gradient.svg"
+                        alt="Partner 4"
+                        width={1200}
+                        height={1200}
+                        className={styles.logo}
+                    />
+                </div>
+
+                <div className={styles.gradient8}>
+                    <Image
+                        src="/gradient.svg"
+                        alt="Partner 4"
+                        width={1200}
+                        height={1200}
+                        className={styles.logo}
+                    />
+                </div>
+
+                <div className={styles.gradient9}>
+                    <Image
+                        src="/gradient.svg"
+                        alt="Partner 4"
+                        width={1200}
+                        height={1200}
+                        className={styles.logo}
+                    />
+                </div>
+
+                <div className={styles.gradient10}>
+                    <Image
+                        src="/gradient.svg"
+                        alt="Partner 4"
+                        width={1200}
+                        height={1200}
+                        className={styles.logo}
+                    />
+                </div>
+
+
 
                 <div className={styles.topside}>
                     <div className={styles.leftSide}>
@@ -185,17 +258,29 @@ const Page = () => {
                 */}
 
 
-                <motion.div
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{once: true, amount: 0.3}}
-                    variants={fadeInUp}
-                    transition={{duration: 0.8, delay: 0.4}}
-                    className={styles.bookCall}
-                    onClick={handleTryItNow}
-                >
-                    <p>Try For Free</p>
-                </motion.div>
+                <div className={styles.relative}>
+
+
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{once: true, amount: 0.3}}
+                        variants={fadeInUp}
+                        transition={{duration: 0.8, delay: 0.4}}
+                        className={styles.bookCall}
+                        onClick={handleTryItNow}
+                    >
+                        <p>Try For Free</p>
+
+                    </motion.div>
+                    <Image
+                        src="/arrow.svg"
+                        alt="Partner 4"
+                        width={120}
+                        height={120}
+                        className={styles.arrow2}
+                    />
+                </div>
                 <div className={styles.checks}>
                     <p>✓ Cancel Anytime</p>
                     <p>✓ No Credit Card Required</p>
@@ -259,14 +344,17 @@ const Page = () => {
                 </div>
                 <Science/>
             </div>
+
+
             <TestimonialSection/>
 
-            <Integrations/>
-            <ToolsSection/>
 
+            <ToolsSection/>
+            <Integrations/>
             <VideoAnalyticsSection/>
 
             <StepsSection/>
+            <Footer/>
 
 
         </div>

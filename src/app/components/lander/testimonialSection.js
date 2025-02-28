@@ -1,27 +1,36 @@
+"use client";
+import { useState } from "react";
 import styles from "./testimonialSection.module.css";
+import UntrackedVideoPlayer from "@/app/untracked-video-player/UntrackedVideoPlayer";
+import Marquee from "react-fast-marquee";
 
 const TestimonialSection = () => {
+    const [isPaused, setIsPaused] = useState(false);
+
     return (
         <section className={styles.testimonialSection}>
             <h2 className={styles.subtitle}>WHAT OTHERS SAY?</h2>
             <h1 className={styles.title}>Don’t take our word. Take theirs!</h1>
 
-            <div className={styles.imageContainer}>
-                <div className={styles.placeholder}></div>
-                <div className={styles.placeholder}></div>
-                <div className={styles.placeholder}></div>
-                <div className={styles.placeholder}></div>
-                <div className={styles.placeholder}></div>
-                <div className={styles.placeholder}></div>
-
-            </div>
+            {/* Marquee that stops on hover */}
+            <Marquee gradient={false} speed={50} play={!isPaused} style={{ display: "flex" }}>
+                <div
+                    className={styles.imageContainer}
+                    onMouseEnter={() => setIsPaused(true)}
+                    onMouseLeave={() => setIsPaused(false)}
+                >
+                    <UntrackedVideoPlayer />
+                    <UntrackedVideoPlayer />
+                    <UntrackedVideoPlayer />
+                    <UntrackedVideoPlayer />
+                    <UntrackedVideoPlayer />
+                </div>
+            </Marquee>
 
             <div className={styles.testimonials}>
                 {[1, 2, 3, 4].map((_, index) => (
                     <div key={index} className={styles.card}>
                         <div className={styles.top}>
-
-
                             <p className={styles.role}>MARKETER</p>
                             <p className={styles.date}>7 days ago</p>
                         </div>
