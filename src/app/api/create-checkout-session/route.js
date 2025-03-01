@@ -5,18 +5,17 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export async function POST(req) {
     try {
         const body = await req.json();
-        const { priceId, metadata } = body; // Extract metadata from the request body
+        const { priceId, planName, metadata } = body; // Include planName
 
-        if (!priceId) {
-            return new Response(JSON.stringify({ error: 'Price ID is required' }), {
+        if (!priceId || !planName) {
+            return new Response(JSON.stringify({ error: 'Price ID and Plan Name are required' }), {
                 status: 400,
                 headers: { 'Content-Type': 'application/json' },
             });
         }
 
-        const session = await stripe.checkout.sessions.create({
+        let sessionConfig = {
             payment_method_types: ['card'],
-            mode: 'subscription',
             line_items: [
                 {
                     price: priceId,
@@ -25,8 +24,23 @@ export async function POST(req) {
             ],
             success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/home`,
             cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/home`,
-            metadata, // Pass metadata to the session
-        });
+            metadata,
+        };
+
+        if (planName === "Monthly") {
+            // Subscription mode
+            sessionConfig.mode = 'subscription';
+        } else if (planName === "Lifetime") {
+            // One-time payment mode
+            sessionConfig.mode = 'payment';
+        } else {
+            return new Response(JSON.stringify({ error: 'Invalid plan type' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' },
+            });
+        }
+
+        const session = await stripe.checkout.sessions.create(sessionConfig);
 
         return new Response(JSON.stringify({ id: session.id }), {
             status: 200,

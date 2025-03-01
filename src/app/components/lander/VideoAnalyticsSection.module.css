@@ -65,7 +65,8 @@
 }
 
 .quoteSection {
-    margin-top: 150px;
+    margin-top: 120px;
+    margin-bottom: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,9 +75,10 @@
 }
 
 .quoteBox {
-    width: 200px;
-    height: 200px;
+    width: 202px;
+    height: 202px;
     background: white;
+    border: 1px solid #fff;
     margin-bottom: 20px;
 }
 

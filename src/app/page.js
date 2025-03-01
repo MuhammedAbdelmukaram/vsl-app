@@ -17,6 +17,7 @@ import VideoAnalyticsSection from "@/app/components/lander/VideoAnalyticsSection
 import ToolsSection from "@/app/components/lander/ToolsSection";
 import Integrations from "@/app/components/lander/Integrations";
 import Footer from "@/app/components/lander/Footer";
+import QuoteSection from "@/app/components/lander/QuoteSection";
 
 const Page = () => {
     const router = useRouter();
@@ -352,8 +353,9 @@ const Page = () => {
             <ToolsSection/>
             <Integrations/>
             <VideoAnalyticsSection/>
-
+            <QuoteSection/>
             <StepsSection/>
+
             <Footer/>
 
 

@@ -55,19 +55,7 @@ const VideoAnalyticsSection = () => {
                 <div className={styles.videoPlaceholder}></div>
             </div>
 
-            <div className={styles.quoteSection}>
-                <div className={styles.quoteBox}></div>
-                <div>
 
-
-                    <p className={styles.quote}>
-                        <span className={styles.bold}>“ See Your Audience </span>Allows users to pick up where they left
-                        off or rewatch, increasing overall engagement. “
-                    </p>
-                    <p className={styles.author}>Alex Backer <span className={styles.position}>CEO of TikTok, CTO of Facebook</span>
-                    </p>
-                </div>
-            </div>
         </section>
     );
 };

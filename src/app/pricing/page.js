@@ -1,9 +1,40 @@
+"use client"
 import React from 'react';
 import styles from "@/app/pricing/pricing.module.css";
 import HeaderOutApp from "@/app/components/headerOutApp";
 import Image from "next/image";
+import Integrations from "@/app/components/lander/Integrations";
+import { loadStripe } from "@stripe/stripe-js";
+import { useRouter } from "next/navigation"; // To handle navigation
+import useAuth from "@/utils/useAuth"; // Hook to check login status
+
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 const Page = () => {
+    const router = useRouter();
+    const { isLoggedIn, loading } = useAuth();
+
+
+    const handlePlanClick = (priceId, planName, billingPeriod) => {
+        const token = localStorage.getItem("token");
+
+        if (!token || !isLoggedIn) {
+            // Redirect to login with query parameters for plan details
+            router.push(
+                `/login?redirect=/plan&priceId=${priceId}&planName=${planName}&billingPeriod=${billingPeriod}`
+            );
+            return;
+        }
+
+        // Redirect logged-in user to plan page with plan metadata
+        router.push(
+            `/plan?priceId=${priceId}&planName=${planName}&billingPeriod=${billingPeriod}`
+        );
+    };
+
+
+
     return (
         <div className={styles.pricingPage}>
             <div className={styles.headerHelper}>
@@ -88,6 +119,14 @@ const Page = () => {
 
                             <button
                                 className={styles.startButton}
+                                onClick={() =>
+                                    handlePlanClick(
+                                        "price_1QxdOSBpdFBuaaBz9F0BTcbK", // Plan name
+                                        "Monthly" ,
+                                        "Monthly"// Billing period,
+
+                                    )
+                                }
                             >
                                 Start 14 Days Free Trial
                             </button>
@@ -111,6 +150,14 @@ const Page = () => {
 
                             <button
                                 className={styles.startButton}
+                                onClick={() =>
+                                    handlePlanClick(
+                                        "price_1QxdOmBpdFBuaaBzcxFMcJoY", // Plan name
+                                        "Lifetime" ,
+                                        "Lifetime"// Billing period,
+
+                                    )
+                                }
                             >
                                 Start 14 Days Free Trial
                             </button>
@@ -120,8 +167,13 @@ const Page = () => {
                     </div>
 
                 </div>
+
+
             </div>
 
+            <div className={styles.integrations}>
+                <Integrations/>
+            </div>
 
         </div>
     );

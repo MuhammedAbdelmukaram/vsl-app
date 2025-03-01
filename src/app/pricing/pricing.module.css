@@ -18,9 +18,11 @@
 
 
 .container {
+    position: relative;
     padding-top: 70px;
     max-width: 1000px;
     margin: 0 auto;
+    z-index: 2;
 }
 
 .eyebrow{
@@ -195,9 +197,13 @@
     margin-bottom: 10px;
 }
 
+.integrations{
+    margin-top:80px;
+}
+
 .startButton {
     margin-top: 28px;
-    background-color: #ff6600;
+    background-color: #d25801;
     color: #fff;
     border: none;
     padding: 15px 30px;
