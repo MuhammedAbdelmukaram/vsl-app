@@ -98,8 +98,7 @@
     margin-top: 12px;
     flex: 1;
     display: flex;
-    flex-direction: column;
-    gap: 26px;
+    gap: 66px;
 }
 
 .options label {
@@ -190,6 +189,9 @@
     height: 24px;
 }
 
+.optionsHeading{
+    margin-bottom: 12px;
+}
 
 .optionsGrid{
     display: flex;
@@ -245,7 +247,9 @@
     margin-top: 66px;
     text-align: center;
 }
-
+.thumbnailImage{
+    max-width: 300px;
+}
 .thumbnailWrapper{
     display: flex;
     flex-direction: column;
@@ -334,12 +338,6 @@
     gap: 10px;
 }
 
-.sliderThing{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
 
 .inputGroup input {
     padding: 10px;
@@ -357,6 +355,41 @@
     border-radius: 5px;
     color: #fff;
 }
+
+
+
+.inputGroupGeneral {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.inputGroupGeneral input {
+    padding: 10px;
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.inputGroupGeneral .small {
+    padding: 10px;
+    background: #222;
+    width: 98px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.sliderThing{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
 
 .disabledInput {
     opacity: 0.5;

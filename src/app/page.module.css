@@ -1,6 +1,9 @@
 .page {
     background: #1B1B1B;
     position: relative;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+    overflow-scrolling: unset;
 }
 
 .container {
@@ -243,7 +246,7 @@
     width: 100%;
     flex-direction: column;
     margin-bottom: 100px;
-    z-index: 2;
+    z-index: 3;
 
 }
 

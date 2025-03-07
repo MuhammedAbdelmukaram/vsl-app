@@ -21,7 +21,19 @@
     position: relative;
 }
 
+.options{
+    display: grid;
+    grid-template-columns: repeat(2, 2fr); /* Creates 2 columns */
+    grid-template-rows: repeat(2, auto); /* Creates 2 rows */
+    gap: 2px; /* Adjust spacing between elements */
+    justify-content: center;
+    align-items: start;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #494949;
+}
+
 .dropdownMenu {
+    width: max-content;
     position: absolute;
     top: 100%;
     right: 0;
@@ -45,9 +57,65 @@
 }
 
 .dropdownMenu button:hover {
-    background-color: #ffa500;
+    background-color: #d05702;
     color: #000;
     border-radius: 4px;
+}
+
+/* Style the date input field */
+.datePicker {
+    background-color: #222; /* Dark background */
+    color: #fff; /* White text */
+    border: 1px solid #444; /* Border to blend */
+    padding: 8px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    width: 120px;
+}
+
+/* Remove default arrow icon */
+.datePicker::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+/* Add hover and focus effects */
+.datePicker:hover,
+.datePicker:focus {
+    border-color: #d05702; /* Accent color */
+}
+
+/* Fix the popper positioning */
+.datePickerPopup {
+    background-color: #222 !important; /* Dark theme */
+    border: 1px solid #444 !important;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+    z-index: 9999 !important;
+}
+
+/* Style navigation buttons */
+.react-datepicker__navigation {
+    border-color: #d05702 !important; /* Accent color */
+}
+
+/* Style selected date */
+.react-datepicker__day--selected {
+    background-color: #d05702 !important;
+    color: #fff !important;
+    border-radius: 50%;
+}
+
+/* Fix popper arrow */
+.react-datepicker__triangle {
+    display: none !important; /* Hides weird arrow */
+}
+
+/* Hover Effect */
+.react-datepicker__day:hover {
+    background-color: #555 !important;
+    color: #fff !important;
 }
 
 .customRange {
@@ -72,25 +140,26 @@
 
 .customRange button {
     margin-top: 5px;
-    background-color: #ffa500;
+    background-color: #d05702;
     border: none;
-    color: #000;
+    color: #fff;
+    font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
-    padding: 5px;
+    padding: 7px 10px;
     transition: background 0.2s;
 }
 
 .customRange button:hover {
-    background-color: #e69500;
+    background-color: #d05702;
 }
 
 
 .calendarButton {
     display: flex;
     align-items: center;
-    background: #0a0a0b;
-    color: #969696;
+    background: #1b1b1c;
+    color: #fff;
     border: 1px solid #969696;
     padding: 8px 12px;
     border-radius: 5px;

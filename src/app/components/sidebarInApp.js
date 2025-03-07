@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 import {usePathname, useRouter} from "next/navigation";
 import styles from "./sidebar.module.css";
 import Avatar from "react-avatar";
-
+import Link from "next/link";
 const SidebarInApp = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [videoCount, setVideoCount] = useState(0);

@@ -31,6 +31,8 @@ const StepTwo = ({
         border: false,
         borderWidth: "1px",
         borderRadius: "0px",
+        borderGlow:false,
+        borderGlowColor:"#ffffff",
         borderColor: "#ffffff",
         theatreView: false,
         fullScreen: false,
@@ -59,6 +61,14 @@ const StepTwo = ({
 
     const handleBorderColorChange = (newColor) => {
         setFormData((prev) => ({ ...prev, borderColor: newColor }));
+    };
+
+    const handleBorderGlowChange = (e) => {
+        setFormData((prev) => ({ ...prev, borderGlow: e.target.checked }));
+    };
+
+    const handleBorderGlowColorChange = (newColor) => {
+        setFormData((prev) => ({ ...prev, borderGlowColor: newColor }));
     };
 
     const handleBorderRadiusChange = (e) => {
@@ -156,10 +166,13 @@ const StepTwo = ({
                 borderWidth={formData.borderWidth}
                 borderRadius={formData.borderRadius}
                 borderColor={formData.borderColor}
+                borderGlow={formData.borderGlow}  // New: Pass glow state
+                borderGlowColor={formData.borderGlowColor}  // New: Pass glow color
                 theatreView={formData.theatreView}
                 fullScreen={formData.fullScreen}
                 exitThumbnailButtons={formData.exitThumbnailButtons}
             />
+
 
             {/* Tabs Navigation */}
             <div className={styles.tabNavigation}>
@@ -211,10 +224,12 @@ const StepTwo = ({
                             <label>Progress Bar Color</label>
                             <ColorPicker color={formData.brandColor} onChange={handleBrandColorChange} />
                         </div>
+
                         <div className={styles.checkboxWrapper}>
                             <input type="checkbox" id="border" checked={formData.border} onChange={handleCheckboxChange} />
                             <label htmlFor="border">Enable Border</label>
                         </div>
+
                         {formData.border && (
                             <>
                                 <div className={styles.inputGroup}>
@@ -231,18 +246,34 @@ const StepTwo = ({
                                         ))}
                                     </div>
                                 </div>
+
                                 <div className={styles.inputGroup}>
                                     <label>Border Radius</label>
                                     <input type="range" min="0" max="8" step="1" value={parseInt(formData.borderRadius) || 0} onChange={handleBorderRadiusChange} />
                                 </div>
+
                                 <div className={styles.textInputs}>
                                     <label>Border Color</label>
                                     <ColorPicker color={formData.borderColor} onChange={handleBorderColorChange} />
                                 </div>
+
+                                {/* Border Glow Toggle */}
+                                <div className={styles.checkboxWrapper}>
+                                    <input type="checkbox" id="borderGlow" checked={formData.borderGlow} onChange={handleBorderGlowChange} />
+                                    <label htmlFor="borderGlow">Enable Border Glow</label>
+                                </div>
+
+                                {formData.borderGlow && (
+                                    <div className={styles.textInputs}>
+                                        <label>Border Glow Color</label>
+                                        <ColorPicker color={formData.borderGlowColor} onChange={handleBorderGlowColorChange} />
+                                    </div>
+                                )}
                             </>
                         )}
                     </>
                 )}
+
 
                 {activeTab === "Start" && (
                     <>

@@ -30,6 +30,8 @@ const VideoPlayer = ({
                          theatreView = false,
                          fullScreen = false,
                          exitThumbnailButtons = false,
+                         borderGlow,
+                         borderGlowColor
 
                      }) => {
     const playerRef = useRef(null);
@@ -138,9 +140,9 @@ const VideoPlayer = ({
     return (
         <div
             ref={wrapperRef}
-            className={`${styles.playerWrapper} ${isFullscreen ? styles.fullscreen : ""} ${
-                isTheatre ? styles.theatre : ""
-            }`}
+            className={`${styles.playerWrapper} ${isFullscreen ? styles.fullscreen : ""} 
+                ${isTheatre ? styles.theatre : ""} 
+                ${borderGlow ? styles.glowingBorder : ""}`}  // Apply glow if enabled
             style={{
                 width: isFullscreen ? "100vw" : isTheatre ? "1200px" : width,
                 maxWidth: isFullscreen ? "100vw" : isTheatre ? "1200px" : maxWidth,
@@ -148,6 +150,7 @@ const VideoPlayer = ({
                 position: "relative",
                 borderRadius,
                 border: border ? `${borderWidth} solid ${borderColor}` : "none",
+                "--borderGlowColor": borderGlow ? borderGlowColor : "transparent", // Pass color as a CSS variable
             }}
         >
             <ReactPlayer

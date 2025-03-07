@@ -12,10 +12,7 @@ import Countries from "@/app/components/analytics/Countries";
 import Devices from "@/app/components/analytics/Devices";
 import Browser from "@/app/components/analytics/Browser";
 import TrafficSource from "@/app/components/analytics/TrafficSource";
-import General from "./General";
-import Design from "./Design";
-import Start from "./Start";
-import End from "./End";
+import General from "@/app/components/analytics/General";
 import UntrackedVideoPlayerTest from "@/app/untracked-video-player/UntrackedVideoPlayerTest";
 
 
@@ -246,13 +243,12 @@ const VideoPage = () => {
 
     // Tab Content
     const tabContent = {
-        General: <General
-            video={video}
-            handlePitchTimeChange={handlePitchTimeChange}
-            handleChange={handleChange}/>,
-        Design: <Design video={video} handleChange={handleChange}/>,
-        Start: <Start video={video}  handleChange={handleChange} handleThumbnailChange={handleThumbnailChange} uploadedThumbnailUrl={uploadedThumbnailUrl}/>,
-        End: <End video={video}  handleChange={handleChange} handleThumbnailChange={handleThumbnailChange} uploadedExitThumbnailUrl={uploadedExitThumbnailUrl}/>,
+        General: <General/>,
+        Retention: <Retention/>,
+        Countries: <Countries/>,
+        Devices: <Devices/>,
+        Browser: <Browser/>,
+        "Traffic Source": <TrafficSource/>,
     };
 
     return (
@@ -316,6 +312,39 @@ const VideoPage = () => {
                         </div>
                     </div>
 
+                    {/* Options */}
+                    <div className={styles.optionsSection}>
+                        <h3>Options</h3>
+                        <div className={styles.optionsGrid}>
+                            {Object.entries(video.options).map(([key, value]) => {
+                                // Exclude border-related options from general options
+                                if (["borderWidth", "borderRadius", "borderColor"].includes(key)) {
+                                    return null;
+                                }
+
+                                const isDisabled = key === "showThumbnail" && uploadedThumbnailUrl === "/default-thumbnail.jpg";
+                                return (
+                                    <div
+                                        key={key}
+                                        className={`${styles.option} ${isDisabled ? styles.disabledOption : ""}`}
+                                        {...(isDisabled && {"data-tooltip": "Upload thumbnail first"})}
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            id={key}
+                                            name={key}
+                                            checked={value}
+                                            onChange={handleChange}
+                                            disabled={isDisabled}
+                                        />
+                                        <label htmlFor={key}>
+                                            {key.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase())}
+                                        </label>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
 
 
                     <div className={styles.thumbnails}>
@@ -393,7 +422,7 @@ const VideoPage = () => {
                             />
                         </div>
                         <div className={styles.inputGroup}>
-                            <label>Progress Bar Color</label>
+                            <label>Brand Color</label>
                             <ColorPicker
                                 color={video.brandColor || "#ffffff"}
                                 onChange={(color) =>

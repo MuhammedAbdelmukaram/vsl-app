@@ -29,7 +29,9 @@ const VideoPlayer = ({
                          borderColor = "#ffffff", // ✅ Border color
                          fullScreen= false,
                          exitThumbnailButtons= false,
-                         theatreView= false
+                         theatreView= false,
+                         borderGlow,
+                         borderGlowColor
                      }) => {
     const playerRef = useRef(null);
     const clickTimeoutRef = useRef(null);
@@ -116,7 +118,8 @@ const VideoPlayer = ({
 
     return (
         <div
-            className={styles.playerWrapper}
+            className={`${styles.playerWrapper} 
+                ${borderGlow ? styles.glowingBorder : ""}`}
             style={{
                 width,
                 maxWidth,
@@ -124,6 +127,7 @@ const VideoPlayer = ({
                 position: "relative",
                 borderRadius: borderRadius,
                 border: border ? `${borderWidth} solid ${borderColor}` : "none",
+                "--borderGlowColor": borderGlow ? borderGlowColor : "transparent", // Pass color as a CSS variable
             }}
         >
             <ReactPlayer

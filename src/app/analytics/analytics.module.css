@@ -20,6 +20,48 @@
     gap: 6px;
 
 }
+.tabs {
+    display: flex;
+    gap: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.tabButton {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 8px 16px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.tabButton:hover {
+    opacity: 0.7;
+}
+
+.tabButton.active {
+    font-weight: bold;
+}
+
+.tabButton.active::after {
+    content: "";
+    width: 100%;
+    height: 3px;
+    background-color: #d87c32;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    border-radius: 2px;
+}
+
+.tabContent {
+    margin-top: 20px;
+}
+
 
 .rightSide{
     display: flex;
@@ -129,37 +171,365 @@
     display: grid;
     grid-template-columns: repeat(3, auto);
     gap: 20px 40px;
-    background-color: #1b1b1b;
     padding: 20px 40px;
     border-radius: 8px;
+
 }
 
-.statItem {
-    display: grid;
-    grid-template-columns: 120px 10px auto; /* Fixed width for labels */
+.textDot{
+    display: flex;
+
     align-items: center;
+}
+.statItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px 2vw;
     gap: 8px;
+    background-color: #131313;
+    box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.25);
+
 }
 
 .dot {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     background-color: white;
+    margin-left: 28px;
     border-radius: 50%;
     justify-self: center; /* Centering the dot */
 }
 
 .label {
-    font-weight: bold;
+    font-weight: normal;
+    min-width: 109px;
     font-size: 14px;
-    color: #cccccc;
+    color: #ffffff;
     text-align: left; /* Right-align for consistency */
 }
 
 .value {
-    font-size: 14px;
+    font-size: 18px;
+    font-weight: bold;
     color: #ffffff;
 }
+/* Card Container */
+.card {
+    background-color: #131313;
+    box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.25);
+    padding: 24px 32px;
+    border-radius: 8px;
+    height: fit-content;
+}
+
+
+
+/* Card Title */
+.cardTitle {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+
+
+/* Legend Styles */
+.legendContainer {
+    display: flex;
+    flex-direction: column;
+    padding-top: 22px;
+    padding-left: 16px;
+    gap: 22px;
+    border-right: 1px solid #fff;
+    min-height: 220px;
+    padding-right: 45px;
+}
+
+.legendItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+
+    color: #ffffff;
+}
+
+.legendColor {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+}
+
+.legendText {
+    font-size: 16px;
+    flex-grow: 1;
+    color: #DCDCDC;
+}
+
+.pieChart{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.legendPercentage {
+    font-weight: bold;
+}
+
+/* Vertical Divider */
+.divider {
+    width: 1px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 0 15px;
+}
+
+.chartRow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 60px;
+    width: 100%;
+}
+
+.chartContainer {
+    width: 100%;
+    height: 300px; /* Increase the height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dashboardContainer {
+    margin-top: 40px;
+    padding: 0px 40px;
+
+    color: white;
+}
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Offset for Aesthetic Misalignment */
+.offsetUp {
+
+}
+.offsetDown {
+
+}
+
+
+
+.card h3 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+/* Legend */
+.legend {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+/* Table Title */
+.tableTitle {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+/* Table */
+.table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Table Header */
+.tableHeader {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Headers */
+.headerText {
+    flex: 1;
+    text-align: right;
+}
+
+/* Table Row */
+.tableRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Browser Name + Icon */
+.browserInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 2;
+}
+
+/* Browser Icons */
+.browserIcon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Browser Name */
+.browserName {
+    flex-grow: 1;
+    text-align: left;
+    color: #ffffff;
+}
+
+/* Bold Numbers */
+.boldNumber {
+    font-weight: bold;
+    font-size: 14px;
+    flex: 1;
+    text-align: right;
+    color: #ffffff;
+}
+/* Stacked Bar Labels */
+.barLabels {
+    display: flex;
+    margin-top: 10px;
+}
+
+.barLabelItem {
+    flex: 1;
+    text-align: center;
+    padding: 6px;
+    font-weight: bold;
+    color: white;
+}
+
+.barLabelText {
+    font-size: 14px;
+}/* Container for the stacked bar */
+.stackedBarContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 45px;
+}
+
+/* Stacked Bar Chart */
+.barChart {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* Individual Bar Segments */
+.barSegment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    font-size: 14px;
+}
+
+/* Labels Inside the Bars */
+.percentageLabel {
+    white-space: nowrap;
+}
+
+/* Traffic Source Labels Below */
+.barLabels {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.barLabel {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    text-align: center;
+    flex: 1;
+}
+
+
+
+
+.chartContainer2 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.progressContainer {
+    width: 100%;
+}
+
+.chartItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.label {
+    flex: 1;
+    white-space: nowrap;
+}
+
+.progressWrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.progressBar {
+    flex: 1;
+    background: #333;
+    border-radius: 5px;
+    height: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progressFill {
+    height: 100%;
+    background: #e67e22;
+    border-radius: 5px;
+}
+
+.valueCountry {
+    font-size: 12px;
+    white-space: nowrap;
+    color: #ffffff;
+}
+
+
+
 
 @media (max-width: 600px) {
     .statsContainer {
@@ -267,7 +637,10 @@
     display: flex;
     justify-content: space-between;
 }
-
+.rightSideWrapper{
+    display: flex;
+    gap: 30px;
+}
 .filters {
     display: flex;
     gap: 10px;
@@ -278,6 +651,7 @@
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
+
 }
 
 /* Container */

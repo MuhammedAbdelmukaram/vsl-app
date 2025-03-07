@@ -7,9 +7,11 @@ import ChartSection from "./ChartSection";
 import StatisticsSection from "./StatisticsSection";
 import VideoModal from "./VideoModal";
 import RetentionGraph from "@/app/components/RetentionGraph";
+import { motion, AnimatePresence } from "framer-motion";
 import styles from "./analytics.module.css";
 
 const Page = () => {
+    const [activeTab, setActiveTab] = useState("overall");
     const [activeFilter, setActiveFilter] = useState("Total Views");
     const [activeChart, setActiveChart] = useState("Bar Chart");
     const [hasVideos, setHasVideos] = useState(false);
@@ -61,11 +63,64 @@ const Page = () => {
         <Layout>
             <div className={styles.container}>
                 <VideoSelector selectedVideo={selectedVideo} setIsModalOpen={setIsModalOpen} />
-                <VideoStats selectedVideo={selectedVideo} />
-                <ChartSection activeChart={activeChart} setActiveChart={setActiveChart} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
-                <StatisticsSection />
-                <RetentionGraph />
 
+
+                {/* Tabs Navigation */}
+                <div className={styles.tabs}>
+                    <button
+                        className={`${styles.tabButton} ${activeTab === "overall" ? styles.active : ""}`}
+                        onClick={() => setActiveTab("overall")}
+                    >
+                        Overall Statistics
+                    </button>
+                    <button
+                        className={`${styles.tabButton} ${activeTab === "retention" ? styles.active : ""}`}
+                        onClick={() => setActiveTab("retention")}
+                    >
+                        Retention Graph
+                    </button>
+                </div>
+
+                {/* Animated Tab Content */}
+                <div className={styles.tabContent}>
+                    <AnimatePresence mode="wait">
+                        {activeTab === "overall" && (
+                            <motion.div
+                                key="overall"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.1 }}
+                            >
+                                <ChartSection
+                                    activeChart={activeChart}
+                                    setActiveChart={setActiveChart}
+                                    activeFilter={activeFilter}
+                                    setActiveFilter={setActiveFilter}
+                                />
+                                <VideoStats  />
+                                <StatisticsSection />
+                            </motion.div>
+                        )}
+
+                        {activeTab === "retention" && (
+                            <motion.div
+                                key="retention"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.1 }}
+                            >
+                                <RetentionGraph />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+
+
+                </div>
+
+                {/* Video Modal */}
                 {isModalOpen && (
                     <VideoModal
                         videos={videos}

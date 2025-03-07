@@ -1,32 +1,42 @@
 .retentionContainer {
-    background-color: #1e1e1e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #111; /* Dark mode */
     padding: 20px;
     border-radius: 10px;
-    margin-top: 20px;
-    position: relative;
+    border: 1px solid #333;
+}
+
+/* Left: Video Placeholder */
+.videoPlaceholder {
+    width: 40%;
+    height: 300px;
+    background-color: #222;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 1px solid #444;
+}
+
+/* Right: Retention Graph */
+.graphContainer {
+    width: 55%;
 }
 
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: white;
+    color: #fff;
     margin-bottom: 10px;
 }
 
-.header h3 {
-    font-size: 16px;
-    margin: 0 10px;
-    font-weight: bold;
-}
-
-.toggleButton {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-}
-
 .graph {
-    height: 300px;
-    position: relative;
+    width: 100%;
+    height: 300px; /* Adjust height */
 }

@@ -23,6 +23,8 @@ const VideoSchema = new mongoose.Schema({
         borderWidth: { type: String, default: "0px" },
         borderRadius: { type: String, default: "0px" },
         borderColor: { type: String, default: "#ffffff" },
+        borderGlow: { type: Boolean, default: false }, // New
+        borderGlowColor: { type: String, default: "#ff0000" }, // New
         exitThumbnailButtons: { type: Boolean, default: false },
         fullScreen: { type: Boolean, default: false },
         theatreView: { type: Boolean, default: false },
