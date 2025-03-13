@@ -18,7 +18,6 @@
 .upperSection {
     position: relative;
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
     gap: 20px;
     border-bottom: 1px solid #333;
@@ -26,7 +25,9 @@
 }
 
 .videoDetails {
-    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
 }
 
 .videoThumbnail img {
@@ -44,6 +45,7 @@
 .videoInfo{
     display: flex;
     width: 100%;
+    gap: 10px;
     justify-content: space-between;
     align-items: flex-end;
 }
@@ -57,7 +59,7 @@
 
 
 .inputTitle{
-    background-color: #131314;
+    background-color: #181819;
     border: none;
     color: #fff;
     font-size: 24px;
@@ -98,6 +100,7 @@
     margin-top: 12px;
     flex: 1;
     display: flex;
+    align-items: flex-end;
     gap: 66px;
 }
 
@@ -193,11 +196,22 @@
     margin-bottom: 12px;
 }
 
+.optionsGrid2{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(152px, 0fr)); /* Adjusts dynamically */
+    gap: 15px; /* Reduced spacing */
+    column-gap: 60px;
+    width: 100%; /* Ensures it takes up the full width */
+    max-width: 800px; /* Adjust this based on your layout */
+}
+
 .optionsGrid{
-    display: flex;
-    flex-direction: column;
-    min-width: 180px;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(152px, 0fr)); /* Adjusts dynamically */
+    gap: 15px; /* Reduced spacing */
+    column-gap: 60px;
+    width: 100%; /* Ensures it takes up the full width */
+    max-width: 800px; /* Adjust this based on your layout */
 }
 
 /* Hide the default checkbox */
@@ -208,6 +222,12 @@
     height: 0;
 }
 
+.specialLabel{
+
+}
+.specialLabel:before{
+    display: none!important;
+}
 /* Style the custom checkbox */
 .optionsGrid label {
     display: flex;
@@ -249,26 +269,33 @@
 }
 .thumbnailImage{
     max-width: 300px;
+
 }
 .thumbnailWrapper{
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #fff;
+    min-width: 202px;
+    min-height: 114.5px;
+    max-width: 202px;
+    max-height: 114.5px;
 
 }
 
 .thumbnailImages{
     display: flex;
+    flex-direction: column;
     gap: 20px;
 }
 
 .thumbnailImages img {
-    border: 1px solid #fff;
     cursor: pointer;
     max-width: 200px; /* Restrict the maximum width */
     aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
     object-fit: cover; /* Ensure the image fills the space properly */
-    margin: 5px;
     transition: transform 0.3s ease, filter 0.3s ease; /* Smooth hover effect */
 }
 
@@ -341,6 +368,7 @@
 
 .inputGroup input {
     padding: 10px;
+    max-width: 300px;
     background: #222;
     border: 1px solid #333;
     border-radius: 5px;
@@ -389,6 +417,77 @@
     gap: 8px;
 }
 
+/* Disabled checkbox state */
+.optionsGrid input[type="checkbox"]:disabled + label::before {
+    border-color: #555 !important; /* Dark grey border */
+    background-color: #222 !important; /* Dark grey background */
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Also grey out the label when disabled */
+.optionsGrid input[type="checkbox"]:disabled + label {
+    color: #666 !important;
+    cursor: not-allowed;
+}
+
+
+.rangeWrapper{
+
+}
+
+.rangeInput {
+    -webkit-appearance: none; /* Remove default styles */
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #eeeeee;
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+/* Custom Thumb (Chrome, Safari, Edge) */
+.rangeInput::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background-color: white;
+    border: 3px solid #fd6501; /* Blue thumb */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.rangeInput::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    border-color: #4caf50; /* Green when hovered */
+}
+
+/* Custom Thumb (Firefox) */
+.rangeInput::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background-color: white;
+    border: 3px solid #2196f3;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.rangeInput::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    border-color: #4caf50;
+}
+
+/* Disabled State */
+.disabledInput {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 
 
 .disabledInput {
@@ -464,12 +563,12 @@
 .bottomSection {
     display: flex;
     flex-direction: column;
-    gap: 60px;
+    gap: 30px;
 }
 
 .tabs {
     display: flex;
-    gap: 10px;
+    gap: 3vw;
 }
 
 .tabs button {
@@ -586,3 +685,86 @@
     background: #e76100;
 }
 
+
+
+
+
+
+
+
+.stats {
+    margin-top: 33px;
+    background-color: #141414;
+    padding: 24px 32px;
+    border-radius: 8px;
+    width: 100%;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.statsTitle {
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.statsGrid {
+    display: grid;
+    gap: 10px;
+}
+
+.statsRow {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; /* Ensuring equal column width */
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.statsRow:last-child {
+    border-bottom: none;
+
+}
+
+.bold {
+    text-align: right;
+    font-weight: bold;
+}
+
+
+.normal{
+    text-align: right;
+}
+
+.green {
+    text-align: right;
+    color: #4caf50;
+    font-weight: bold;
+}
+
+.analyticsButton{
+    color: #fff;
+    font-weight: bold;
+    background-color: transparent;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.viewAnalytics {
+    margin-top: 24px;
+    text-align: right;
+}
+
+.viewAnalytics a {
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+.rightSide{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}

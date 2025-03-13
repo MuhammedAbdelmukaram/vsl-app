@@ -21,7 +21,6 @@ const General = ({handlePitchTimeChange, video, handleChange}) => {
             <div>
 
 
-                <h3 className={styles.optionsHeading}>Options</h3>
                 <div className={styles.optionsGrid}>
                     {Object.entries(video.options)
                         .filter(([key]) => allowedOptions.includes(key)) // Only include specified options

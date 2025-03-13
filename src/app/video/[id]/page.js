@@ -17,6 +17,8 @@ import Design from "./Design";
 import Start from "./Start";
 import End from "./End";
 import UntrackedVideoPlayerTest from "@/app/untracked-video-player/UntrackedVideoPlayerTest";
+import VideoStats from "@/app/video/[id]/VideoStats";
+import VideoPlayer from "@/app/video-player/VideoPlayer";
 
 
 const EmbedModal = ({isOpen, onClose, embedCode}) => {
@@ -240,6 +242,9 @@ const VideoPage = () => {
     };
 
 
+
+
+
     if (loading) return <Loader/>;
     if (error) return <div>Error: {error}</div>;
     if (!video) return <div>No video found</div>;
@@ -250,9 +255,11 @@ const VideoPage = () => {
             video={video}
             handlePitchTimeChange={handlePitchTimeChange}
             handleChange={handleChange}/>,
-        Design: <Design video={video} handleChange={handleChange}/>,
-        Start: <Start video={video}  handleChange={handleChange} handleThumbnailChange={handleThumbnailChange} uploadedThumbnailUrl={uploadedThumbnailUrl}/>,
-        End: <End video={video}  handleChange={handleChange} handleThumbnailChange={handleThumbnailChange} uploadedExitThumbnailUrl={uploadedExitThumbnailUrl}/>,
+        Design: <Design video={video} handleChange={handleChange} handleBorderRadiusChange={handleBorderRadiusChange} setVideo={setVideo} setBorderWidth={setBorderWidth}/>,
+        Start: <Start video={video} handleChange={handleChange} handleThumbnailChange={handleThumbnailChange}
+                      uploadedThumbnailUrl={uploadedThumbnailUrl}/>,
+        End: <End video={video} handleChange={handleChange} handleThumbnailChange={handleThumbnailChange}
+                  uploadedExitThumbnailUrl={uploadedExitThumbnailUrl}/>,
     };
 
     return (
@@ -276,7 +283,7 @@ const VideoPage = () => {
                         </button>
                     </div>
                     <div className={styles.videoDetails}>
-                        <div style={{width: "fit-content"}}>
+                        <div style={{width: "40vw"}}>
                             <div className={styles.videoInfo}>
                                 <input
                                     type="text"
@@ -291,7 +298,7 @@ const VideoPage = () => {
                                 </p>
                             </div>
                             <div className={styles.videoThumbnail}>
-                                <UntrackedVideoPlayerTest
+                                <VideoPlayer
                                     url={video.videoUrl}
                                     autoPlay={video.options.autoPlay}
                                     autoPlayText={video.autoPlayText}
@@ -314,11 +321,22 @@ const VideoPage = () => {
 
                             </div>
                         </div>
+
+
+                    </div>
+
+                    <div className={styles.rightSide}>
+                        <VideoStats/>
+                        <div className={styles.viewAnalytics}>
+                            <button className={styles.analyticsButton}>
+                                View Full Analytics
+                            </button>
+                        </div>
                     </div>
 
 
 
-                    <div className={styles.thumbnails}>
+                    {/*<div className={styles.thumbnails}>
                         <div className={styles.thumbnailImages}>
                             <div className={styles.thumbnailWrapper}>
                                 <p>Thumbnail</p>
@@ -355,7 +373,7 @@ const VideoPage = () => {
                                 />
                             </div>
                         </div>
-                    </div>
+                    </div>*/}
 
 
                 </div>
@@ -367,114 +385,6 @@ const VideoPage = () => {
                     embedCode={video.iFrame || "No embed code available"}
                 />
 
-                {/* Middle Section */}
-                <div className={styles.middleSection}>
-                    <div className={styles.inputs}>
-                        <div className={styles.inputGroup}>
-                            <label>Pitch Time</label>
-                            <input
-                                type="text"
-                                name="pitchTime"
-                                value={video.pitchTime || ""}
-                                onChange={handlePitchTimeChange}
-                                placeholder="MM:SS"
-                                className={styles.rtlInput}
-                            />
-                        </div>
-
-                        <div className={styles.inputGroup}>
-                            <label>Auto-Play Text</label>
-                            <input
-                                type="text"
-                                name="autoPlayText"
-                                value={video.autoPlayText || ""}
-                                onChange={handleChange}
-                                placeholder="Auto-play overlay text"
-                            />
-                        </div>
-                        <div className={styles.inputGroup}>
-                            <label>Progress Bar Color</label>
-                            <ColorPicker
-                                color={video.brandColor || "#ffffff"}
-                                onChange={(color) =>
-                                    setVideo((prev) => ({
-                                        ...prev,
-                                        brandColor: color,
-                                    }))
-                                }
-                            />
-                        </div>
-
-
-                        {/* Always Visible but Disabled When Border is Off */}
-                        <div className={styles.inputGroup}>
-                            <label>Border Width</label>
-                            <div className={styles.borderWidthGroup}>
-                                {["1px", "2px", "3px"].map((width) => (
-                                    <button
-                                        key={width}
-                                        className={`${styles.borderWidthButton} ${
-                                            (video.options.borderWidth || "1px") === width ? styles.activeButton : ""
-                                        } ${!video.options.border ? styles.disabledButton : ""}`}
-                                        onClick={() => setBorderWidth(width)}
-                                        disabled={!video.options.border}
-                                    >
-                                        {width}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-
-
-                        <div>
-                            <label>Border Radius</label>
-                            <div className={styles.sliderThing}>
-                                <input
-                                    type="range"
-                                    min="0"
-                                    max="8"
-                                    step="1"
-                                    value={parseInt(video.options.borderRadius) || 1}
-                                    onChange={handleBorderRadiusChange}
-                                    disabled={!video.options.border}
-                                    className={!video.options.border ? styles.disabledInput : ""}
-                                />
-                                <div className={styles.borderWidthGroup}>
-                                    <span className={styles.borderWidthButton}>{video.options.borderRadius || "0px"}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className={styles.inputGroup}>
-                            <label>Border Color</label>
-                            <ColorPicker
-                                color={video.options.borderColor || "#ffffff"}
-                                onChange={(color) =>
-                                    setVideo((prev) => ({
-                                        ...prev,
-                                        options: {...prev.options, borderColor: color},
-                                    }))
-                                }
-                                disabled={!video.options.border}
-                                className={!video.options.border ? styles.disabledInput : ""}
-                            />
-                        </div>
-
-                        {video.options.borderGlow && (
-                            <div className={styles.inputGroup}>
-                                <label>Border Glow Color</label>
-                                <ColorPicker
-                                    color={video.options.borderGlowColor || "#ff0000"}
-                                    onChange={(color) => setVideo((prev) => ({
-                                        ...prev,
-                                        options: {...prev.options, borderGlowColor: color},
-                                    }))}
-                                />
-                            </div>
-                        )}
-
-                    </div>
-                </div>
 
                 {/* Bottom Section */}
                 <div className={styles.bottomSection}>

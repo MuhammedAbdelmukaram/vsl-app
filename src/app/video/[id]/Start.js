@@ -1,60 +1,74 @@
 import React from 'react';
 import styles from "@/app/video/[id]/video.module.css";
 
-const Start = ({video, handleChange, uploadedThumbnailUrl, handleThumbnailChange}) => {
-
+const Start = ({ video, handleChange, uploadedThumbnailUrl, handleThumbnailChange }) => {
     const allowedOptions = ["showThumbnail", "autoPlay"];
 
+    const handleOptionChange = (e) => {
+        const { name, checked } = e.target;
+
+        // Allow both to be deselected, but only one can be selected at a time
+        const updatedOptions = {
+            autoPlay: name === "autoPlay" ? checked : false,
+            showThumbnail: name === "showThumbnail" ? checked : false
+        };
+
+        // If deselecting, maintain existing selections
+        if (!checked) {
+            updatedOptions.autoPlay = video.options.autoPlay && name !== "autoPlay";
+            updatedOptions.showThumbnail = video.options.showThumbnail && name !== "showThumbnail";
+        }
+
+        handleChange({ target: { name: "options", value: updatedOptions } });
+    };
 
     return (
-        <div>
+        <div className={styles.optionsGrid}>
             <div className={styles.optionsGrid}>
-                {Object.entries(video.options)
-                    .filter(([key]) => allowedOptions.includes(key)) // Only include specified options
-                    .map(([key, value]) => (
-                        <div key={key} className={styles.option}>
-                            {key === "playbackRate" ? (
-                                <input
-                                    type="number"
-                                    id={key}
-                                    name={key}
-                                    value={value}
-                                    min="0.5"
-                                    max="2"
-                                    step="0.1"
-                                    onChange={handleChange}
-                                />
-                            ) : (
-                                <input
-                                    type="checkbox"
-                                    id={key}
-                                    name={key}
-                                    checked={value}
-                                    onChange={handleChange}
-                                />
-                            )}
-                            <label htmlFor={key}>
-                                {key.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase())}
-                            </label>
-                        </div>
-                    ))}
+                {allowedOptions.map((key) => (
+                    <div key={key} className={styles.option}>
+                        <input
+                            type="checkbox"
+                            id={key}
+                            name={key}
+                            checked={video.options[key] || false}
+                            onChange={handleOptionChange}
+                            disabled={key === "showThumbnail" && (!uploadedThumbnailUrl || uploadedThumbnailUrl==="/default-thumbnail.jpg")} // Disable if no thumbnail is available
+                        />
+                        <label htmlFor={key} className={!uploadedThumbnailUrl && key === "showThumbnail" ? styles.disabledLabel : ""}>
+                            {key.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase())}
+                        </label>
+                    </div>
+                ))}
             </div>
-            <div className={styles.thumbnailWrapper}>
-                <p>Thumbnail</p>
-                <label htmlFor="thumbnail-upload">
-                    <img
-                        src={uploadedThumbnailUrl || "/default-thumbnail.jpg"}
-                        alt="Thumbnail"
-                        className={styles.thumbnailImage}
-                    />
-                </label>
+            <div className={styles.inputGroup}>
+                <small>Auto-Play Text</small>
                 <input
-                    type="file"
-                    id="thumbnail-upload"
-                    accept="image/*"
-                    style={{display: "none"}} // Hide the input
-                    onChange={(e) => handleThumbnailChange(e, "thumbnail")}
+                    type="text"
+                    name="autoPlayText"
+                    value={video.autoPlayText || ""}
+                    onChange={handleChange}
+                    placeholder="Auto-play overlay text"
                 />
+            </div>
+            <div className={styles.thumbnailImages}>
+                <p>Thumbnail</p>
+                <div className={styles.thumbnailWrapper}>
+                    <label className={styles.specialLabel} htmlFor="thumbnail-upload">
+                        <img
+                            src={uploadedThumbnailUrl || "/default-thumbnail.jpg"}
+                            alt="Thumbnail"
+                            className={styles.thumbnailImage}
+                        />
+                    </label>
+                    <input
+                        type="file"
+                        id="thumbnail-upload"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                        onChange={(e) => handleThumbnailChange(e, "thumbnail")}
+                    />
+                </div>
             </div>
         </div>
     );

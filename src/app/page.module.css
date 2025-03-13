@@ -144,27 +144,7 @@
     border-left: 10px solid #ffffff;
 }
 
-@keyframes glowingBorder {
-    0% {
-        box-shadow: 0 0 5px rgba(212, 89, 0, 0.6), 0 0 10px rgba(212, 89, 0, 0.5);
-    }
-    50% {
-        box-shadow: 0 0 15px rgba(212, 89, 0, 0.8), 0 0 25px rgba(212, 89, 0, 0.7);
-    }
-    100% {
-        box-shadow: 0 0 5px rgba(212, 89, 0, 0.6), 0 0 10px rgba(212, 89, 0, 0.5);
-    }
-}
 
-.glowingBorder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    border: 2px solid #d45900; /* Solid Orange Border */
-    border-radius: 10px;
-    animation: glowingBorder 2s infinite alternate; /* Smooth Glow Effect */
-}
 
 .outer{
     display: flex;

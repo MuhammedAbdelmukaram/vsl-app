@@ -3,11 +3,11 @@ import styles from "@/app/video/[id]/video.module.css";
 
 const End = ({video, handleChange, handleThumbnailChange, uploadedExitThumbnailUrl}) => {
 
-    const allowedOptions = ["showExitThumbnail", "exitThumbnailButtons"];
+    const allowedOptions = [ "exitThumbnailButtons" ,"showExitThumbnail",];
 
 
     return (
-        <div>
+        <div className={styles.optionsGrid}>
             <div className={styles.optionsGrid}>
                 {Object.entries(video.options)
                     .filter(([key]) => allowedOptions.includes(key)) // Only include specified options
@@ -30,6 +30,7 @@ const End = ({video, handleChange, handleThumbnailChange, uploadedExitThumbnailU
                                     id={key}
                                     name={key}
                                     checked={value}
+                                    disabled={key === "showExitThumbnail" && (!uploadedExitThumbnailUrl || uploadedExitThumbnailUrl==="/default-thumbnail.jpg")} // Disable if no thumbnail is available
                                     onChange={handleChange}
                                 />
                             )}
@@ -40,22 +41,25 @@ const End = ({video, handleChange, handleThumbnailChange, uploadedExitThumbnailU
                     ))}
             </div>
 
-            <div className={styles.thumbnailWrapper}>
+            <div className={styles.thumbnailImages}>
                 <p>Exit Thumbnail</p>
-                <label htmlFor="exit-thumbnail-upload">
-                    <img
-                        src={uploadedExitThumbnailUrl || "/default-thumbnail.jpg"}
-                        alt="Exit Thumbnail"
-                        className={styles.thumbnailImage}
+                <div className={styles.thumbnailWrapper}>
+
+                    <label className={styles.specialLabel} htmlFor="exit-thumbnail-upload">
+                        <img
+                            src={uploadedExitThumbnailUrl || "/default-thumbnail.jpg"}
+                            alt="Exit Thumbnail"
+                            className={styles.thumbnailImage}
+                        />
+                    </label>
+                    <input
+                        type="file"
+                        id="exit-thumbnail-upload"
+                        accept="image/*"
+                        style={{display: "none"}} // Hide the input
+                        onChange={(e) => handleThumbnailChange(e, "exitThumbnail")}
                     />
-                </label>
-                <input
-                    type="file"
-                    id="exit-thumbnail-upload"
-                    accept="image/*"
-                    style={{display: "none"}} // Hide the input
-                    onChange={(e) => handleThumbnailChange(e, "exitThumbnail")}
-                />
+                </div>
             </div>
         </div>
     );

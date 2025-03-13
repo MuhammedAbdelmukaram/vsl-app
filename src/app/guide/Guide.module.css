@@ -1,0 +1,191 @@
+.container {
+    position: relative;
+    background: #1B1B1B;
+    color: white;
+    text-align: center;
+    padding: 0px 0px 50px 0px;
+    font-family: "Inter", sans-serif;
+    min-height: 100vh;
+}
+
+.content{
+    margin-top: 40px;
+}
+
+.header{
+   padding-top: 20px;
+}
+
+.gradient{
+    position: absolute;
+    z-index: 1;
+    top: -420px;
+    left:-800px;
+    width: 100%;
+}
+
+.gradient2{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 0px;
+    right: -1267px;
+}
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #aaa;
+    margin-bottom: 25px;
+}
+
+/* React-Select Dropdown */
+.dropdownContainer {
+    position: inherit;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+    margin-bottom: 25px;
+}
+
+.select {
+    width: 60%;
+    max-width: 400px;
+}
+
+.react-select__control {
+    background: #1e1e1e !important;
+    color: white !important;
+    border: 1px solid #333 !important;
+    border-radius: 8px !important;
+}
+
+.react-select__menu {
+    background: #2a2a2a !important;
+}
+
+.react-select__option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+}
+
+.react-select__option:hover {
+    background: #444 !important;
+}
+
+/* Fix spacing and alignment for dropdown */
+.option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+}
+.option:hover {
+    cursor:pointer;
+    background-color: #464646;
+}
+
+.optionLogo {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}
+
+.singleValue {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    gap: 18px;
+}
+
+
+/* Video Placeholder */
+.videoPlaceholder {
+    width: 60%;
+    max-width: 650px;
+    height: 300px;
+    background: #444;
+    margin: 0 auto;
+    border-radius: 12px;
+}
+
+/* Section Title */
+.sectionTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 40px 0 20px;
+}
+
+/* Steps */
+.steps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 60%;
+    max-width: 650px;
+    text-align: left;
+}
+
+.stepNumber {
+    background: #ff9800;
+    color: white;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+/* Final Text */
+.finalText {
+    width: 60%;
+    max-width: 650px;
+    margin: 30px auto 0;
+    text-align: left;
+    color: #bbb;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Target the scrollbar inside the React-Select dropdown */
+.react-select__menu-list {
+    scrollbar-width: thin !important;; /* For Firefox */
+    scrollbar-color: #888 #242424 !important;; /* Scroll thumb and track */
+
+    /* For WebKit browsers (Chrome, Edge, Safari) */
+}
+
+.react-select__menu-list::-webkit-scrollbar {
+    width: 6px !important;; /* Thin scrollbar */
+}
+
+.react-select__menu-list::-webkit-scrollbar-track {
+    background: #242424 !important; /* Dark background */
+    border-radius: 4px !important;;
+}
+
+.react-select__menu-list::-webkit-scrollbar-thumb {
+    background: #888 !important;; /* Scrollbar color */
+    border-radius: 4px !important;;
+    transition: background 0.2s ease-in-out !important;;
+}
+
+.react-select__menu-list::-webkit-scrollbar-thumb:hover {
+    background: #bbb !important;; /* Lighter on hover */
+}

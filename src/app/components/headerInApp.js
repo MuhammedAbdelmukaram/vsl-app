@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import HelpModal from "./helpModal"; // Import the new modal component
 import styles from "./header.module.css";
 
+// USEFUL FOR iFRAME WAY OF EMBEDING
+
 const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
@@ -16,7 +18,7 @@ const HeaderInApp = ({ title }) => {
     const currentPage = title
         ? `Videos <img src="/arrowRight.svg" alt="Arrow" style="width: 12px; height: 12px; margin: 0 5px;"/> <span style="font-size: 14px; font-weight: normal; color: #6b6a6a;">${title}</span>`
         : pathname === "/home"
-            ? "Welcome <span style='font-weight: normal'>John Doe</span>"
+            ? "Welcome <span style='font-weight: normal;margin-left: 10px'>John Doe</span>"
             : capitalizeFirstLetter(pathname.replace("/", ""));
 
     return (

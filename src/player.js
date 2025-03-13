@@ -51,6 +51,15 @@ const videoId = videoConfig ? videoConfig._id : null;
                 showExitThumbnail={videoConfig.options.showExitThumbnail}
                 autoPlay={videoConfig.options.autoPlay}
                 brandColor={videoConfig.brandColor}
+                border={videoConfig.options.border} // Enable border
+                borderWidth={videoConfig.options.borderWidth}
+                borderRadius={videoConfig.options.borderRadius}
+                borderColor={videoConfig.options.borderColor}
+                theatreView={videoConfig.options.theatreView}
+                fullScreen={videoConfig.options.fullScreen}
+                exitThumbnailButtons={videoConfig.options.exitThumbnailButtons}
+                borderGlow={videoConfig.options.borderGlow}
+                borderGlowColor={videoConfig.options.borderGlowColor}
             />
         );
 
