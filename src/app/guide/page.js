@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import Select from "react-select";
 import styles from "./Guide.module.css";
-import {selectStyles} from "@/app/components/SelectStyles2";
+import {selectStyles} from "@/app/components/selectStyles2";
 import Image from "next/image";
 import HeaderOutApp from "@/app/components/headerOutApp";
 
