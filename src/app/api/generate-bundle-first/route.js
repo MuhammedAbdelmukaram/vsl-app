@@ -1,6 +1,7 @@
 import { execSync } from "child_process";
 import path from "path";
-import { generateEmbedScript, uploadFileToR2WithToken } from "@/lib/uploadHelpers";
+import {generateEmbedScript, uploadFileToR2WithToken} from "@/lib/uploadHelpers";
+
 import fs from "fs";
 import dbConnect from "@/lib/dbConnect";
 import Video from "@/models/Video"; // Assuming a MongoDB model for storing video info
@@ -25,13 +26,13 @@ export const POST = async (req) => {
         console.log("Video configuration:", video);
 
         const buildId = `${video.user}_${video._id}`;
-        const tempDir = path.join("/tmp", `temp_${buildId}`); // ✅ Updated for Vercel
-        const outputDir = path.join("/tmp", `dist_${buildId}`); // ✅ Updated for Vercel
+        const tempDir = path.resolve(process.cwd(), `temp/${buildId}`);
+        const outputDir = path.resolve(process.cwd(), `dist/${buildId}`);
 
         console.log("Temporary directory path:", tempDir);
         console.log("Output directory path:", outputDir);
 
-        fs.mkdirSync(tempDir, { recursive: true }); // ✅ Ensure /tmp/ directories exist
+        fs.mkdirSync(tempDir, { recursive: true });
         fs.mkdirSync(outputDir, { recursive: true });
 
         // Write video config
@@ -42,10 +43,10 @@ export const POST = async (req) => {
             console.log("Running Webpack with build ID:", buildId);
             execSync(
                 `npx webpack --config webpack.config.js --env BUILD_ID=${buildId}`,
-                { stdio: "inherit", cwd: tempDir } // ✅ Ensure Webpack runs inside /tmp/
+                { stdio: "inherit" }
             );
 
-            const playerBundlePath = path.join(outputDir, "player.bundle.js"); // ✅ Updated
+            const playerBundlePath = path.resolve(outputDir, "player.bundle.js");
 
             // Read player file
             const playerFileContent = fs.readFileSync(playerBundlePath);
@@ -62,7 +63,7 @@ export const POST = async (req) => {
             console.log("Uploaded player URL:", uploadedPlayerUrl);
 
             // ✅ **Generate Embed Code using the separate function**
-            const embedCode = generateEmbedScript(video._id, uploadedPlayerUrl);
+            const embedCode = generateEmbedScript(video._id,uploadedPlayerUrl);
 
             // ✅ **Store Embed Code in Database**
             await Video.findByIdAndUpdate(video._id, { playerUrl: uploadedPlayerUrl, playerEmbedCode: embedCode });
@@ -71,10 +72,7 @@ export const POST = async (req) => {
                 status: 200,
             });
         } finally {
-            // ✅ **Cleanup /tmp/ to prevent storage issues**
             fs.unlinkSync(tempConfigPath);
-            fs.rmSync(tempDir, { recursive: true, force: true }); // ✅ Delete /tmp/temp_<buildId>
-            fs.rmSync(outputDir, { recursive: true, force: true }); // ✅ Delete /tmp/dist_<buildId>
         }
     } catch (error) {
         console.error("Error generating or uploading player bundle:", error);
