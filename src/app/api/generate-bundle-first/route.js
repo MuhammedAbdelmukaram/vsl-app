@@ -1,15 +1,14 @@
 import { execSync } from "child_process";
 import path from "path";
-import {generateEmbedScript, uploadFileToR2WithToken} from "@/lib/uploadHelpers";
-
+import { generateEmbedScript, uploadFileToR2WithToken } from "@/lib/uploadHelpers";
 import fs from "fs";
 import dbConnect from "@/lib/dbConnect";
-import Video from "@/models/Video"; // Assuming a MongoDB model for storing video info
+import Video from "@/models/Video";
 
 export const POST = async (req) => {
     try {
         console.log("Received POST request.");
-        await dbConnect(); // Ensure database connection
+        await dbConnect();
 
         const body = await req.json();
         console.log("Request body:", body);
@@ -26,8 +25,8 @@ export const POST = async (req) => {
         console.log("Video configuration:", video);
 
         const buildId = `${video.user}_${video._id}`;
-        const tempDir = path.resolve(process.cwd(), `temp/${buildId}`);
-        const outputDir = path.resolve(process.cwd(), `dist/${buildId}`);
+        const tempDir = path.join("/tmp", `temp_${buildId}`);
+        const outputDir = path.join("/tmp", `dist_${buildId}`);
 
         console.log("Temporary directory path:", tempDir);
         console.log("Output directory path:", outputDir);
@@ -35,7 +34,12 @@ export const POST = async (req) => {
         fs.mkdirSync(tempDir, { recursive: true });
         fs.mkdirSync(outputDir, { recursive: true });
 
-        // Write video config
+        // ✅ Copy Webpack config to /tmp/
+        const webpackConfigPath = path.resolve(process.cwd(), "webpack.config.js");
+        const tempWebpackConfigPath = path.join(tempDir, "webpack.config.js");
+        fs.copyFileSync(webpackConfigPath, tempWebpackConfigPath);
+
+        // ✅ Write video config
         const tempConfigPath = path.join(tempDir, "video.config.json");
         fs.writeFileSync(tempConfigPath, JSON.stringify(video, null, 2), "utf8");
 
@@ -43,16 +47,16 @@ export const POST = async (req) => {
             console.log("Running Webpack with build ID:", buildId);
             execSync(
                 `npx webpack --config webpack.config.js --env BUILD_ID=${buildId}`,
-                { stdio: "inherit" }
+                { stdio: "inherit", cwd: tempDir }
             );
 
-            const playerBundlePath = path.resolve(outputDir, "player.bundle.js");
+            const playerBundlePath = path.join(outputDir, "player.bundle.js");
 
-            // Read player file
+            // ✅ Read player file
             const playerFileContent = fs.readFileSync(playerBundlePath);
             const folder = `players/${video._id}`;
 
-            // Upload player bundle
+            // ✅ Upload player bundle
             const uploadedPlayerUrl = await uploadFileToR2WithToken(
                 { name: `${video._id}-player.bundle.js`, type: "application/javascript", content: playerFileContent },
                 folder,
@@ -62,17 +66,20 @@ export const POST = async (req) => {
 
             console.log("Uploaded player URL:", uploadedPlayerUrl);
 
-            // ✅ **Generate Embed Code using the separate function**
-            const embedCode = generateEmbedScript(video._id,uploadedPlayerUrl);
+            // ✅ Generate Embed Code
+            const embedCode = generateEmbedScript(video._id, uploadedPlayerUrl);
 
-            // ✅ **Store Embed Code in Database**
+            // ✅ Store Embed Code in Database
             await Video.findByIdAndUpdate(video._id, { playerUrl: uploadedPlayerUrl, playerEmbedCode: embedCode });
 
             return new Response(JSON.stringify({ success: true, playerEmbedCode: embedCode }), {
                 status: 200,
             });
         } finally {
+            // ✅ Cleanup temp files
             fs.unlinkSync(tempConfigPath);
+            fs.rmSync(tempDir, { recursive: true, force: true });
+            fs.rmSync(outputDir, { recursive: true, force: true });
         }
     } catch (error) {
         console.error("Error generating or uploading player bundle:", error);
