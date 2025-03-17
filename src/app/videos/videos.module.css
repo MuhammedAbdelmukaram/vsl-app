@@ -50,6 +50,28 @@
     color: #ccc;
     margin-bottom: 20px;
 }
+.filtersContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.viewToggleButton {
+    background-color: #ED6300;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.viewToggleButton:hover {
+    background-color: #C05710;
+}
+
 
 .filters {
     display: flex;
@@ -168,9 +190,32 @@
 .pagination {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    margin-top: 60px;
+    gap: 10px;
+    margin-top: 20px;
 }
+
+.pageButton {
+    background: transparent;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+.pageButton:hover {
+    background: #d25801;
+    color: #fff;
+}
+
+.pageButton.active {
+    background: #d25801;
+    color: #d7d7d7;
+    font-weight: bold;
+}
+
+
 
 .paginationButton {
     width: 30px;
@@ -262,3 +307,30 @@
     cursor: not-allowed;
 }
 
+
+.viewToggleButtons {
+    display: flex;
+    gap: 10px;
+}
+
+.toggleButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    transition: transform 0.2s ease;
+}
+
+.toggleButton svg {
+    width: 24px;
+    height: 24px;
+    color: #ffffff;
+}
+
+.toggleButton:hover {
+    transform: scale(1.1);
+}
+
+.activeView svg {
+    color: #ff7300; /* Highlight active button */
+}

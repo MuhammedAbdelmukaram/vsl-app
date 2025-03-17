@@ -98,8 +98,11 @@ const Home = () => {
         <Layout>
             {hasVideos ? (
                 <>
-                    <UpperSection data={[]} />
-                    <LowerSection data={videoPerformance} />
+                    <div style={{  marginLeft: 220}}>
+                        <UpperSection data={[]} />
+                        <LowerSection data={videoPerformance} />
+                    </div>
+
                 </>
             ) : (
                 <NoVideos />

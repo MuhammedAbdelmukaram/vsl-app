@@ -224,7 +224,6 @@
 }
 
 .playButton {
-    font-size: 3rem;
     background: none;
     border: none;
     color: #ffa500;
@@ -306,9 +305,11 @@
 
 .overlayContainer{
     display: flex;
+    flex-direction: column-reverse;
+    opacity: 80%;
     gap: 16px;
     align-items: center;
     background-color: #fff;
-    padding: 14px 30px;
+    padding: 14px 30px 24px 30px;
     border-radius: 4px;
 }

@@ -38,6 +38,7 @@ const VideoPlayer = ({
     const wrapperRef = useRef(null);
     const clickTimeoutRef = useRef(null);
     const isDoubleClickRef = useRef(false);
+    const menuRef = useRef(null);
 
     const [playing, setPlaying] = useState(autoPlay);
     const [muted, setMuted] = useState(true);
@@ -47,10 +48,59 @@ const VideoPlayer = ({
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isTheatre, setIsTheatre] = useState(false);
 
+    // ✅ Custom Context Menu State
+    const [contextMenuVisible, setContextMenuVisible] = useState(false);
+    const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
+
     const [lastWatchPosition, setLastWatchPosition] = useState(0);
+    const [loading, setLoading] = useState(true); // Track loading state
+
+// When the player starts, mark loading as false
 
 
     const [viewLogged, setViewLogged] = useState(false);
+
+
+    // ✅ Hide context menu on outside click
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (contextMenuVisible && menuRef.current && !menuRef.current.contains(e.target)) {
+                setContextMenuVisible(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [contextMenuVisible]);
+
+    // ✅ Show Context Menu on Right-Click
+    const handleContextMenu = (e) => {
+        e.preventDefault();
+        setContextMenuVisible(true);
+
+        // Adjust menu position to prevent overflow
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const menuWidth = 160;
+        const menuHeight = 40;
+
+        const x = Math.min(e.clientX, viewportWidth - menuWidth);
+        const y = Math.min(e.clientY, viewportHeight - menuHeight);
+
+        setContextMenuPosition({ x, y });
+    };
+
+    // ✅ Clicking on "Powered by VSL Player" redirects
+    const handleMenuClick = () => {
+        window.open("https://vslplayer.io", "_blank");
+        setContextMenuVisible(false);
+    };
+
+
+    const handleVideoLoaded = () => {
+        setLoading(false);
+    };
+
 
     useEffect(() => {
         if (autoPlay) {
@@ -207,6 +257,7 @@ const VideoPlayer = ({
     return (
         <div
             ref={wrapperRef}
+            onContextMenu={handleContextMenu}
             className={`${styles.playerWrapper} ${isFullscreen ? styles.fullscreen : ""} 
         ${isTheatre ? styles.theatre : ""} 
         ${borderGlow ? styles.glowingBorder : ""}`}
@@ -220,26 +271,40 @@ const VideoPlayer = ({
                 "--borderGlowColor": borderGlow ? borderGlowColor : "transparent",
             }}
         >
-            <CustomPlayer
-                ref={playerRef}
-                url={url}
-                playing={playing}
-                muted={muted}
-                onProgress={handleProgress}
-                onPause={handlePause}
-                onStart={() => {
-                    if (!viewLogged && videoId) {
-                        fetch("/api/analytics/view", {
-                            method: "POST",
-                            headers: {"Content-Type": "application/json"},
-                            body: JSON.stringify({videoId}),
-                        }).then((res) => {
-                            if (res.ok) setViewLogged(true);
-                        }).catch((error) => console.error("Error logging view:", error));
-                    }
-                }}
-                progressInterval={fastProgressBar ? 25 : 50}
-            />
+            {/* 🎬 Show Skeleton Loader While Video is Loading */}
+            {loading && (
+                <div className={styles.skeletonLoader}>
+                    <div className={styles.skeletonShimmer}></div>
+                </div>
+            )}
+
+            {/* 🎥 Show Actual Video Player Only When Ready */}
+            <div style={{ display: loading ? "none" : "block" }}>
+                <CustomPlayer
+                    ref={playerRef}
+
+                    url={url}
+                    playing={playing}
+                    muted={muted}
+                    onProgress={handleProgress}
+                    onPause={handlePause}
+                    onReady={() => setLoading(false)} // ✅ Mark as loaded when ready
+                    onStart={() => {
+                        setLoading(false); // ✅ Ensure loading disappears when video starts
+                        if (!viewLogged && videoId) {
+                            fetch("/api/analytics/view", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ videoId }),
+                            }).then((res) => {
+                                if (res.ok) setViewLogged(true);
+                            }).catch((error) => console.error("Error logging view:", error));
+                        }
+                    }}
+                    progressInterval={fastProgressBar ? 25 : 50}
+                />
+            </div>
+
 
             {showOverlay && (
                 <Overlay
@@ -262,6 +327,20 @@ const VideoPlayer = ({
                 handleStartOver={handleStartOver}
                 handleContinue={handleContinue}
             />
+
+            {/* Custom Context Menu */}
+            {contextMenuVisible && (
+                <ul
+                    ref={menuRef}
+                    className={styles.contextMenu}
+                    style={{
+                        top: `${contextMenuPosition.y}px`,
+                        left: `${contextMenuPosition.x}px`,
+                    }}
+                >
+                    <li onClick={handleMenuClick}>Powered by VSL Player</li>
+                </ul>
+            )}
 
 
             <ProgressBar progress={progress} brandColor={brandColor}/>

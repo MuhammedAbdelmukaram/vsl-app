@@ -36,7 +36,6 @@ const HeaderInApp = ({ title }) => {
                         onClick={() => setModalOpen(true)}
                         style={{
                             cursor: "pointer",
-                            color: "white",
                             width: "25px",
                             height: "25px",
                             display: "flex",
@@ -44,7 +43,8 @@ const HeaderInApp = ({ title }) => {
                             justifyContent: "center",
                             borderRadius: "50%",
                             fontWeight: "bold",
-                            fontSize: "16px"
+                            fontSize: "16px",
+                            color:"#000",
                         }}
                     >
                         ?
