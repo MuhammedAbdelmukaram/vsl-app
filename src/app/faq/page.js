@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import styles from "./faq.module.css";
 import Layout from "@/app/components/LayoutHS";
-import HelpModal from "@/app/components/HelpModal"; // ✅ Import HelpModal
+import HelpModal from "@/app/components/helpModal"; // ✅ Import HelpModal
 
 const faqs = [
     {
