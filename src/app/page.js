@@ -215,9 +215,9 @@ const Page = () => {
                     {/* Load the external script */}
                     <div className={styles.outer}>
 
-                        <div className={styles.glowingBorder}>
+
                             <div
-                                id="vid_676726228f714081916a35b3" // Must match `VIDEO_CONFIG.videoId`
+                                id="vid_67d8bcdc2468bf70613adafb" // Must match `VIDEO_CONFIG.videoId`
                                 style={{
                                     position: "relative",
                                     width: "100%",
@@ -227,11 +227,11 @@ const Page = () => {
                                 }}
                             ></div>
                             <Script
-                                id="scr_video_player_676726228f714081916a35b3"
-                                src="https://pub-c376537ae6c646e39fabf6d97ec84d7b.r2.dev/players/676726228f714081916a35b3/67554f799c85ed4fd8c891e2-676726228f714081916a35b3-player.bundle.js"
+                                id="scr_video_player_67d8bcdc2468bf70613adafb"
+                                src="https://pub-c376537ae6c646e39fabf6d97ec84d7b.r2.dev/players/67d8bcdc2468bf70613adafb/67554f799c85ed4fd8c891e2-67d8bcdc2468bf70613adafb-player.bundle.js"
                                 strategy="afterInteractive"
                             />
-                        </div>
+
                     </div>
 
                 </div>

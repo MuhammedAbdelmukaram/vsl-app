@@ -17,6 +17,7 @@ const UploadPage = () => {
     const [uploadedThumbnailUrl, setUploadedThumbnailUrl] = useState("");
     const [uploadedExitThumbnailUrl, setUploadedExitThumbnailUrl] = useState("");
     const [videoId, setVideoId] = useState(null);
+    const [m3u8Url, setM3u8Url] = useState(null); // ✅ Store M3U8 URL
     const [token, setToken] = useState(null);
 
     const router = useRouter();
@@ -25,37 +26,58 @@ const UploadPage = () => {
         const file = e.target.files[0];
         if (file) {
             try {
-                // Step 1: Store the current videoId before uploading the new video
                 const previousVideoId = videoId;
 
-                // Step 2: Upload the new video
-                await uploadVideoToR2(file, setVideoId, setUploadedVideoUrl, setUploadStatus);
+                // ✅ Ensure we wait for the uploaded video URL before proceeding
+                let uploadedUrl = null;
+                let newVideoId = null;
 
-                // Step 3: Log the previousVideoId (after videoId might have been updated)
-                console.log("Previous video ID:", previousVideoId);
+                await new Promise((resolve) => {
+                    uploadVideoToR2(file, (id) => {
+                        newVideoId = id;
+                        setVideoId(id);
+                    }, (url) => {
+                        uploadedUrl = url;
+                        setUploadedVideoUrl(url);
+                        resolve(); // ✅ Ensure we wait for both videoId & URL
+                    }, setUploadStatus);
+                });
 
-                // Step 4: Move the old video to the deleted collection using the dynamic route
+                if (!uploadedUrl || !newVideoId) {
+                    console.error("❌ Upload failed: videoId or uploadedUrl is missing.");
+                    return;
+                }
+
+                console.log("✅ Upload completed. Video URL:", uploadedUrl);
+                console.log("✅ Video ID:", newVideoId);
+
+                // ✅ Move previous video to deleted collection
                 if (previousVideoId) {
                     try {
-                        const response = await fetch(`/api/moveToDeleted/${previousVideoId}`, {
-                            method: "POST",
-                        });
+                        const response = await fetch(`/api/moveToDeleted/${previousVideoId}`, { method: "POST" });
 
                         if (!response.ok) {
                             throw new Error("Failed to move old video to the deleted collection");
                         }
-
-                        console.log("Old video moved to the deleted collection successfully");
+                        console.log("✅ Old video moved to the deleted collection");
                     } catch (error) {
-                        console.error("Error moving old video to deleted collection:", error);
+                        console.error("❌ Error moving old video to deleted collection:", error);
                     }
                 }
+
+                // ✅ Now that videoId is updated, trigger conversion
+                setTimeout(() => {
+                    console.log("🎬 Triggering video conversion...");
+                    convertMp4ToM3u8(uploadedUrl, newVideoId, token);
+                }, 500); // Small delay to ensure state update
             } catch (error) {
-                console.error("Error uploading new video:", error);
+                console.error("❌ Error uploading new video:", error);
                 setUploadStatus("Upload Failed. Please try again.");
             }
         }
     };
+
+
 
 
     useEffect(() => {
@@ -83,6 +105,36 @@ const UploadPage = () => {
     };
 
     const nextStep = () => setCurrentStep((prev) => prev + 1);
+
+
+
+    const convertMp4ToM3u8 = async (videoUrl, videoId, authToken) => {
+        try {
+            const response = await fetch("http://localhost:5000/convert-video", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${authToken}`,
+                },
+                body: JSON.stringify({
+                    videoUrl,
+                    videoId,
+                    user: token ? token.userId : "unknown-user",
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to convert video");
+            }
+
+            const data = await response.json();
+            setM3u8Url(data.m3u8Url); // ✅ Store M3U8 URL
+            console.log("✅ Conversion successful. M3U8 URL:", data.m3u8Url);
+        } catch (error) {
+            console.error("❌ Error converting video:", error);
+        }
+    };
+
 
     return (
         <div className={styles.pageContainer}>

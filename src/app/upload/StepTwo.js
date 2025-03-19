@@ -124,7 +124,7 @@ const StepTwo = ({
             console.log("Fetched updated video data:", updatedVideoData);
 
             // Step 3: Trigger Webpack bundling and upload process
-            const bundleResponse = await fetch("/api/generate-bundle-first", {
+            const bundleResponse = await fetch("http://localhost:5000/generate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
