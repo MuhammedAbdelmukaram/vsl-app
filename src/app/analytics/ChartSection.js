@@ -1,80 +1,93 @@
-import React, {useState} from "react";
-import {Bar, Line} from "react-chartjs-2";
+import React, { useState, useEffect } from "react";
+import { Bar, Line } from "react-chartjs-2";
 import Image from "next/image";
 import styles from "./analytics.module.css";
 import Calendar from "@/app/components/Calendar";
 
-const ChartSection = ({activeChart, setActiveChart, activeFilter, setActiveFilter}) => {
+const ChartSection = ({ activeChart, setActiveChart, activeFilter, setActiveFilter,selectedVideo }) => {
     const metrics = ["Total Views", "Play Rate", "Avg View Rate", "Pitch Retention"];
     const chartType = [
-        {label: "Bar Chart", imgSrc: "/barChart.png"},
-        {label: "Line Chart", imgSrc: "/lineChart.png"},
+        { label: "Bar Chart", imgSrc: "/barChart.png" },
+        { label: "Line Chart", imgSrc: "/lineChart.png" },
     ];
 
-    const chartData = {
-        labels: Array(90).fill(0).map((_, i) => `Day ${i + 1}`),
-        datasets: [
-            {
-                label: activeFilter,
-                backgroundColor: "#99512A",
-                borderColor: "#D87C32",
-                data: Array(90).fill(0).map(() => Math.floor(Math.random() * 2000)),
-                fill: false,
-            },
-        ],
+    const [chartData, setChartData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [selectedRange, setSelectedRange] = useState("Today");
+    const [customDates, setCustomDates] = useState(() => {
+        const today = new Date();
+        return { from: today, to: today };
+    });
+
+    const toggleDropdown = () => setShowDropdown((prev) => !prev);
+
+    const handleRangeSelect = (range, newDates) => {
+        setSelectedRange(range);
+        setCustomDates(newDates);
+        setShowDropdown(false);
     };
+
+    useEffect(() => {
+        const fetchChartData = async () => {
+            if (!customDates.from || !customDates.to || !selectedVideo) return; // ✅ wait for selectedVideo
+            setIsLoading(true);
+
+            try {
+                const from = customDates.from.toISOString();
+                const to = customDates.to.toISOString();
+
+                const res = await fetch(
+                    `/api/analytics/metrics?filter=${encodeURIComponent(activeFilter)}&from=${from}&to=${to}&videoId=${selectedVideo._id}&accountId=${selectedVideo.user}`
+                );
+
+
+                const data = await res.json();
+                const labels = data.map((entry) => entry._id);
+                const values = data.map((entry) => entry.count);
+
+                setChartData({
+                    labels,
+                    datasets: [
+                        {
+                            label: activeFilter,
+                            backgroundColor: "#99512A",
+                            borderColor: "#D87C32",
+                            data: values,
+                            fill: false,
+                        },
+                    ],
+                });
+            } catch (error) {
+                console.error("Error loading analytics data:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchChartData();
+    }, [activeFilter, customDates, selectedVideo]); // ✅ add selectedVideo to deps
+
+    if (!selectedVideo) return <div>Please select a video to view chart data.</div>;
+
 
     const chartOptions = {
         responsive: true,
         maintainAspectRatio: false,
         scales: {
-            x: {grid: {display: false}, ticks: {maxRotation: 0, minRotation: 0}},
-            y: {beginAtZero: true, grid: {display: false}, ticks: {precision: 0}},
+            x: { grid: { display: false }, ticks: { maxRotation: 0, minRotation: 0 } },
+            y: { beginAtZero: true, grid: { display: false }, ticks: { precision: 0 } },
         },
         plugins: {
-            legend: {display: false},
+            legend: { display: false },
             tooltip: {
                 mode: "index",
                 intersect: false,
-                callbacks: {label: (context) => `${context.dataset.label}: ${context.raw}`}
+                callbacks: {
+                    label: (context) => `${context.dataset.label}: ${context.raw}`,
+                },
             },
         },
-    };
-
-    const [showDropdown, setShowDropdown] = useState(false);
-    const [selectedRange, setSelectedRange] = useState("This Month");
-    const [customDates, setCustomDates] = useState({from: null, to: null});
-
-    const toggleDropdown = () => setShowDropdown((prev) => !prev);
-
-    const handleRangeSelect = (range) => {
-        const today = new Date();
-        let fromDate = null;
-        let toDate = null;
-
-        switch (range) {
-            case "Today":
-                fromDate = toDate = today;
-                break;
-            case "This Week":
-                fromDate = new Date(today.setDate(today.getDate() - today.getDay())); // Start of the week
-                toDate = new Date();
-                break;
-            case "This Month":
-                fromDate = new Date(today.getFullYear(), today.getMonth(), 1); // First day of the month
-                toDate = new Date();
-                break;
-            case "Last Month":
-                fromDate = new Date(today.getFullYear(), today.getMonth() - 1, 1); // First day of last month
-                toDate = new Date(today.getFullYear(), today.getMonth(), 0); // Last day of last month
-                break;
-            default:
-                return;
-        }
-
-        setSelectedRange(range);
-        setCustomDates({from: fromDate, to: toDate});
-        setShowDropdown(false);
     };
 
     return (
@@ -92,8 +105,6 @@ const ChartSection = ({activeChart, setActiveChart, activeFilter, setActiveFilte
                     ))}
                 </div>
                 <div className={styles.rightSideWrapper}>
-
-
                     <div className={styles.chartType}>
                         {chartType.map((chart) => (
                             <button
@@ -101,8 +112,7 @@ const ChartSection = ({activeChart, setActiveChart, activeFilter, setActiveFilte
                                 className={`${styles.filterButton} ${activeChart === chart.label ? styles.active : ""}`}
                                 onClick={() => setActiveChart(chart.label)}
                             >
-                                <Image src={chart.imgSrc} alt={chart.label} width={16} height={16}
-                                       className={styles.chartIcon}/>
+                                <Image src={chart.imgSrc} alt={chart.label} width={16} height={16} className={styles.chartIcon} />
                             </button>
                         ))}
                     </div>
@@ -114,14 +124,20 @@ const ChartSection = ({activeChart, setActiveChart, activeFilter, setActiveFilte
                             selectedRange={selectedRange}
                             handleRangeSelect={handleRangeSelect}
                             customDates={customDates}
-                            setCustomDates={setCustomDates} // ✅ Pass this prop
+                            setCustomDates={setCustomDates}
                         />
                     </div>
                 </div>
             </div>
+
             <div className={styles.chartContainer}>
-                {activeChart === "Bar Chart" ? <Bar data={chartData} options={chartOptions}/> :
-                    <Line data={chartData} options={chartOptions}/>}
+                {isLoading || !chartData ? (
+                    <div>Loading chart...</div>
+                ) : activeChart === "Bar Chart" ? (
+                    <Bar data={chartData} options={chartOptions} />
+                ) : (
+                    <Line data={chartData} options={chartOptions} />
+                )}
             </div>
         </>
     );

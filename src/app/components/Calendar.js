@@ -7,41 +7,41 @@ const Calendar = ({ showDropdown, toggleDropdown, selectedRange, handleRangeSele
     // Function to determine date range based on selection
     const updateDateRange = (range) => {
         const today = new Date();
-        let fromDate = "";
-        let toDate = "";
+        let fromDate = null;
+        let toDate = new Date(); // today
 
         switch (range) {
             case "Today":
-                fromDate = toDate = today;
+                fromDate = new Date(); // today
                 break;
             case "This Week":
-                fromDate = new Date(today.setDate(today.getDate() - today.getDay())); // Start of the week
-                toDate = new Date();
+                fromDate = new Date();
+                fromDate.setDate(toDate.getDate() - toDate.getDay()); // start of week
                 break;
             case "This Month":
-                fromDate = new Date(today.getFullYear(), today.getMonth(), 1); // First day of the month
-                toDate = new Date();
+                fromDate = new Date(today.getFullYear(), today.getMonth(), 1);
                 break;
             case "Last Month":
-                fromDate = new Date(today.getFullYear(), today.getMonth() - 1, 1); // First day of last month
-                toDate = new Date(today.getFullYear(), today.getMonth(), 0); // Last day of last month
+                fromDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+                toDate = new Date(today.getFullYear(), today.getMonth(), 0);
                 break;
             default:
                 return;
         }
 
-        // Update both selected range and custom input values
-        handleRangeSelect(range);
-        setCustomDates({ from: fromDate, to: toDate });
+        // 🔁 Update state using parent-provided callback
+        handleRangeSelect(range, { from: fromDate, to: toDate });
     };
+
 
     // Function to handle custom range selection and update the button text
     const applyCustomRange = () => {
         if (customDates.from && customDates.to) {
-            const formattedRange = `From ${customDates.from.toLocaleDateString()} to ${customDates.to.toLocaleDateString()}`;
-            handleRangeSelect(formattedRange);
+            const label = `From ${customDates.from.toLocaleDateString()} to ${customDates.to.toLocaleDateString()}`;
+            handleRangeSelect(label, customDates);
         }
     };
+
 
     return (
         <div className={styles.dropdownContainer}>

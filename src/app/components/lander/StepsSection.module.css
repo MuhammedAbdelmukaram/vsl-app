@@ -143,3 +143,85 @@
     color: #bdbdbd;
     margin-top: 10px;
 }
+
+
+@media screen and (max-width: 600px) {
+
+    .container{
+        padding: 60px 0px;
+    }
+    .smallText {
+        font-size: 12px;
+        margin-top: 30px;
+    }
+
+    .integrationContainer {
+        gap: 3vw;
+        padding: 15px 10px;
+    }
+
+    .logoIcon {
+        padding: 4px;
+        border-radius: 12px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .logoIcon img {
+        height: 30px !important;
+        width: 30px !important;
+    }
+
+    .title {
+        font-size: 32px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+
+    .stepsContainer {
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 80px;
+    }
+
+    .step {
+        max-width: 100%;
+        padding: 16px;
+    }
+
+    .step img {
+        height: 180px;
+    }
+
+    .stepTitle {
+        font-size: 16px;
+    }
+
+    .stepDescription {
+        font-size: 13px;
+    }
+
+    .cta {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .cta button {
+        padding: 14px 48px;
+        font-size: 18px;
+        font-weight: 600;
+        width: 90%;
+    }
+
+    .checks {
+        flex-direction: row;
+        gap: 12px;
+        text-align: center;
+        font-size: 13px;
+        margin-top: 20px;
+    }
+}

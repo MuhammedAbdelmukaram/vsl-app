@@ -139,7 +139,7 @@ const StatsSection = () => {
 
 
                 {/* **Countries (Horizontal Bar Chart) - Bottom Left** */}
-                <div className={styles.card} style={{transform: "translateY(-30px)"}}>
+                <div className={styles.card2} style={{transform: "translateY(-30px)"}}>
                     <h3 style={{ marginBottom: 32 }}>Countries</h3>
                     <div className={styles.chartContainer2}>
                         {countryData.map((country, index) => (

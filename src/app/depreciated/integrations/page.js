@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./integrations.module.css";
-import Layout from "../components/LayoutHS";
+import Layout from "../../components/LayoutHS";
 import IntegrationBox from "@/app/components/IntegrationBox";
 import SelectVideoModal from "@/app/components/selectVideoModal"; // Import the modal
 

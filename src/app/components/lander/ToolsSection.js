@@ -51,6 +51,7 @@ const ToolsSection = () => {
                         { id: "auto-play", icon: "/f2.svg", text: "AUTO-PLAY", badge: "+12% Play Rate" },
                         { id: "exit-thumbnail", icon: "/f3.svg", text: "EXIT THUMBNAIL" },
                         { id: "ab-testing", icon: "/f4.svg", text: "A/B TESTING" },
+                        { id: "resume-replay", icon: "/f5.svg", text: "RESUME/REPLAY" },
                         { id: "resume-replay", icon: "/f5.svg", text: "RESUME/REPLAY" }
                     ].map(({ id, icon, text, badge }) => (
                         <button
@@ -59,11 +60,12 @@ const ToolsSection = () => {
                             onClick={() => setActiveFeature(id)}
                         >
                             <Image src={icon} alt={text} width={50} height={50} className={styles.logo} />
-                            <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+                            <div className={styles.featureTextWrapper}>
                                 {text}
                                 {badge && <span className={styles.badge}>{badge}</span>}
                             </div>
                         </button>
+
                     ))}
                     <a className={styles.moreFeatures} href="#">+10 more features</a>
                 </div>

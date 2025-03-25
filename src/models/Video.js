@@ -7,6 +7,7 @@ const VideoSchema = new mongoose.Schema({
 
     // Video URLs
     videoUrl: { type: String, required: true }, // Uploaded video URL
+    m3u8Url: { type: String, required: false }, // ✅ HLS Stream URL (New)
     thumbnail: { type: String }, // Initial Thumbnail URL
     exitThumbnail: { type: String }, // Exit Thumbnail URL
     playerUrl: { type: String, required: false },

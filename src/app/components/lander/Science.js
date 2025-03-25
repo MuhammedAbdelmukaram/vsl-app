@@ -34,7 +34,7 @@ const Science = () => {
                         <div className={styles.row}>
                             <div className={styles.section}>
                                 <img src="/me.svg" alt="VSL Player" className={styles.icon}/>
-                                <span className={styles.text}>VSL Player</span>
+                                <span className={styles.subtext}>VSL Player</span>
                             </div>
 
                             <div>

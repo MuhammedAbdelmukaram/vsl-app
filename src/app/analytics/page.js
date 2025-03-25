@@ -9,6 +9,7 @@ import VideoModal from "./VideoModal";
 import RetentionGraph from "@/app/components/RetentionGraph";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./analytics.module.css";
+import Loader from "@/app/loader/page";
 
 const Page = () => {
     const [activeTab, setActiveTab] = useState("overall");
@@ -57,7 +58,7 @@ const Page = () => {
         setIsModalOpen(false);
     };
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader/>;
 
     return (
         <Layout>
@@ -93,6 +94,7 @@ const Page = () => {
                                 transition={{ duration: 0.1 }}
                             >
                                 <ChartSection
+                                    selectedVideo={selectedVideo}
                                     activeChart={activeChart}
                                     setActiveChart={setActiveChart}
                                     activeFilter={activeFilter}

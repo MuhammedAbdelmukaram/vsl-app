@@ -162,3 +162,116 @@
 .cardText {
     font-size: 14px;
 }
+
+
+@media screen and (max-width: 600px) {
+    .contentWrapper {
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 60px;
+        align-items: center;
+    }
+
+    .features {
+        flex-direction: row;
+        gap: 10px;
+        overflow-x: auto;
+        justify-content: space-between;
+        padding: 0px;
+        width: 100%;
+    }
+
+    .featureButton {
+        min-width: 54px;
+        min-height: 54px;
+        padding: 0;
+        border-radius: 10px;
+        background: #171717;
+        border: 1px solid #555;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .featureTextWrapper {
+        display: none;
+    }
+
+    .logo {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .featureButton.active {
+        background: #d45900;
+        border-color: #d45900;
+    }
+
+    .videoSection {
+        width: 100%;
+        padding: 16px;
+        text-align: center;
+    }
+
+    .videoPlaceholder {
+        height: 220px;
+    }
+
+    .videoTitle {
+        font-size: 18px;
+        margin-top: 12px;
+    }
+
+    .videoDescription {
+        font-size: 14px;
+        margin-top: 6px;
+    }
+
+    .moreFeatures {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 425px) {
+    .featureButton {
+        min-width: 45px;
+        min-height: 45px;
+    }
+
+    .logo {
+        width: 28px !important;
+        height: 28px !important;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .featureButton {
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+    .logo {
+        width: 22px !important;
+        height: 22px !important;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .features {
+        gap: 6px;
+    }
+
+    .featureButton {
+        min-width: 30px;
+        min-height: 30px;
+        border-radius: 8px;
+    }
+
+    .logo {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+

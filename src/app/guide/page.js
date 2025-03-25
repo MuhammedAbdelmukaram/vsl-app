@@ -7,6 +7,8 @@ import { selectStyles } from "@/app/components/selectStyles2";
 import Image from "next/image";
 import HeaderOutApp from "@/app/components/headerOutApp";
 import Layout from "@/app/components/LayoutHS";
+import { useSearchParams } from "next/navigation";
+
 
 const integrationsOptions = [
     { value: "framer", label: "Framer", logo: "/integrationIcons/framerIcon.png" },
@@ -79,6 +81,10 @@ const CustomSingleValue = ({ data }) => (
 );
 
 const Page = () => {
+    const searchParams = useSearchParams(); // ✅ Use Next.js searchParams hook
+    const integrationParam = searchParams.get("integration"); // ✅ Get integration from URL
+
+
     const [selectedIntegration, setSelectedIntegration] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [checkedAuth, setCheckedAuth] = useState(false); // Ensures hydration consistency
@@ -89,6 +95,16 @@ const Page = () => {
         setIsLoggedIn(!!token);
         setCheckedAuth(true); // Prevent hydration mismatch
     }, []);
+
+    useEffect(() => {
+        if (integrationParam) {
+            const matchedIntegration = integrationsOptions.find(opt => opt.value === integrationParam);
+            if (matchedIntegration) {
+                setSelectedIntegration(matchedIntegration);
+            }
+        }
+    }, [integrationParam]);
+
 
     const handleChange = (selectedOption) => {
         setSelectedIntegration(selectedOption);

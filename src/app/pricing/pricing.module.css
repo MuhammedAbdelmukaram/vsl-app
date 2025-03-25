@@ -1,6 +1,6 @@
 .pricingPage {
     position: relative;
-    background:#1b1b1b;
+    background: #181819;
     color: #fff;
     padding-bottom: 100px;
     text-align: center;
@@ -60,6 +60,7 @@
 .checkpoint p{
     color: #dbdbdb;
     font-size: 13px;
+    text-align: left;
 }
 
 .highlight{
@@ -111,6 +112,7 @@
     gap: 0px;
     flex-wrap: wrap;
 }
+
 .cardS{
     position: relative;
     background-color: rgba(0, 0, 0, 0.3);
@@ -242,14 +244,127 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
 }
 
-@media (max-width: 768px) {
-    .pricingCards {
-        flex-direction: column;
-        align-items: center;
+
+@media (max-width: 995px) {
+    .container {
+        padding-top: 40px;
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
-    .card {
+    .title {
+        font-size: 2rem;
+    }
+
+    .text {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+    .innerContainer {
+        flex-direction: column-reverse;
+        padding: 20px 10px;
+        gap: 40px;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+
+    .checks {
+        margin: 0 auto;
+        padding: 0 12px;
+        align-items: flex-start;
+        justify-content: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px 24px; /* vertical & horizontal gap */
         width: 100%;
-        max-width: 400px;
+    }
+
+    .checkpoint {
+        flex: 1 1 45%; /* allow 2 per row, wraps on smaller screens */
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        min-width: 160px;
+    }
+
+    .checkpoint p {
+        font-size: 14px;
+        line-height: 1.4;
+        margin: 0;
+        text-align: left;
+        color: #dbdbdb;
+    }
+
+
+    .pricingCards {
+        /* Remove this line: */
+        /* flex-direction: column; */
+
+        /* Add these: */
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 26px;
+        width: 100%;
+    }
+
+    .card, .cardS {
+        width: 100%;
+        max-width: 285px;
+        padding: 30px 44px;
+    }
+
+    .planName {
+        font-size: 20px;
+        margin-top: 16px;
+        margin-bottom: 16px;
+    }
+
+    .prices {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .priceOld {
+        font-size: 1rem;
+    }
+
+    .priceNew {
+        font-size: 2rem;
+    }
+
+    .month {
+        font-size: 14px;
+    }
+
+    .startButton {
+        margin-top: 40px;
+        width: 100%;
+        font-size: 14px;
+        padding: 14px 20px;
+    }
+
+    .offer {
+        top: -10px;
+        right: -10px;
+        padding: 4px 14px;
+    }
+
+    .offerText {
+        font-size: 12px;
+    }
+
+    .eyebrow {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+    .integrations {
+        margin-top: 60px;
+        padding: 0 10px;
     }
 }
+
+

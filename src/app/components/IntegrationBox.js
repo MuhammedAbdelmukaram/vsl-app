@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../integrations/integrations.module.css";
+import styles from "@/app/depreciated/integrations/integrations.module.css";
 import Image from "next/image";
 
 const IntegrationBox = ({ photo, headline, status, description, onSelectIntegration }) => {

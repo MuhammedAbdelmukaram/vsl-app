@@ -13,6 +13,7 @@ const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 const VideoPlayer = ({
                          url,
                          autoPlay,
+                         m3u8Url,
                          fastProgressBar,
                          showThumbnail,
                          showExitThumbnail,

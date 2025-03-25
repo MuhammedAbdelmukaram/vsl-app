@@ -165,3 +165,170 @@
         display: none;
     }
 }
+
+/* Tablet - up to 1024px */
+@media screen and (max-width: 1024px) {
+    .container,
+    .container2,
+    .container3,
+    .containerSmall {
+        padding: 30px 40px;
+    }
+
+    .heading {
+        font-size: 24px;
+    }
+
+    .headingSpecial {
+        font-size: 28px;
+    }
+
+    .percentage {
+        font-size: 32px;
+    }
+
+    .percentageSpecial {
+        font-size: 36px;
+    }
+
+    .section {
+        min-width: unset;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .subtext {
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    .parenthesis {
+        font-size: 13px;
+    }
+
+    .icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .text {
+        font-size: 16px;
+    }
+
+    .logo {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .row {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .explanation,
+    .description {
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .bottomImage {
+        margin: 30px auto 0;
+    }
+
+    .graphic {
+        width: 100%;
+    }
+
+    .separator {
+        height: 1px;
+        margin: 16px 0;
+    }
+
+    .layout {
+        gap: 16px;
+    }
+
+    .container2 {
+        display: block;
+    }
+
+    .container3 {
+        display: none;
+    }
+}
+
+/* Mobile - up to 600px */
+@media screen and (max-width: 600px) {
+    .container,
+    .container2,
+    .container3,
+    .containerSmall {
+        padding: 20px 20px;
+        border-radius: 10px;
+    }
+
+
+
+    .heading {
+        font-size: 20px;
+    }
+
+    .headingSpecial {
+        font-size: 24px;
+    }
+
+    .percentage {
+        font-size: 28px;
+    }
+
+    .percentageSpecial {
+        font-size: 32px;
+    }
+
+    .text {
+        font-size: 14px;
+    }
+
+    .subtext {
+        display: none;
+        font-size: 13px;
+    }
+
+    .parenthesis {
+        font-size: 12px;
+    }
+
+    .icon {
+        width: 26px;
+        height: 26px;
+    }
+
+    .row {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .bottomImage img,
+    .section img,
+    .logo {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .explanation,
+    .description {
+        font-size: 12px;
+        text-align: center;
+        padding: 0 10px;
+    }
+
+    .layout {
+        padding: 0 10px;
+        gap: 12px;
+    }
+
+    .separator {
+        margin: 12px 0;
+    }
+}

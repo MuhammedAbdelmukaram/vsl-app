@@ -300,6 +300,9 @@ const VideoPage = () => {
                             <div className={styles.videoThumbnail}>
                                 <VideoPlayer
                                     url={video.videoUrl}
+                                    videoId={video._id}
+                                    accountId={video.user}
+                                    m3u8Url={video.m3u8Url}
                                     autoPlay={video.options.autoPlay}
                                     autoPlayText={video.autoPlayText}
                                     brandColor={video.brandColor}

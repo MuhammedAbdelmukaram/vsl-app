@@ -140,17 +140,26 @@
 }
 
 .stepNumber {
-    background: #ff9800;
+    background: #d45900;
     color: white;
     font-weight: bold;
-    width: 30px;
-    height: 30px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 16px;
+    flex-shrink: 0;
 }
+
+.step p {
+    font-size: 15px;
+    color: #ddd;
+    line-height: 1.6;
+    margin: 0;
+}
+
 
 /* Final Text */
 .finalText {
@@ -188,4 +197,47 @@
 
 .react-select__menu-list::-webkit-scrollbar-thumb:hover {
     background: #bbb !important;; /* Lighter on hover */
+}
+
+
+@media screen and (max-width: 768px) {
+    .dropdownContainer {
+        padding: 0 16px;
+    }
+
+    .videoPlaceholder {
+        width: 90%;
+        height: 200px;
+    }
+
+    .sectionTitle {
+        font-size: 20px;
+        padding: 0 10px;
+    }
+
+    .steps {
+        padding: 0 10px;
+    }
+
+    .step {
+        width: 100%;
+    }
+
+    .step p {
+        font-size: 14px;
+    }
+
+    .stepNumber {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
 }

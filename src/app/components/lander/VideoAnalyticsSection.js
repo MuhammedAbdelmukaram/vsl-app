@@ -10,7 +10,7 @@ const VideoAnalyticsSection = () => {
             <div className={styles.content}>
                 <div className={styles.features}>
                     <div className={styles.feature}>
-                        <Image src="/d1.svg" alt="Partner 1" width={55} height={55} className={styles.logo}/>
+                        <Image src="/d1.svg" alt="Partner 1" width={55} height={55} className={styles.logo2}/>
                         <div>
                             <h3 className={styles.featureTitle} style={{color: "#ff7b00"}}>
                                 Full Performance Overview
@@ -22,7 +22,7 @@ const VideoAnalyticsSection = () => {
                     </div>
 
                     <div className={styles.feature}>
-                        <Image src="/d2.svg" alt="Partner 1" width={55} height={55} className={styles.logo}/>
+                        <Image src="/d2.svg" alt="Partner 1" width={55} height={55} className={styles.logo2}/>
                         <div>
                             <h3 className={styles.featureTitle}>Retention Graph</h3>
                             <p className={styles.featureDescription}>
@@ -32,7 +32,7 @@ const VideoAnalyticsSection = () => {
                     </div>
 
                     <div className={styles.feature}>
-                        <Image src="/d3.svg" alt="Partner 1" width={55} height={55} className={styles.logo}/>
+                        <Image src="/d3.svg" alt="Partner 1" width={55} height={55} className={styles.logo2}/>
                         <div>
                             <h3 className={styles.featureTitle}>Audience Segmentation</h3>
                             <p className={styles.featureDescription}>
@@ -42,7 +42,7 @@ const VideoAnalyticsSection = () => {
                     </div>
 
                     <div className={styles.feature}>
-                        <Image src="/d4.svg" alt="Partner 1" width={55} height={55} className={styles.logo}/>
+                        <Image src="/d4.svg" alt="Partner 1" width={55} height={55} className={styles.logo2}/>
                         <div>
                             <h3 className={styles.featureTitle}>Drop-Off Alerts</h3>
                             <p className={styles.featureDescription}>

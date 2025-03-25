@@ -18,6 +18,7 @@ import ToolsSection from "@/app/components/lander/ToolsSection";
 import Integrations from "@/app/components/lander/Integrations";
 import Footer from "@/app/components/lander/Footer";
 import QuoteSection from "@/app/components/lander/QuoteSection";
+import Gradients from "@/app/components/gradients";
 
 const Page = () => {
     const router = useRouter();
@@ -36,107 +37,7 @@ const Page = () => {
             </div>
             <div className={styles.container}>
 
-                <div className={styles.gradient}>
-                    <Image
-                        src="/gradient.svg"
-                        alt="Partner 4"
-                        width={1200}
-                        height={1200}
-                        className={styles.logo}
-                    />
-                </div>
-
-                <div className={styles.gradient2}>
-                    <Image
-                        src="/gradient.svg"
-                        alt="Partner 4"
-                        width={1200}
-                        height={1200}
-                        className={styles.logo}
-                    />
-                </div>
-
-                <div className={styles.gradient3}>
-                    <Image
-                        src="/gradient.svg"
-                        alt="Partner 4"
-                        width={1200}
-                        height={1200}
-                        className={styles.logo}
-                    />
-                </div>
-
-                <div className={styles.gradient4}>
-                    <Image
-                        src="/gradient.svg"
-                        alt="Partner 4"
-                        width={1200}
-                        height={1200}
-                        className={styles.logo}
-                    />
-                </div>
-
-                <div className={styles.gradient5}>
-                    <Image
-                        src="/gradient.svg"
-                        alt="Partner 4"
-                        width={1200}
-                        height={1200}
-                        className={styles.logo}
-                    />
-                </div>
-
-                <div className={styles.gradient6}>
-                    <Image
-                        src="/gradient.svg"
-                        alt="Partner 4"
-                        width={1200}
-                        height={1200}
-                        className={styles.logo}
-                    />
-                </div>
-
-                <div className={styles.gradient7}>
-                    <Image
-                        src="/gradient.svg"
-                        alt="Partner 4"
-                        width={1200}
-                        height={1200}
-                        className={styles.logo}
-                    />
-                </div>
-
-                <div className={styles.gradient8}>
-                    <Image
-                        src="/gradient.svg"
-                        alt="Partner 4"
-                        width={1200}
-                        height={1200}
-                        className={styles.logo}
-                    />
-                </div>
-
-                <div className={styles.gradient9}>
-                    <Image
-                        src="/gradient.svg"
-                        alt="Partner 4"
-                        width={1200}
-                        height={1200}
-                        className={styles.logo}
-                    />
-                </div>
-
-                <div className={styles.gradient10}>
-                    <Image
-                        src="/gradient.svg"
-                        alt="Partner 4"
-                        width={1200}
-                        height={1200}
-                        className={styles.logo}
-                    />
-                </div>
-
-
+                <Gradients/>
 
                 <div className={styles.topside}>
                     <div className={styles.leftSide}>
@@ -215,9 +116,9 @@ const Page = () => {
                     {/* Load the external script */}
                     <div className={styles.outer}>
 
-
+                        <div className={styles.glowingBorder}>
                             <div
-                                id="vid_67d8bcdc2468bf70613adafb" // Must match `VIDEO_CONFIG.videoId`
+                                id="vid_67dd43e9c91d9210350c1bf6" // Must match `VIDEO_CONFIG.videoId`
                                 style={{
                                     position: "relative",
                                     width: "100%",
@@ -227,11 +128,11 @@ const Page = () => {
                                 }}
                             ></div>
                             <Script
-                                id="scr_video_player_67d8bcdc2468bf70613adafb"
-                                src="https://pub-c376537ae6c646e39fabf6d97ec84d7b.r2.dev/players/67d8bcdc2468bf70613adafb/67554f799c85ed4fd8c891e2-67d8bcdc2468bf70613adafb-player.bundle.js"
+                                id="scr_video_player_67dd43e9c91d9210350c1bf6"
+                                src="https://pub-c376537ae6c646e39fabf6d97ec84d7b.r2.dev/players/67dd43e9c91d9210350c1bf6/67554f799c85ed4fd8c891e2-67dd43e9c91d9210350c1bf6-player.bundle.js"
                                 strategy="afterInteractive"
                             />
-
+                        </div>
                     </div>
 
                 </div>

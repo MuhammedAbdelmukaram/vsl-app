@@ -5,6 +5,30 @@
     padding: 50px 20px;
 }
 
+.testimonialsDesktop {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.testimonialsMobile {
+    display: none;
+}
+
+.cardMobile {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80vw;
+    margin: 0 10px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid #333;
+}
+
 .subtitle {
     font-size: 14px;
     font-weight: bold;
@@ -105,4 +129,109 @@
     color: #d05801;
     font-weight: bold;
     margin-top: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .testimonialsDesktop {
+        display: none;
+    }
+
+    .testimonialsMobile {
+        display: block;
+        margin-top: 30px;
+    }
+
+    .testimonialSection {
+        padding: 40px 16px;
+    }
+
+    .title {
+        font-size: 22px;
+        margin: 10px 0 24px;
+    }
+
+    .imageContainer {
+        flex-direction: row;
+        gap: 12px;
+        margin-bottom: 20px;
+        margin-right: 0;
+        padding: 0 10px;
+    }
+
+    .placeholder {
+        width: 300px;
+        height: 180px;
+    }
+
+    .testimonials {
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 90vw;
+        padding: 24px 20px;
+        gap: 8px;
+    }
+
+    .top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        margin-bottom: 20px;
+    }
+
+    .role,
+    .date {
+        font-size: 11px;
+    }
+
+    .text {
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .profile {
+        margin-top: 20px;
+        gap: 8px;
+    }
+
+    .avatar {
+        min-width: 30px;
+        min-height: 30px;
+    }
+
+    .name {
+        font-size: 13px;
+    }
+
+    .company {
+        font-size: 11px;
+    }
+
+    .footerText {
+        font-size: 13px;
+        margin-top: 24px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .placeholder {
+        width: 250px;
+        height: 150px;
+    }
+
+    .imageContainer {
+        gap: 8px;
+    }
+
+    .card {
+        padding: 20px 14px;
+    }
+
+    .text {
+        font-size: 12px;
+    }
 }

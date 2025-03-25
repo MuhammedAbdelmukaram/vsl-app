@@ -63,6 +63,7 @@ const Page = () => {
                     <div className={styles.checks}>
 
 
+
                         <div className={styles.checkpoint}>
                             <Image src="/pCheck.svg" alt="Partner 1" width={55} height={20} className={styles.logo}/>
                             <p><span className={styles.highlight}>Unlimited</span> Views per VSL</p>

@@ -25,11 +25,13 @@ export async function PUT(request) {
             videoId,
             thumbnail,
             exitThumbnail,
-            options,       // New: Destructure options
-            pitchTime,     // New: pitchTime
-            autoPlayText,  // New: autoPlayText
-            brandColor,    // New: brandColor
+            m3u8Url,       // ✅ Include M3U8 URL in update
+            options,
+            pitchTime,
+            autoPlayText,
+            brandColor,
             iFrame,
+            playerUrl,
         } = await request.json();
 
         if (!videoId) {
@@ -46,6 +48,8 @@ export async function PUT(request) {
         const updatePayload = {
             ...(thumbnail && { thumbnail }),
             ...(exitThumbnail && { exitThumbnail }),
+            ...(playerUrl && { playerUrl }), // ✅ Save Player URL in DB
+            ...(m3u8Url && { m3u8Url }),   // ✅ Save M3U8 URL
             ...(options && { options }),
             ...(pitchTime && { pitchTime }),
             ...(autoPlayText && { autoPlayText }),
@@ -56,7 +60,7 @@ export async function PUT(request) {
         // Update Video
         const updatedVideo = await Video.findOneAndUpdate(
             { _id: objectId, user: userId },
-            updatePayload, // Update these fields
+            updatePayload,
             { new: true }
         );
 

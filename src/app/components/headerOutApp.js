@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import {useState} from "react";
+import {useRouter} from "next/navigation";
 import Image from "next/image";
 import styles from "./headerOutApp.module.css";
 
@@ -19,7 +19,7 @@ const HeaderOutApp = () => {
     return (
         <header className={styles.header}>
             {/* Logo on the left */}
-            <div className={styles.logo} onClick={handleLogoClick} style={{ cursor: "pointer" }}>
+            <div className={styles.logo} onClick={handleLogoClick} style={{cursor: "pointer"}}>
                 <Image
                     src="/logo.png" // Replace with your logo path
                     alt="Logo"
@@ -37,14 +37,17 @@ const HeaderOutApp = () => {
             </div>
 
             {/* Navigation links */}
-            <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>
-                <div className={styles.navGap}>
-                    <a href="/pricing" className={styles.navLink}>Pricing</a>
-                    <a href="/login" className={styles.navLink}>Login</a>
-                </div>
-                <div style={{ height: "55px", width: 1, backgroundColor: "#5b5b5b" }}></div>
-                <a href="/signup" className={styles.bookCall}>Try it now</a>
-            </nav>
+
+
+                <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>
+                    <div className={styles.navGap}>
+                        <a href="/pricing" className={styles.navLink}>Pricing</a>
+                        <a href="/login" className={styles.navLink}>Login</a>
+                    </div>
+                    <div className={styles.line} ></div>
+                    <a href="/signup" className={styles.bookCall}>Try it now</a>
+                </nav>
+
         </header>
     );
 };

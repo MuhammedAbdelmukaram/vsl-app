@@ -214,7 +214,7 @@
 .headerHelper {
     background-color: #1B1B1B;
     position: inherit;
-    z-index: 2;
+    z-index: 3;
     padding-top: 20px;
 }
 
@@ -362,6 +362,7 @@
     display: flex;
     gap: 10px;
     align-items: flex-end;
+
     justify-content: flex-start;
 }
 .checks {
@@ -395,4 +396,125 @@
     padding: 10px 0;
     font-size: 0.9rem;
     background-color: #1a1a1a;
+}
+
+@media screen and (max-width: 1000px) {
+
+    .container{
+        padding: 36px 0px 60px 0px;
+    }
+    .heading2{
+        padding: 4px 10px;
+        font-size: 40px;
+        text-align: center;
+    }
+
+    .topside {
+        flex-direction: column;
+        gap: 40px;
+        align-items: center;
+    }
+
+    .topside > div {
+        max-width: 100%;
+        min-width: 100%;
+        padding: 0px;
+    }
+
+    .smallReview{
+        margin-top: 20px;
+    }
+
+    .heading {
+        font-size: 7vw;
+        line-height: 8vw;
+        min-height: 24vw;
+        text-align: center;
+        padding: 0 16px;
+    }
+
+    .subtitles {
+        font-size: 2.5vw;
+        width: 90%;
+        text-align: center;
+        margin: 0 auto 30px;
+    }
+
+    .boxes {
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: center;
+        margin-top: 0px;
+    }
+
+    .box {
+        width: 90px;
+        height: 90px;
+    }
+
+    .boxImg {
+        max-width: 40px;
+    }
+
+    .boxText {
+        font-size: 10px;
+        text-align: center;
+    }
+
+    .arrowContainer {
+        display: none; /* optional: hide the horizontal arrow on small screens */
+    }
+
+    .textsRight {
+        display: none;
+        margin-top: 10px;
+    }
+
+    .featuresOrange,
+    .italic {
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .outer {
+        padding: 0 16px;
+    }
+
+    .bookCall{
+        padding: 14px 48px;
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 24px;
+    }
+
+    .relative{
+        width: 90%;
+    }
+
+    .gradient{
+        left: 0px;
+    }
+
+    .checks {
+        flex-direction: row;
+        gap: 12px;
+        text-align: center;
+        font-size: 13px;
+        margin-top: 20px;
+    }
+
+    .headerHelper{
+        padding-top: 8px;
+    }
+
+    .leftSide{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .arrow2{
+        display: none;
+    }
 }

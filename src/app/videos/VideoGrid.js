@@ -44,7 +44,7 @@ const VideoGrid = ({
                                         justifyContent: "space-between",
                                         alignItems: "center",
                                     }}>
-                                        <h3 className={styles.title}>{video.title}</h3>
+                                        <h3 className={styles.title}>{video.name}</h3>
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();

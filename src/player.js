@@ -42,6 +42,7 @@ const videoId = videoConfig ? videoConfig._id : null;
         root.render(
             <VideoPlayer
                 videoId={videoId}
+                m3u8Url={videoConfig.m3u8Url}
                 url={videoConfig.videoUrl}
                 fastProgressBar={videoConfig.options.fastProgressBar}
                 autoPlayText={videoConfig.autoPlayText || "Click to Watch"}

@@ -11,6 +11,9 @@ import CustomPlayer from "./CustomPlayer";
 
 const VideoPlayer = ({
                          videoId,
+                         m3u8Url,
+                         accountId,
+                         live = false,
                          url,
                          autoPlay,
                          autoPlayText = "Click to Watch",
@@ -51,14 +54,22 @@ const VideoPlayer = ({
     // ✅ Custom Context Menu State
     const [contextMenuVisible, setContextMenuVisible] = useState(false);
     const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
+    const [userInitiated, setUserInitiated] = useState(!autoPlay);
+
 
     const [lastWatchPosition, setLastWatchPosition] = useState(0);
     const [loading, setLoading] = useState(true); // Track loading state
+    const [autoPlayedAndEnded, setAutoPlayedAndEnded] = useState(false);
+
+    const USE_SESSION_TIMEOUT = false; // Toggle this to enable/disable 30min logic
 
 // When the player starts, mark loading as false
 
 
     const [viewLogged, setViewLogged] = useState(false);
+
+    let lastKnownTime = null;
+    const lastKnownTimeRef = useRef(null);
 
 
     // ✅ Hide context menu on outside click
@@ -101,6 +112,27 @@ const VideoPlayer = ({
         setLoading(false);
     };
 
+    // ✅ Handle sessionId (with optional 30min timeout logic)
+    const now = Date.now();
+    const lastSessionTime = parseInt(localStorage.getItem("lastSessionTime")) || 0;
+    const sessionTimeout = 30 * 60 * 1000; // 30 minutes
+
+    if (
+        !localStorage.getItem("sessionId") ||
+        (USE_SESSION_TIMEOUT && now - lastSessionTime > sessionTimeout)
+    ) {
+        localStorage.setItem("sessionId", crypto.randomUUID());
+    }
+
+    localStorage.setItem("lastSessionTime", now);
+
+
+// optionally: persist device ID too
+    if (!localStorage.getItem("deviceId")) {
+        localStorage.setItem("deviceId", crypto.randomUUID());
+    }
+
+
 
     useEffect(() => {
         if (autoPlay) {
@@ -132,37 +164,74 @@ const VideoPlayer = ({
 
 
     const handleStartOver = () => {
+        setUserInitiated(true);
         setPlaying(true);
-        setShowExit(false);  // ✅ Hide exit thumbnail & buttons when restarting
+        setAutoPlayedAndEnded(false);
+        setShowExit(false);
         if (playerRef.current) playerRef.current.seekTo(0);
+        handlePlay();
     };
 
+
     const handleContinue = () => {
+        setUserInitiated(true);
         setPlaying(true);
-        setShowExit(false);  // ✅ Hide exit thumbnail & buttons when continuing
+        setAutoPlayedAndEnded(false);
+        setShowExit(false);
         if (playerRef.current) playerRef.current.seekTo(lastWatchPosition);
+        handlePlay();
     };
 
     const handleOverlayClick = (e) => {
         if (e) e.stopPropagation();
+
+        // ✅ Treat overlay click as user interaction (even if autoplay was true)
+        setUserInitiated(true);
         setShowOverlay(false);
         setMuted(false);
         setPlaying(true);
-        setShowExit(false);  // ✅ Hide exit thumbnail & buttons when video starts
+        setAutoPlayedAndEnded(false);
+        setShowExit(false);
+
         if (playerRef.current) playerRef.current.seekTo(0);
+
+        // ✅ Manually trigger "played" event if not yet logged
+        if (!viewLogged) {
+            sendAnalyticsEvent("played");
+            setViewLogged(true);
+        }
+
+        handlePlay(); // still do this to trigger any extra logic
     };
+
 
     const handlePause = () => {
-        // ✅ Ensure `showExit` is always set to true when paused
-        setShowExit(true);
-        setPlaying(false);
+        if (!userInitiated) {
+            setAutoPlayedAndEnded(true);
+            return;
+        }
 
-        // ✅ Save the last watched position when paused
+        const lastTime = lastKnownTimeRef.current;
+
+        // ✅ Send "timed" event with last known time
+        if (playerRef.current && lastTime !== null) {
+            sendAnalyticsEvent("timed", { time: lastTime });
+            lastKnownTimeRef.current = null;
+        }
+
+        // ✅ Send "paused" event with current player time
         if (playerRef.current) {
             const currentTime = playerRef.current.getCurrentTime();
+            sendAnalyticsEvent("paused", { time: currentTime });
             localStorage.setItem(localStorageKey, currentTime);
         }
+
+        setShowExit(true);
+        setPlaying(false);
     };
+
+
+
 
 
 
@@ -235,24 +304,136 @@ const VideoPlayer = ({
         setIsTheatre((prev) => !prev);
     };
 
-    /** 📌 Log View for Tracking */
-    const logView = async () => {
-        if (!viewLogged && videoId) {
-            try {
-                const response = await fetch("/api/analytics/view", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({videoId}),
-                });
+    const getUTMParams = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        return {
+            utm_source: urlParams.get('utm_source'),
+            utm_medium: urlParams.get('utm_medium'),
+            utm_campaign: urlParams.get('utm_campaign'),
+            referrer: document.referrer || null,
+        };
+    };
 
-                if (response.ok) {
-                    setViewLogged(true);
-                }
-            } catch (error) {
-                console.error("Error logging view:", error);
+    /** 📌 Log function */
+    const sendAnalyticsEvent = async (eventType, eventData = {}) => {
+        const payload = {
+            id: crypto.randomUUID(),
+            createdAt: Date.now(),
+            event: eventType,
+            accountId: accountId,
+            sessionId: localStorage.getItem("sessionId") || crypto.randomUUID(),
+            device: localStorage.getItem("deviceId") || navigator.userAgent,
+            event_version: "1.0.0",
+            media_id: videoId,
+            media_type: "video",
+            player_version: "1.0.0",
+            product: "vslplayer",
+            domain: window.location.hostname,
+            path: window.location.pathname,
+            uri: window.location.href,
+            metadata: {
+                traffic_origin_params: getUTMParams()
+            },
+            data: eventData,
+        };
+
+        // ✅ Log full payload always
+        console.log(`[Analytics Event] ${eventType}`, payload);
+
+        {/*
+            if (!live) {
+                return;
             }
+        */}
+
+        try {
+            await fetch("/api/analytics", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+        } catch (error) {
+            console.error(`Failed to send ${eventType} event:`, error);
         }
     };
+
+
+
+    useEffect(() => {
+        let intervalId;
+        let lastSentAt = Date.now();
+
+        if (playing && playerRef.current && userInitiated) {
+            intervalId = setInterval(() => {
+                if (!playerRef.current) return;
+
+                const currentTime = playerRef.current.getCurrentTime();
+                lastKnownTimeRef.current = currentTime;
+
+                const now = Date.now();
+                const elapsed = now - lastSentAt;
+
+                if (elapsed >= 20000) {
+                    sendAnalyticsEvent("timed", { time: currentTime });
+                    lastSentAt = now;
+                    lastKnownTimeRef.current = null;
+                }
+            }, 5000);
+        }
+
+        return () => clearInterval(intervalId);
+    }, [playing, userInitiated]);
+
+
+    const handleEnded = () => {
+        if (!userInitiated) return;
+
+        if (playerRef.current) {
+            const currentTime = playerRef.current.getCurrentTime();
+
+            // ✅ Send "finished" analytics event
+            sendAnalyticsEvent("finished", { time: currentTime });
+
+            // ✅ Clear last watch position from localStorage
+            localStorage.removeItem(localStorageKey);
+        }
+
+        setShowExit(true);
+        setPlaying(false);
+    };
+
+
+
+
+    useEffect(() => {
+        const sendPageView = async () => {
+            await sendAnalyticsEvent("pageview");
+        };
+        sendPageView();
+    }, []);
+
+
+
+    const handlePlay = () => {
+        setLoading(false);
+
+        const lastTime = lastKnownTimeRef.current;
+        if (playerRef.current && lastTime !== null) {
+            sendAnalyticsEvent("timed", { time: lastTime });
+            lastKnownTimeRef.current = null;
+        }
+
+        if (!viewLogged && userInitiated) {
+            sendAnalyticsEvent("played");
+            setViewLogged(true);
+        }
+    };
+
+
+
+
+
+
 
     return (
         <div
@@ -282,25 +463,16 @@ const VideoPlayer = ({
             <div style={{ display: loading ? "none" : "block" }}>
                 <CustomPlayer
                     ref={playerRef}
-
-                    url={url}
+                    onStart={handlePlay}
+                    onPlay={handlePlay}
+                    onEnded={handleEnded}
+                    url={live ? m3u8Url : url}
                     playing={playing}
                     muted={muted}
                     onProgress={handleProgress}
                     onPause={handlePause}
                     onReady={() => setLoading(false)} // ✅ Mark as loaded when ready
-                    onStart={() => {
-                        setLoading(false); // ✅ Ensure loading disappears when video starts
-                        if (!viewLogged && videoId) {
-                            fetch("/api/analytics/view", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ videoId }),
-                            }).then((res) => {
-                                if (res.ok) setViewLogged(true);
-                            }).catch((error) => console.error("Error logging view:", error));
-                        }
-                    }}
+
                     progressInterval={fastProgressBar ? 25 : 50}
                 />
             </div>
