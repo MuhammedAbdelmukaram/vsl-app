@@ -39,7 +39,7 @@ const Science = () => {
 
                             <div>
                                 <Image src="/peopleAll.svg" alt="Clock Icon" width={436} height={40}
-                                       className={styles.logo}/>
+                                       className={styles.logo} style={{ colorScheme: 'light' }}/>
                             </div>
                         </div>
 
@@ -55,7 +55,7 @@ const Science = () => {
 
                             <div>
                                 <Image src="/peopleSome.svg" alt="Clock Icon" width={436} height={40}
-                                       className={styles.logo}/>
+                                       className={styles.logo} style={{ colorScheme: 'light' }}/>
                             </div>
 
                         </div>

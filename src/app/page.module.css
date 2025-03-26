@@ -184,7 +184,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
     background-color: rgba(143, 143, 143, 0.44);
     border:1px solid #939393;
     border-radius: 21px;
@@ -217,6 +216,8 @@
     z-index: 3;
     padding-top: 20px;
 }
+
+
 
 .science{
     margin-top: 100px;
@@ -434,7 +435,7 @@
     }
 
     .subtitles {
-        font-size: 2.5vw;
+        font-size: 3vw;
         width: 90%;
         text-align: center;
         margin: 0 auto 30px;
@@ -516,5 +517,37 @@
 
     .arrow2{
         display: none;
+    }
+
+    .headerHelper {
+        background-color: transparent;
+        position: inherit;
+        z-index: 3;
+        margin-top: 0px;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .boxes{
+        display: none;
+    }
+    .box {
+        height: 16vw;
+        width: 16vw;
+    }
+
+    .boxImg {
+        max-width: 8vw;
+    }
+
+    .boxText {
+        font-size: 9px;
+    }
+
+    .topside {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
     }
 }

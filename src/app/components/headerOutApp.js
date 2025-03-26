@@ -3,6 +3,7 @@ import {useState} from "react";
 import {useRouter} from "next/navigation";
 import Image from "next/image";
 import styles from "./headerOutApp.module.css";
+import Link from "next/link";
 
 const HeaderOutApp = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -41,11 +42,12 @@ const HeaderOutApp = () => {
 
                 <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>
                     <div className={styles.navGap}>
-                        <a href="/pricing" className={styles.navLink}>Pricing</a>
-                        <a href="/login" className={styles.navLink}>Login</a>
+                        <Link href="/pricing" className={styles.navLink}>Pricing</Link>
+                        <Link href="/guide" className={styles.navLink}>Guide</Link>
+                        <Link href="/login" className={styles.navLink}>Login</Link>
                     </div>
                     <div className={styles.line} ></div>
-                    <a href="/signup" className={styles.bookCall}>Try it now</a>
+                    <Link href="/signup" className={styles.bookCall}>Try it now</Link>
                 </nav>
 
         </header>

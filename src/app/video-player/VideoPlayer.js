@@ -215,14 +215,14 @@ const VideoPlayer = ({
 
         // ✅ Send "timed" event with last known time
         if (playerRef.current && lastTime !== null) {
-            sendAnalyticsEvent("timed", { time: lastTime });
+            sendAnalyticsEvent("timed", { time: Math.round(lastTime) });
             lastKnownTimeRef.current = null;
         }
 
         // ✅ Send "paused" event with current player time
         if (playerRef.current) {
             const currentTime = playerRef.current.getCurrentTime();
-            sendAnalyticsEvent("paused", { time: currentTime });
+            sendAnalyticsEvent("paused", { time: Math.round(currentTime) });
             localStorage.setItem(localStorageKey, currentTime);
         }
 
@@ -374,7 +374,7 @@ const VideoPlayer = ({
                 const elapsed = now - lastSentAt;
 
                 if (elapsed >= 20000) {
-                    sendAnalyticsEvent("timed", { time: currentTime });
+                    sendAnalyticsEvent("timed", { time: Math.round(currentTime) });
                     lastSentAt = now;
                     lastKnownTimeRef.current = null;
                 }
@@ -392,7 +392,8 @@ const VideoPlayer = ({
             const currentTime = playerRef.current.getCurrentTime();
 
             // ✅ Send "finished" analytics event
-            sendAnalyticsEvent("finished", { time: currentTime });
+            sendAnalyticsEvent("finished", { time: Math.round(currentTime) });
+
 
             // ✅ Clear last watch position from localStorage
             localStorage.removeItem(localStorageKey);
@@ -419,7 +420,7 @@ const VideoPlayer = ({
 
         const lastTime = lastKnownTimeRef.current;
         if (playerRef.current && lastTime !== null) {
-            sendAnalyticsEvent("timed", { time: lastTime });
+            sendAnalyticsEvent("timed", { time: Math.round(lastTime) });
             lastKnownTimeRef.current = null;
         }
 
