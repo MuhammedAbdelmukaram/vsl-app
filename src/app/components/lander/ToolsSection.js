@@ -32,7 +32,13 @@ const ToolsSection = () => {
             image: "/placeholderA.png",
             title: "Resume/Replay",
             description: "Lets users resume where they left off, improving completion rates."
+        },
+        "design": {
+            image: "/placeholderA.png",
+            title: "Design Customizer",
+            description: "Tailor your player to match your brand and improve visual consistency across pages."
         }
+
     };
 
     return (
@@ -52,7 +58,8 @@ const ToolsSection = () => {
                         { id: "exit-thumbnail", icon: "/f3.svg", text: "EXIT THUMBNAIL" },
                         { id: "ab-testing", icon: "/f4.svg", text: "A/B TESTING" },
                         { id: "resume-replay", icon: "/f5.svg", text: "RESUME/REPLAY" },
-                        { id: "resume-replay", icon: "/f5.svg", text: "RESUME/REPLAY" }
+                        { id: "design", icon: "/f6.svg", text: "DESIGN CUSTOMIZER", badge: "Boost Branding" }
+
                     ].map(({ id, icon, text, badge }) => (
                         <button
                             key={id}

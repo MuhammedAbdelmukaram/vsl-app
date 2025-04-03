@@ -182,7 +182,6 @@
 
 .textDot {
     display: flex;
-
     align-items: center;
 }
 
@@ -209,6 +208,8 @@
 
 .label {
     font-weight: normal;
+    display: flex;
+    align-items: center;
     min-width: 109px;
     font-size: 14px;
     color: #ffffff;
@@ -220,6 +221,44 @@
     font-weight: bold;
     color: #ffffff;
 }
+
+.tooltipWrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 6px;
+}
+
+.tooltipIcon {
+    color: #bbb;
+    cursor: pointer;
+}
+
+.tooltipText {
+    visibility: hidden;
+    opacity: 0;
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    padding: 6px 10px;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    font-size: 12px;
+    z-index: 100;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    white-space: normal;
+}
+
+.tooltipWrapper:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
+}
+
 
 /* Card Container */
 .card {
@@ -295,7 +334,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 60px;
+    gap: 20px;
     width: 100%;
 }
 
@@ -350,6 +389,20 @@
     color: #ffffff;
 }
 
+.card3 {
+    transform: translateY(-20px);
+    background-color: #131313;
+    box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.25);
+    padding: 24px 32px 32px 32px;
+    border-radius: 8px;
+    height: fit-content;
+}
+
+.card3 h3 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #ffffff;
+}
 /* Legend */
 .legend {
     font-size: 14px;
@@ -577,6 +630,7 @@
     cursor: pointer;
     transition: background 0.3s ease;
     font-weight: bold;
+    align-self: flex-end;
 }
 
 .metric:hover {
@@ -863,6 +917,20 @@
     margin-bottom: 20px;
 }
 
+.modalVideoCard {
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border-radius: 8px;
+    overflow: hidden;
+
+}
+
+.modalVideoCard:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+
 .selectedVideo img,
 .modalThumbnail {
     width: 100%;
@@ -1063,3 +1131,155 @@
     font-weight: bold;
     color: #fff;
 }
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent; /* Optional background */
+}
+
+.ring {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 165, 0, 0.2); /* Light orange */
+    border-top: 5px solid #d45900; /* Primary orange */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.heatmapContainer {
+    margin-top: 0px;
+    position: relative;
+}
+
+.heatmapTitle {
+    margin-bottom: 30px!important;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.gridContainer2 {
+    display: grid;
+    grid-template-columns: 60px repeat(7, 1fr); /* 1st column = time labels */
+    column-gap: 14px; /* space between days (horizontal) */
+    row-gap: 6px;    /* space between hours (vertical) */
+    align-items: center;
+    padding: 4px;
+}
+
+.tooltipBox {/*
+    margin-top: 16px;
+    padding: 8px 12px;
+    background-color: #1a1a1a;
+    color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    font-size: 14px;
+    white-space: nowrap;
+    position: absolute;
+*/}
+.tooltipBox {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    padding: 6px 10px;
+    background-color: #1a1a1a;
+    color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+
+
+.headerRow {
+    display: contents;
+}
+
+.dayLabel {
+    text-align: center;
+    font-size: 12px;
+    color: #ccc;
+    padding-bottom: 6px;
+}
+
+.hourRow {
+    display: contents;
+}
+
+.hourLabel {
+    text-align: right;
+    padding-right: 6px;
+    font-size: 12px;
+    color: #999;
+    width: fit-content;
+}
+
+.cell {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 1;
+    border-radius: 2px;
+    background-color: #eee;
+}
+
+.placeholder {
+    padding: 60px 20px;
+    text-align: center;
+    border-radius: 16px;
+    background-color: transparent;
+    margin-top: 40px;
+}
+
+.placeholderText {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.openModalButton {
+    padding: 10px 20px;
+    font-weight: bold;
+    background-color: #7D5FFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.openModalButton:hover {
+    background-color: #5e47d1;
+}
+
+
+/* Heatmap color levels */
+.level0 {
+    background-color: #ffffff;
+}
+.level1 {
+    background-color: #e5d4f6;
+}
+.level2 {
+    background-color: #c19ee0;
+}
+.level3 {
+    background-color: #915ec6;
+}
+.level4 {
+    background-color: #5e2ca5;
+}
+

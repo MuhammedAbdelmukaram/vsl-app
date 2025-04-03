@@ -13,6 +13,8 @@ const PlanContent = () => {
     const planName = searchParams.get("planName");
     const billingPeriod = searchParams.get("billingPeriod");
 
+
+
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
@@ -49,24 +51,29 @@ const PlanContent = () => {
                         return;
                     }
 
+                    const payload = {
+                        priceId,
+                        planName,
+                        billingPeriod,
+                        metadata: {
+                            userId: userDetails._id,
+                            email: userDetails.email,
+                            name: userDetails.name,
+                            plan: planName,
+                        },
+                    };
+
+                    console.log("🛒 Stripe checkout payload:", payload); // 🧠 This logs what you're sending
+
                     const response = await fetch("/api/create-checkout-session", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                             Authorization: `Bearer ${localStorage.getItem("token")}`,
                         },
-                        body: JSON.stringify({
-                            priceId,
-                            planName,
-                            billingPeriod,
-                            metadata: {
-                                userId: userDetails._id, // From API response
-                                email: userDetails.email, // From API response
-                                name: userDetails.name,   // From API response
-                                plan: planName
-                            },
-                        }),
+                        body: JSON.stringify(payload),
                     });
+
 
                     const session = await response.json();
 

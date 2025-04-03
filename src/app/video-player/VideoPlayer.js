@@ -164,6 +164,10 @@ const VideoPlayer = ({
 
 
     const handleStartOver = () => {
+        sendAnalyticsEvent("restarted", {
+            fromPosition: lastWatchPosition
+        });
+
         setUserInitiated(true);
         setPlaying(true);
         setAutoPlayedAndEnded(false);
@@ -172,8 +176,11 @@ const VideoPlayer = ({
         handlePlay();
     };
 
-
     const handleContinue = () => {
+        sendAnalyticsEvent("continued", {
+            fromPosition: lastWatchPosition
+        });
+
         setUserInitiated(true);
         setPlaying(true);
         setAutoPlayedAndEnded(false);
@@ -181,6 +188,7 @@ const VideoPlayer = ({
         if (playerRef.current) playerRef.current.seekTo(lastWatchPosition);
         handlePlay();
     };
+
 
     const handleOverlayClick = (e) => {
         if (e) e.stopPropagation();

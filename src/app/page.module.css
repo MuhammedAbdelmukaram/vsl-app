@@ -339,15 +339,19 @@
 
 }
 .person {
-    height: 35px;
     width: 35px;
+    height: 35px;
+    min-width: 35px;
+    min-height: 35px;
     border-radius: 50%;
     background-color: #fff;
-    overflow: hidden; /* Ensures no part of the image sticks out */
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0; /* prevents squishing on small screens */
 }
+
 
 /* Ensures the image fills the div and is cropped */
 .person img {
@@ -549,5 +553,8 @@
         flex-direction: column;
         gap: 10px;
         align-items: center;
+    }
+    .smallText{
+        font-size: 13px;
     }
 }

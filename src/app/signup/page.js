@@ -7,8 +7,8 @@ import styles from "./signup.module.css";
 const SignupContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const redirectTo = searchParams.get("redirect") || "/home"; // Default to /home
-    const priceId = searchParams.get("priceId"); // Price ID from query
+    const redirectTo = searchParams.get("redirect") || "/home";
+    const priceId = searchParams.get("priceId");
 
     const [formData, setFormData] = useState({
         name: "",
@@ -19,15 +19,42 @@ const SignupContent = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
+    const [passwordValidations, setPasswordValidations] = useState({
+        length: false,
+        uppercase: false,
+        number: false,
+        specialChar: false,
+    });
+
+    const validatePassword = (password) => {
+        setPasswordValidations({
+            length: password.length >= 8,
+            uppercase: /[A-Z]/.test(password),
+            number: /\d/.test(password),
+            specialChar: /[!@#$%]/.test(password),
+        });
+    };
+
+    const allValid = Object.values(passwordValidations).every(Boolean);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+
+        if (name === "password") {
+            validatePassword(value);
+        }
     };
 
     const handleSignup = async (e) => {
         e.preventDefault();
-        setError(""); // Reset error state
-        setSuccess(""); // Reset success state
+        setError("");
+        setSuccess("");
+
+        if (!allValid) {
+            setError("Please meet all password requirements.");
+            return;
+        }
 
         try {
             const response = await fetch("/api/signup", {
@@ -40,10 +67,7 @@ const SignupContent = () => {
 
             if (response.ok) {
                 setSuccess(result.message);
-                // Store token (optional, if applicable)
                 localStorage.setItem("token", result.token);
-
-                // Redirect to the target page with priceId if applicable
                 if (redirectTo === "/plan" && priceId) {
                     router.push(`/plan?priceId=${priceId}`);
                 } else {
@@ -102,17 +126,30 @@ const SignupContent = () => {
                             />
                         </div>
                         <div className={styles.passwordRequirements}>
-                            <p>Your password must include:</p>
+                            <p className={styles.passwordInstructions}>Your password must include:</p>
                             <ul>
-                                <li>Min 8 characters</li>
-                                <li>Capital letter</li>
-                                <li>One number</li>
-                                <li>Special letter (!@#$%)</li>
+                                <li style={{ color: passwordValidations.length ? "green" : "red" }}>
+                                    {passwordValidations.length ? "✅" : "❌"} Min 8 characters
+                                </li>
+                                <li style={{ color: passwordValidations.uppercase ? "green" : "red" }}>
+                                    {passwordValidations.uppercase ? "✅" : "❌"} Capital letter
+                                </li>
+                                <li style={{ color: passwordValidations.number ? "green" : "red" }}>
+                                    {passwordValidations.number ? "✅" : "❌"} One number
+                                </li>
+                                <li style={{ color: passwordValidations.specialChar ? "green" : "red" }}>
+                                    {passwordValidations.specialChar ? "✅" : "❌"} Special letter (!@#$%)
+                                </li>
                             </ul>
                         </div>
                         {error && <p className={styles.error}>{error}</p>}
                         {success && <p className={styles.success}>{success}</p>}
-                        <button type="submit" className={styles.createAccount}>
+                        <button
+                            type="submit"
+                            className={styles.createAccount}
+                            disabled={!allValid}
+                            style={{ opacity: allValid ? 1 : 0.5, cursor: allValid ? "pointer" : "not-allowed" }}
+                        >
                             Create Account
                         </button>
                     </form>
@@ -125,6 +162,7 @@ const SignupContent = () => {
         </div>
     );
 };
+
 
 const SignupPage = () => {
     return (

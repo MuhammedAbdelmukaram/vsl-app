@@ -3,9 +3,19 @@ import { Bar, Line } from "react-chartjs-2";
 import Image from "next/image";
 import styles from "./analytics.module.css";
 import Calendar from "@/app/components/Calendar";
+import { eachDayOfInterval, format } from "date-fns";
 
-const ChartSection = ({ activeChart, setActiveChart, activeFilter, setActiveFilter,selectedVideo }) => {
-    const metrics = ["Total Views", "Play Rate", "Avg View Rate", "Pitch Retention"];
+const ChartSection = ({ activeChart, setActiveChart, activeFilter, setActiveFilter,selectedVideo , selectedRange, setSelectedRange, customDates, setCustomDates}) => {
+    const metrics = [
+        "Page Views",
+        "Unique Page Views",
+        "Total Plays",
+        "Unique Plays",
+        "Returned Watchers", // 👈 New
+        "Play Rate",
+    ];
+
+
     const chartType = [
         { label: "Bar Chart", imgSrc: "/barChart.png" },
         { label: "Line Chart", imgSrc: "/lineChart.png" },
@@ -14,11 +24,6 @@ const ChartSection = ({ activeChart, setActiveChart, activeFilter, setActiveFilt
     const [chartData, setChartData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [selectedRange, setSelectedRange] = useState("Today");
-    const [customDates, setCustomDates] = useState(() => {
-        const today = new Date();
-        return { from: today, to: today };
-    });
 
     const toggleDropdown = () => setShowDropdown((prev) => !prev);
 
@@ -30,7 +35,7 @@ const ChartSection = ({ activeChart, setActiveChart, activeFilter, setActiveFilt
 
     useEffect(() => {
         const fetchChartData = async () => {
-            if (!customDates.from || !customDates.to || !selectedVideo) return; // ✅ wait for selectedVideo
+            if (!customDates.from || !customDates.to || !selectedVideo) return;
             setIsLoading(true);
 
             try {
@@ -38,13 +43,23 @@ const ChartSection = ({ activeChart, setActiveChart, activeFilter, setActiveFilt
                 const to = customDates.to.toISOString();
 
                 const res = await fetch(
-                    `/api/analytics/metrics?filter=${encodeURIComponent(activeFilter)}&from=${from}&to=${to}&videoId=${selectedVideo._id}&accountId=${selectedVideo.user}`
+                    `/api/analytics/graph?filter=${encodeURIComponent(activeFilter)}&from=${from}&to=${to}&videoId=${selectedVideo._id}&accountId=${selectedVideo.user}`
                 );
 
+                const rawData = await res.json();
 
-                const data = await res.json();
-                const labels = data.map((entry) => entry._id);
-                const values = data.map((entry) => entry.count);
+                // 🔁 Create date range
+                const allDates = eachDayOfInterval({
+                    start: new Date(customDates.from),
+                    end: new Date(customDates.to),
+                }).map(date => format(date, "yyyy-MM-dd"));
+
+                // 🧠 Create map from API data
+                const dataMap = Object.fromEntries(rawData.map(entry => [entry._id, entry.count]));
+
+                // 📊 Fill gaps with 0
+                const labels = allDates;
+                const values = allDates.map(date => dataMap[date] || 0);
 
                 setChartData({
                     labels,
@@ -55,9 +70,11 @@ const ChartSection = ({ activeChart, setActiveChart, activeFilter, setActiveFilt
                             borderColor: "#D87C32",
                             data: values,
                             fill: false,
+                            tension: 0.4, // 👈 smooth curve (0 = straight lines, 1 = max curve)
                         },
                     ],
                 });
+
             } catch (error) {
                 console.error("Error loading analytics data:", error);
             } finally {
@@ -66,7 +83,7 @@ const ChartSection = ({ activeChart, setActiveChart, activeFilter, setActiveFilt
         };
 
         fetchChartData();
-    }, [activeFilter, customDates, selectedVideo]); // ✅ add selectedVideo to deps
+    }, [activeFilter, customDates, selectedVideo]);
 
     if (!selectedVideo) return <div>Please select a video to view chart data.</div>;
 
@@ -132,7 +149,9 @@ const ChartSection = ({ activeChart, setActiveChart, activeFilter, setActiveFilt
 
             <div className={styles.chartContainer}>
                 {isLoading || !chartData ? (
-                    <div>Loading chart...</div>
+                    <div className={styles.loader}>
+                        <div className={styles.ring}></div>
+                    </div>
                 ) : activeChart === "Bar Chart" ? (
                     <Bar data={chartData} options={chartOptions} />
                 ) : (

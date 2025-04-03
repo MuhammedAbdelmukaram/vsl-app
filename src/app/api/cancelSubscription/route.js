@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2023-08-
 export async function POST(req) {
     try {
         const body = await req.json();
-        const { subscriptionId } = body;
+        const { subscriptionId, reasons } = body;
 
         if (!subscriptionId) {
             return new Response(
@@ -16,9 +16,9 @@ export async function POST(req) {
             );
         }
 
-        // Cancel subscription in Stripe
+        // Cancel the subscription in Stripe
         const canceledSubscription = await stripe.subscriptions.update(subscriptionId, {
-            cancel_at_period_end: true, // Schedule cancellation at the end of the billing cycle
+            cancel_at_period_end: true,
         });
 
         // Update user in the database
@@ -26,19 +26,23 @@ export async function POST(req) {
         const user = await User.findOne({ stripeSubscriptionId: subscriptionId });
 
         if (user) {
-            // Update subscription fields
             user.subscriptionStatus = "canceled";
-            user.subscriptionEndDate = new Date(); // Optionally reflect the cancellation date
+            user.subscriptionEndDate = new Date();
+            user.plan = "Canceled";
 
-            // Update the most recent billing history entry
+            if (Array.isArray(reasons)) {
+                user.cancellationFeedback = {
+                    reasons,
+                    canceledAt: new Date(),
+                };
+            }
+
+            // Optionally update latest billing
             if (user.billingHistory?.length > 0) {
                 const latestBilling = user.billingHistory[user.billingHistory.length - 1];
                 latestBilling.status = "canceled";
-                latestBilling.date = new Date(); // Optionally update to reflect cancellation
+                latestBilling.date = new Date();
             }
-
-            // Revert the plan to "Free" or any other default plan
-            user.plan = "Free";
 
             await user.save();
         }

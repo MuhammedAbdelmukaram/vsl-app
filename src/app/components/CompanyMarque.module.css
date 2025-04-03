@@ -46,4 +46,17 @@
     .partnerLogos img {
         height: 30px; /* Reduce height for smaller screens */
     }
+
+    .footer {
+        background-color: #181819;
+        padding: 20px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        border:none;
+        border-top: 1px solid #4A4A4A;
+        border-bottom: 1px solid #4A4A4A;
+        border-radius: 0px;
+    }
 }

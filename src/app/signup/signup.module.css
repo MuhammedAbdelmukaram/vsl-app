@@ -96,9 +96,13 @@
     color: #0a0a0a;
 }
 
+.passwordInstructions{
+    margin-bottom: 6px !important;
+}
+
 .passwordRequirements {
     font-size: 0.875rem;
-    margin-bottom: 20px;
+    margin-bottom: 32px;
     color: #999999;
 }
 
@@ -107,16 +111,18 @@
     padding-left: 0;
 }
 
+
+
 .passwordRequirements li {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
 }
 
-.passwordRequirements li:before {
+.passwordRequirements li:before {/*
     content: "✔";
-    color: #ffa500; /* Orange checkmark */
-    margin-right: 8px;
+    color: #ffa500; /* Orange checkmark
+    margin-right: 8px;*/
 }
 
 .createAccount {

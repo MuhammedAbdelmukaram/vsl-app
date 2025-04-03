@@ -18,6 +18,11 @@ const AnalyticsEventSchema = new Schema({
     player_version: { type: String },
     metadata: { type: Object, required: true },
     data: { type: Object, default: {} },
+    ip: { type: String },
+    country: { type: String },
+    browser: { type: String },
+    deviceType: { type: String },
+    os: { type: String },
 });
 
 export default mongoose.models.AnalyticsEvent || mongoose.model("AnalyticsEvent", AnalyticsEventSchema);

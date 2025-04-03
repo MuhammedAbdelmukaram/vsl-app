@@ -18,6 +18,18 @@ const Page = () => {
         repeatNewPassword: "",
     });
 
+    const [cancelReason, setCancelReason] = useState([]);
+    const [customReason, setCustomReason] = useState("");
+    const cancelReasonsList = [
+        "Too expensive",
+        "Missing features I need",
+        "Found a better alternative",
+        "No longer needed",
+        "Just exploring",
+        "Other"
+    ];
+
+
     const router = useRouter();
 
     // Fetch profile data
@@ -87,13 +99,21 @@ const Page = () => {
     const handleCancelSubscription = async () => {
         try {
             const token = localStorage.getItem("token");
+
+            const finalReason = cancelReason.includes("Other")
+                ? [...cancelReason.filter(r => r !== "Other"), customReason]
+                : cancelReason;
+
             const response = await fetch("/api/cancelSubscription", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({subscriptionId: profile.stripeSubscriptionId}),
+                body: JSON.stringify({
+                    subscriptionId: profile.stripeSubscriptionId,
+                    reasons: finalReason,
+                }),
             });
 
             if (!response.ok) {
@@ -104,14 +124,17 @@ const Page = () => {
             setProfile((prev) => ({
                 ...prev,
                 subscriptionStatus: "canceled",
-                subscriptionEndDate: new Date().toISOString(), // Set to the current date
+                subscriptionEndDate: new Date().toISOString(),
             }));
             alert("Subscription canceled successfully.");
             setIsCancelModalOpen(false);
+            setCancelReason([]);
+            setCustomReason("");
         } catch (err) {
             alert(`Error: ${err.message}`);
         }
     };
+
 
     const handleSubmitPassword = async () => {
         if (passwordForm.newPassword !== passwordForm.repeatNewPassword) {
@@ -174,18 +197,33 @@ const Page = () => {
                                 <h2 className={styles.planTitle}>{profile.plan || "Basic Plan"}</h2>
                                 <p className={styles.planPrice}>
                                     {calculateSubscriptionPrice(profile.plan, profile.subscriptionEndDate) ||
-                                        "$59/month"}
+                                        ""}
                                 </p>
                             </div>
 
                             <div className={styles.renewCard}>
-                                <span>Renews at</span>
-                                <h2 className={styles.planTitle}>
-                                    {profile.subscriptionEndDate
-                                        ? new Date(profile.subscriptionEndDate).toLocaleDateString()
-                                        : "Oct 26, 2024"}
-                                </h2>
+                                {profile.plan === "Canceled"  ? (
+                                    <>
+                                        <span className={styles.canceledLabel}>Canceled - access ends on</span>
+                                        <h2 className={styles.planTitle}>
+                                            {profile.subscriptionEndDate
+                                                ? new Date(profile.subscriptionEndDate).toLocaleDateString()
+                                                : "-"}
+                                        </h2>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>Renews at</span>
+                                        <h2 className={styles.planTitle}>
+                                            {profile.subscriptionEndDate
+                                                ? new Date(profile.subscriptionEndDate).toLocaleDateString()
+                                                : "-"}
+                                        </h2>
+                                    </>
+                                )}
 
+
+                                {profile.subscriptionEndDate &&
                                 <div className={styles.cancelWrapper}>
                                     <button
                                         className={styles.cancelButton}
@@ -194,6 +232,7 @@ const Page = () => {
                                         Cancel Subscription
                                     </button>
                                 </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -321,10 +360,40 @@ const Page = () => {
             {isCancelModalOpen && (
                 <div className={styles.modalOverlay}>
                     <div className={styles.modal}>
-                        <h2>Are you sure?</h2>
-                        <p>
-                            Are you sure you want to cancel your subscription? This action cannot be undone.
-                        </p>
+                        <h2>Are you sure you want to cancel?</h2>
+                        <p>This action cannot be undone. Please let us know why you're leaving:</p>
+
+                        <div className={styles.inputGroup}>
+                            {cancelReasonsList.map((reason) => (
+                                <label key={reason} className={styles.checkboxLabel}>
+                                    <input
+                                        type="checkbox"
+                                        value={reason}
+                                        checked={cancelReason.includes(reason)}
+                                        onChange={(e) => {
+                                            const value = e.target.value;
+                                            if (cancelReason.includes(value)) {
+                                                setCancelReason(cancelReason.filter(r => r !== value));
+                                            } else {
+                                                setCancelReason([...cancelReason, value]);
+                                            }
+                                        }}
+                                    />
+                                    {reason}
+                                </label>
+                            ))}
+
+                            {cancelReason.includes("Other") && (
+                                <textarea
+                                    rows={3}
+                                    placeholder="Tell us more..."
+                                    value={customReason}
+                                    onChange={(e) => setCustomReason(e.target.value)}
+                                    className={styles.textarea}
+                                />
+                            )}
+                        </div>
+
                         <div className={styles.modalActions}>
                             <button
                                 onClick={() => setIsCancelModalOpen(false)}
@@ -334,7 +403,7 @@ const Page = () => {
                             </button>
                             <button
                                 onClick={handleCancelSubscription}
-                                className={styles.confirmButton}
+                                className={styles.metric}
                             >
                                 Yes, Cancel Subscription
                             </button>
@@ -342,6 +411,7 @@ const Page = () => {
                     </div>
                 </div>
             )}
+
         </Layout>
     );
 };

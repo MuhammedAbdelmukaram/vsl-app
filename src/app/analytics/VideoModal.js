@@ -3,7 +3,7 @@ import styles from "./analytics.module.css";
 
 const VideoModal = ({ videos, setSelectedVideo, setIsModalOpen }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const videosPerPage = 8; // Change this to show more or fewer videos per page
+    const videosPerPage = 12; // Change this to show more or fewer videos per page
 
     const indexOfLastVideo = currentPage * videosPerPage;
     const indexOfFirstVideo = indexOfLastVideo - videosPerPage;

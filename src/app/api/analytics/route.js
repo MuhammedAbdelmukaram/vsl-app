@@ -34,7 +34,8 @@ export async function POST(req) {
         const uaParser = new UAParser();
         uaParser.setUA(req.headers.get("user-agent") || "");
         const browser = uaParser.getBrowser().name || "Unknown";
-        const deviceType = uaParser.getDevice().type || "Desktop";
+        const rawDeviceType = uaParser.getDevice().type;
+        const deviceType = rawDeviceType ? rawDeviceType.toLowerCase() : "desktop";
         const os = uaParser.getOS().name || "Unknown";
 
         // ✅ Store in MongoDB

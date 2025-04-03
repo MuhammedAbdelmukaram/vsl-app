@@ -145,9 +145,18 @@ const Page = () => {
                         </button>
 
                         {/* Video Manager Button */}
+                        {/* Video Manager Button */}
                         <button
                             className={`${styles.toggleButton} ${viewMode === "manager" ? styles.activeView : ""}`}
-                            onClick={() => setViewMode("manager")}
+                            onClick={() => {
+                                if (videos.length > 0) {
+                                    setViewMode("manager");
+                                } else {
+                                    alert("You need to upload at least one video to access the manager.");
+                                }
+                            }}
+                            disabled={videos.length === 0}
+                            style={videos.length === 0 ? { opacity: 0.5, cursor: "not-allowed" } : {}}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -163,6 +172,7 @@ const Page = () => {
                                 <path d="M4 6h16M4 12h16M4 18h16"></path>
                             </svg>
                         </button>
+
                     </div>
                 </div>
 

@@ -8,30 +8,49 @@ const Calendar = ({ showDropdown, toggleDropdown, selectedRange, handleRangeSele
     const updateDateRange = (range) => {
         const today = new Date();
         let fromDate = null;
-        let toDate = new Date(); // today
+        let toDate = null;
 
         switch (range) {
-            case "Today":
-                fromDate = new Date(); // today
+            case "Last 30 Days":
+                fromDate = new Date(today);
+                fromDate.setDate(today.getDate() - 29);
+                toDate = today;
                 break;
-            case "This Week":
-                fromDate = new Date();
-                fromDate.setDate(toDate.getDate() - toDate.getDay()); // start of week
+
+
+            case "This Week": {
+                const currentDay = today.getDay(); // Sunday = 0
+                const monday = new Date(today);
+                monday.setDate(today.getDate() - ((currentDay + 6) % 7));
+                monday.setHours(0, 0, 0, 0);
+
+                const sunday = new Date(monday);
+                sunday.setDate(monday.getDate() + 6);
+                sunday.setHours(23, 59, 59, 999);
+
+                fromDate = monday;
+                toDate = sunday;
                 break;
-            case "This Month":
+            }
+
+            case "This Month": {
                 fromDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                toDate = new Date(today.getFullYear(), today.getMonth() + 1, 0); // last day of current month
                 break;
+            }
+
             case "Last Month":
                 fromDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-                toDate = new Date(today.getFullYear(), today.getMonth(), 0);
+                toDate = new Date(today.getFullYear(), today.getMonth(), 0); // last day of last month
                 break;
+
             default:
                 return;
         }
 
-        // 🔁 Update state using parent-provided callback
         handleRangeSelect(range, { from: fromDate, to: toDate });
     };
+
 
 
     // Function to handle custom range selection and update the button text
@@ -52,8 +71,8 @@ const Calendar = ({ showDropdown, toggleDropdown, selectedRange, handleRangeSele
             {showDropdown && (
                 <div className={styles.dropdownMenu}>
                     <div className={styles.options}>
-                        <button onClick={() => updateDateRange("Today")}>Today</button>
                         <button onClick={() => updateDateRange("This Week")}>This Week</button>
+                        <button onClick={() => updateDateRange("Last 30 Days")}>Last 30 Days</button>
                         <button onClick={() => updateDateRange("This Month")}>This Month</button>
                         <button onClick={() => updateDateRange("Last Month")}>Last Month</button>
                     </div>
@@ -67,6 +86,9 @@ const Calendar = ({ showDropdown, toggleDropdown, selectedRange, handleRangeSele
                                 dateFormat="MM/dd/yyyy"
                                 placeholderText="From"
                                 className={styles.datePicker}
+                                popperClassName={styles.datePickerPopup}
+                                popperPlacement="bottom-start"
+                                portalId="root-portal"
                             />
                             <DatePicker
                                 selected={customDates.to}

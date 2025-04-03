@@ -10,16 +10,27 @@ import RetentionGraph from "@/app/components/RetentionGraph";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./analytics.module.css";
 import Loader from "@/app/loader/page";
+import WeeklyHeatmap from "@/app/analytics/WeeklyHeatmap";
 
 const Page = () => {
     const [activeTab, setActiveTab] = useState("overall");
-    const [activeFilter, setActiveFilter] = useState("Total Views");
+    const [activeFilter, setActiveFilter] = useState("Page Views");
     const [activeChart, setActiveChart] = useState("Bar Chart");
     const [hasVideos, setHasVideos] = useState(false);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [videos, setVideos] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null);
+
+    const [selectedRange, setSelectedRange] = useState("This Month");
+    const [customDates, setCustomDates] = useState(() => {
+        const today = new Date();
+        const firstOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        const lastOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        return { from: firstOfMonth, to: lastOfMonth }; // ✅ whole month
+    });
+
+
 
     useEffect(() => {
         const fetchVideos = async () => {
@@ -83,44 +94,56 @@ const Page = () => {
                 </div>
 
                 {/* Animated Tab Content */}
+                {/* Tab Content or Placeholder */}
                 <div className={styles.tabContent}>
-                    <AnimatePresence mode="wait">
-                        {activeTab === "overall" && (
-                            <motion.div
-                                key="overall"
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                transition={{ duration: 0.1 }}
-                            >
-                                <ChartSection
-                                    selectedVideo={selectedVideo}
-                                    activeChart={activeChart}
-                                    setActiveChart={setActiveChart}
-                                    activeFilter={activeFilter}
-                                    setActiveFilter={setActiveFilter}
-                                />
-                                <VideoStats  />
-                                <StatisticsSection />
-                            </motion.div>
-                        )}
+                    {selectedVideo ? (
+                        <AnimatePresence mode="wait">
+                            {activeTab === "overall" && (
+                                <motion.div
+                                    key="overall"
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.1 }}
+                                >
+                                    <ChartSection
+                                        selectedVideo={selectedVideo}
+                                        activeChart={activeChart}
+                                        setActiveChart={setActiveChart}
+                                        activeFilter={activeFilter}
+                                        setActiveFilter={setActiveFilter}
+                                        selectedRange={selectedRange}
+                                        setSelectedRange={setSelectedRange}
+                                        customDates={customDates}
+                                        setCustomDates={setCustomDates}
+                                    />
 
-                        {activeTab === "retention" && (
-                            <motion.div
-                                key="retention"
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                transition={{ duration: 0.1 }}
-                            >
-                                <RetentionGraph />
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                                    <VideoStats selectedVideo={selectedVideo} customDates={customDates} />
 
+                                    <StatisticsSection selectedVideo={selectedVideo} customDates={customDates} />
+                                </motion.div>
+                            )}
 
+                            {activeTab === "retention" && (
+                                <motion.div
+                                    key="retention"
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.1 }}
+                                >
+                                    <RetentionGraph selectedVideo={selectedVideo} />
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    ) : (
+                        <div className={styles.placeholder}>
+                            <p className={styles.placeholderText}>No video selected</p>
 
+                        </div>
+                    )}
                 </div>
+
 
                 {/* Video Modal */}
                 {isModalOpen && (

@@ -54,7 +54,7 @@ const VideoStats = ({ videoId }) => {
                     <span className={styles.green}>42.5%</span>
                 </div>
                 <div className={styles.statsRow}>
-                    <span>Avg Daily Views</span>
+                    <span>Avg Daily Plays</span>
                     <span className={styles.normal}>345,550</span>
                     <span className={styles.green}>42.5%</span>
                     <span className={styles.green}>42.5%</span>
