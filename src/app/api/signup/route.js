@@ -30,7 +30,10 @@ export async function POST(request) {
             name,
             email,
             password: hashedPassword,
+            plan: "Free", // explicitly set
+            trialStartDate: new Date(), // track start of free trial
         });
+
 
         // Save user to the database
         await newUser.save();

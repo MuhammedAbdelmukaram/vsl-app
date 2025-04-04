@@ -10,9 +10,11 @@ const UserSchema = new mongoose.Schema(
         // Plan and Subscription Details
         plan: {
             type: String,
-            enum: ["Free", "Monthly", "Lifetime", "Canceled"],
-            default: "Free", // Default to Free plan
+            enum: ["Free", "Monthly", "Lifetime", "Canceled", "Expired"],
+            default: "Free",
         },
+
+        trialStartDate: { type: Date, default: Date.now },
         stripeCustomerId: { type: String }, // Stripe Customer ID for tracking payments
         stripeSubscriptionId: { type: String }, // Active subscription ID in Stripe
         subscriptionStatus: {
