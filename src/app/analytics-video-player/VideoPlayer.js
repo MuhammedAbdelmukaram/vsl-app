@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState, useRef, useEffect} from "react";
+import React, {useState, useRef, useEffect, forwardRef} from "react";
 import ProgressBar from "./ProgressBar";
 import Overlay from "./Overlay";
 import ExitThumbnail from "./ExitThumbnail";
@@ -9,35 +9,45 @@ import * as styles from "./VideoPlayer.module.css";
 import CustomPlayer from "./CustomPlayer";
 
 
-const VideoPlayer = ({
-                         videoId,
-                         m3u8Url,
-                         accountId,
-                         live = false,
-                         url,
-                         autoPlay,
-                         autoPlayText = "Click to Watch",
-                         thumbnail,
-                         exitThumbnail,
-                         fastProgressBar,
-                         showThumbnail,
-                         showExitThumbnail,
-                         width = "100%",
-                         maxWidth = "800px",
-                         aspectRatio = "16 / 9",
-                         brandColor = "#ffffff",
-                         border = false,
-                         borderWidth = "1px",
-                         borderRadius = "0px",
-                         borderColor = "#ffffff",
-                         theatreView = false,
-                         fullScreen = false,
-                         exitThumbnailButtons = true,
-                         borderGlow,
-                         borderGlowColor,
-                     }) => {
+const VideoPlayer = (
+    {
+        videoId,
+        m3u8Url,
+        accountId,
+        live = false,
+        url,
+        autoPlay,
+        autoPlayText = "Click to Watch",
+        thumbnail,
+        exitThumbnail,
+        fastProgressBar,
+        showThumbnail,
+        showExitThumbnail,
+        width = "100%",
+        maxWidth = "800px",
+        aspectRatio = "16 / 9",
+        brandColor = "#ffffff",
+        border = false,
+        borderWidth = "1px",
+        borderRadius = "0px",
+        borderColor = "#ffffff",
+        theatreView = false,
+        fullScreen = false,
+        exitThumbnailButtons = true,
+        borderGlow,
+        borderGlowColor,
+    },
+    ref // ✅ This is how forwardRef gives you the external ref
+) => {
+
     const localStorageKey = `video-progress-${videoId}`;
     const playerRef = useRef(null);
+
+
+
+
+
+
     const wrapperRef = useRef(null);
     const clickTimeoutRef = useRef(null);
     const isDoubleClickRef = useRef(false);
@@ -56,7 +66,6 @@ const VideoPlayer = ({
     const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
     const [userInitiated, setUserInitiated] = useState(!autoPlay);
 
-    const [isFastPlaying, setIsFastPlaying] = useState(false);
 
     const [lastWatchPosition, setLastWatchPosition] = useState(0);
     const [loading, setLoading] = useState(true); // Track loading state
@@ -202,7 +211,6 @@ const VideoPlayer = ({
         setAutoPlayedAndEnded(false);
         setShowExit(false);
 
-        if (playerRef.current) playerRef.current.seekTo(0);
 
         // ✅ Manually trigger "played" event if not yet logged
         if (!viewLogged) {
@@ -213,7 +221,20 @@ const VideoPlayer = ({
         handlePlay(); // still do this to trigger any extra logic
     };
 
-
+    useEffect(() => {
+        if (ref && typeof ref === "object" && ref !== null) {
+            ref.current = {
+                seekTo: (timeInSeconds) => {
+                    if (playerRef.current) {
+                        playerRef.current.seekTo(timeInSeconds, "seconds");
+                    }
+                },
+                handleOverlayClick: () => {
+                    handleOverlayClick();
+                }
+            };
+        }
+    }, [ref, handleOverlayClick]);
     const handlePause = () => {
         if (!userInitiated) {
             setAutoPlayedAndEnded(true);
@@ -312,24 +333,6 @@ const VideoPlayer = ({
     const handleTheatreMode = () => {
         setIsTheatre((prev) => !prev);
     };
-
-    let holdTimeout;
-
-    const handleHoldStart = () => {
-        if (playerRef.current) {
-            playerRef.current.setPlaybackRate(2);
-            setIsFastPlaying(true);
-        }
-    };
-
-    const handleHoldEnd = () => {
-        clearTimeout(holdTimeout);
-        if (playerRef.current) {
-            playerRef.current.setPlaybackRate(1);
-            setIsFastPlaying(false);
-        }
-    };
-
 
     const getUTMParams = () => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -573,45 +576,10 @@ const VideoPlayer = ({
             <div onClick={(e) => handleClick(e, "pause")} className={styles.centerClickArea}></div>
 
             {/* Right Side Click for Forward */}
-            <div
-                className={styles.rightClickArea}
-                onMouseDown={(e) => {
-                    e.stopPropagation();
-                    handleHoldStart();
-
-                    // Detect quick click (not a hold)
-                    clickTimeoutRef.current = setTimeout(() => {
-                        clickTimeoutRef.current = null;
-                    }, 200); // 200ms threshold for distinguishing hold
-                }}
-                onMouseUp={(e) => {
-                    e.stopPropagation();
-                    if (clickTimeoutRef.current) {
-                        // If user released before 200ms, treat as double-click area
-                        handleClick(e, "forward");
-                    }
-                    handleHoldEnd();
-                }}
-                onMouseLeave={handleHoldEnd}
-                onTouchStart={(e) => {
-                    e.stopPropagation();
-                    handleHoldStart();
-                    clickTimeoutRef.current = setTimeout(() => {
-                        clickTimeoutRef.current = null;
-                    }, 200);
-                }}
-                onTouchEnd={(e) => {
-                    e.stopPropagation();
-                    if (clickTimeoutRef.current) {
-                        handleClick(e, "forward");
-                    }
-                    handleHoldEnd();
-                }}
-            ></div>
-
-
+            <div onClick={(e) => handleClick(e, "forward")} className={styles.rightClickArea}></div>
         </div>
     );
 };
 
-export default VideoPlayer;
+export default forwardRef(VideoPlayer);
+

@@ -281,7 +281,7 @@ const Page = () => {
                                         <th>Status</th>
                                         <th>Amount</th>
                                         <th>Plan</th>
-                                        <th>Download</th>
+
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -293,9 +293,7 @@ const Page = () => {
                                             </td>
                                             <td>${bill.amount || "59.99"}</td>
                                             <td>{bill.plan || "Basic Plan"}</td>
-                                            <td>
-                                                <button className={styles.downloadButton}>Download</button>
-                                            </td>
+
                                         </tr>
                                     ))}
                                     </tbody>

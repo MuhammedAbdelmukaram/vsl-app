@@ -65,7 +65,9 @@ const VideoStats = ({ selectedVideo, customDates }) => {
         repeatViewRate,
         hookRetention,
         completionRate,
-        averageWatchTime
+        averageWatchTime,
+        pitchTime
+
     } = stats;
 
     const formatTime = (seconds) => {
@@ -105,13 +107,38 @@ const VideoStats = ({ selectedVideo, customDates }) => {
                                 <span className={styles.tooltipText}>{tooltips[stat.label]}</span>
                             </span>
                         </span>
-                        {/*<div className={styles.dot}></div>*/}
                     </div>
                     <span className={styles.value}>{stat.value}</span>
                 </div>
             ))}
+
+            {/* 🧠 Handle Pitch Retention separately */}
+            <div className={styles.statItem}>
+                <div className={styles.textDot}>
+                    <span className={styles.label}>
+                        Pitch Retention
+                        <span className={styles.tooltipWrapper}>
+                            <Info size={14} className={styles.tooltipIcon} />
+                            <span className={styles.tooltipText}>{tooltips["Pitch Retention"]}</span>
+                        </span>
+                    </span>
+                </div>
+
+                {/* Check pitchTime from stats */}
+                {(!pitchTime || pitchTime === "00:00") ? (
+                    <button
+                        className={styles.setPitchButton}
+                        onClick={() => console.log("Set pitch clicked")}
+                    >
+                        Set Pitch Time
+                    </button>
+                ) : (
+                    <span className={styles.value}>{`${pitchRetention?.toFixed(1) || 0}%`}</span>
+                )}
+            </div>
         </div>
     );
+
 };
 
 export default VideoStats;

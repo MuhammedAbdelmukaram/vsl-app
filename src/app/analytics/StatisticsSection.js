@@ -14,6 +14,7 @@ const StatsSection = ({selectedVideo, customDates}) => {
     const [deviceData, setDeviceData] = useState([]);
     const [browserData, setBrowserData] = useState([]);
     const [countryData, setCountryData] = useState([]);
+    const [heatmapData, setHeatmapData] = useState([]);
 
 
     {/*
@@ -74,6 +75,8 @@ const StatsSection = ({selectedVideo, customDates}) => {
 
                 setDeviceData(data.deviceData || []);
                 setCountryData(data.countryData || []);
+                setHeatmapData(data.heatmapData || []);
+
 
                 // Merge and normalize browser data
                 const browserMap = new Map();
@@ -247,10 +250,10 @@ const StatsSection = ({selectedVideo, customDates}) => {
 
 
                 {/* **Countries (Horizontal Bar Chart) - Bottom Left** */}
-                <div className={styles.card2} style={{transform: "translateY(-30px)"}}>
+                <div className={styles.card2} style={{transform: "translateY(-80px)"}}>
                     <h3 style={{marginBottom: 32}}>Countries</h3>
                     <div className={styles.chartContainer2}>
-                        {countryData.length === 0 ? (
+                        {countryData.length <= 3 ? (
                             <div className={styles.placeholder}>
                                 <p style={{ textAlign: "center", opacity: 0.7, fontSize: "14px" }}>
                                     Not enough country data yet. Once your video gets more views across countries,
@@ -284,18 +287,18 @@ const StatsSection = ({selectedVideo, customDates}) => {
                 </div>
 
 
-                {/* **Traffic Source (Stacked Bar Chart) - Bottom Right** */}
+                {/* **Traffic Source (Stacked Bar Chart) - Bottom Right**
                 <div className={styles.card}>
                     <h3 className={styles.tableTitle}>Traffic Source</h3>
 
-                    {/* Table Header */}
+
                     <div className={styles.tableHeader}>
                         <div className={styles.browserInfo}></div>
                         <span className={styles.headerText}>SESSIONS</span>
                         <span className={styles.headerText}>LAST 24h</span>
                     </div>
 
-                    {/* Table Rows */}
+
                     <div className={styles.table}>
                         {[
                             {source: "Direct", value: 30.4, color: "#7D5FFF", sessions: "225,024", last24h: "24,024"},
@@ -347,12 +350,14 @@ const StatsSection = ({selectedVideo, customDates}) => {
                     </div>
 
                 </div>
-
+            */}
 
                 <WeeklyHeatmap
                     selectedVideo={selectedVideo}
                     customDates={customDates}
+                    heatmapData={heatmapData}
                 />
+
 
 
             </div>

@@ -54,7 +54,6 @@ export async function GET(req) {
 
         const events = await AnalyticsEvent.find(baseQuery);
 
-        // 🔄 Fetch pageview events separately
         const pageviewEvents = await AnalyticsEvent.find({
             media_id: videoId,
             accountId,
@@ -66,6 +65,7 @@ export async function GET(req) {
         const browserPlayedCounts = {};
         const browserPageviews = {};
         const countryCounts = {};
+        const heatmapCounts = {};
 
         for (const ev of events) {
             if (ev.deviceType) {
@@ -86,6 +86,12 @@ export async function GET(req) {
             if (ev.country) {
                 countryCounts[ev.country] = (countryCounts[ev.country] || 0) + 1;
             }
+
+            const date = new Date(ev.createdAt);
+            const day = date.getDay();
+            const hour = date.getHours();
+            const key = `${day}-${hour}`;
+            heatmapCounts[key] = (heatmapCounts[key] || 0) + 1;
         }
 
         for (const ev of pageviewEvents) {
@@ -110,8 +116,8 @@ export async function GET(req) {
 
         const browserData = Array.from(uniqueBrowsers).map((browserName) => ({
             name: browserName,
-            value: browserPlayedCounts[browserName] || 0, // plays
-            sessions: browserPageviews[browserName] || 0, // pageviews
+            value: browserPlayedCounts[browserName] || 0,
+            sessions: browserPageviews[browserName] || 0,
         }));
 
         const countryData = Object.entries(countryCounts)
@@ -119,10 +125,16 @@ export async function GET(req) {
             .sort((a, b) => b.value - a.value)
             .slice(0, 10);
 
+        const heatmapData = Object.entries(heatmapCounts).map(([key, count]) => {
+            const [day, hour] = key.split("-").map(Number);
+            return { day, hour, count };
+        });
+
         return NextResponse.json({
             deviceData,
             browserData,
             countryData,
+            heatmapData,
         });
     } catch (err) {
         console.error("[API Error] /analytics/statistics-section:", err);

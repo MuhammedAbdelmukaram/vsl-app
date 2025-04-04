@@ -1,62 +1,76 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./lowerSection.module.css";
 import { useRouter } from "next/navigation";
 
 const ITEMS_PER_PAGE = 6;
 
-const LowerSection = ({ data }) => {
+const LowerSection = () => {
+    const [videos, setVideos] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
-
+    const [totalCount, setTotalCount] = useState(0);
+    const [loading, setLoading] = useState(true);
     const router = useRouter();
+
+    const menuRef = useRef(null);
+    const [menuVisible, setMenuVisible] = useState(false);
+    const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+    const [selectedVideoId, setSelectedVideoId] = useState(null);
+
+    const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
+
+    const fetchVideos = async (page) => {
+        try {
+            setLoading(true);
+            const token = localStorage.getItem("token");
+            const res = await fetch(`/api/getVideosHome?page=${page}&limit=${ITEMS_PER_PAGE}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            const { videos, totalCount } = await res.json();
+            setVideos(videos);
+            setTotalCount(totalCount);
+        } catch (err) {
+            console.error("Error fetching paginated videos:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchVideos(currentPage);
+    }, [currentPage]);
+
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
 
-    const paginatedData = data.slice(
-        (currentPage - 1) * ITEMS_PER_PAGE,
-        currentPage * ITEMS_PER_PAGE
-    );
-
-    // 🔥 State to track the menu position & selected video
-    const [menuVisible, setMenuVisible] = useState(false);
-    const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
-    const [selectedVideoId, setSelectedVideoId] = useState(null);
-    const menuRef = useRef(null);
-
-    // ✅ Open the menu at the clicked position
     const handleRowClick = (event, videoId) => {
         event.preventDefault();
         setSelectedVideoId(videoId);
-
-        const { clientX, clientY } = event;
-        setMenuPosition({ x: clientX, y: clientY });
+        setMenuPosition({ x: event.clientX, y: event.clientY });
         setMenuVisible(true);
     };
 
-    // ✅ Handle menu option selection
     const handleMenuClick = (action) => {
-        if (action === "options") {
-            router.push(`/video/${selectedVideoId}`);
-        } else if (action === "analytics") {
-            router.push("/analytics");
-        }
+        if (action === "options") router.push(`/video/${selectedVideoId}`);
+        else if (action === "analytics") router.push("/analytics");
         setMenuVisible(false);
     };
 
-    // ✅ Close the menu if clicking outside
     const handleOutsideClick = (event) => {
         if (menuRef.current && !menuRef.current.contains(event.target)) {
             setMenuVisible(false);
         }
     };
 
+    if (loading) return <div className={styles.loading}>Loading...</div>;
+
     return (
         <div className={styles.lowerSection} onClick={handleOutsideClick}>
             <h2>Video Manager</h2>
             <div className={styles.table}>
-                {paginatedData.map((video, index) => (
+                {videos.map((video, index) => (
                     <div
                         className={styles.row}
                         key={index}
@@ -68,33 +82,39 @@ const LowerSection = ({ data }) => {
                         </div>
                         <div className={styles.stats}>
                             <div className={styles.statItem}>
-                                <p className={styles.statValueSpecial}>
-                                    {video.name || "Unknown"}
-                                </p>
+                                <p className={styles.statValueSpecial}>{video.name || "Unknown"}</p>
                             </div>
                             <div className={styles.statItem}>
                                 <p className={styles.statValue}>{video.views ?? "0"}</p>
-                                <p className={styles.statLabel}>Views</p>
+                                <p className={styles.statLabel}>Total Plays</p>
                             </div>
                             <div className={styles.statItem}>
                                 <p className={styles.statValue}>{video.uniqueViews ?? "0"}</p>
-                                <p className={styles.statLabel}>Unique Views</p>
+                                <p className={styles.statLabel}>Unique Plays</p>
                             </div>
                             <div className={styles.statItem}>
-                                <p className={styles.statValue}>{video.playRate ?? "0"}</p>
+                                <p className={styles.statValue}>
+                                    {video.playRate ? `${video.playRate.toFixed(1)}%` : "0%"}
+                                </p>
                                 <p className={styles.statLabel}>Play Rate</p>
                             </div>
                             <div className={styles.statItem}>
-                                <p className={styles.statValue}>{video.pitchRetention ?? "0"}</p>
+                                <p className={styles.statValue}>
+                                    {video.avgWatchTime ? `${video.avgWatchTime.toFixed(1)}s` : "0s"}
+                                </p>
+                                <p className={styles.statLabel}>Avg Watch Time</p>
+                            </div>
+                            <div className={styles.statItem}>
+                                <p className={styles.statValue}>
+                                    {video.engagement ? `${video.engagement.toFixed(1)}%` : "0%"}
+                                </p>
+                                <p className={styles.statLabel}>Hook Retention</p>
+                            </div>
+                            <div className={styles.statItem}>
+                                <p className={styles.statValue}>
+                                    {video.buttonClicks ? `${video.buttonClicks.toFixed(1)}%` : "0%"}
+                                </p>
                                 <p className={styles.statLabel}>Pitch Retention</p>
-                            </div>
-                            <div className={styles.statItem}>
-                                <p className={styles.statValue}>{video.engagement ?? "0"}</p>
-                                <p className={styles.statLabel}>Engagement</p>
-                            </div>
-                            <div className={styles.statItem}>
-                                <p className={styles.statValue}>{video.buttonClicks ?? "0"}</p>
-                                <p className={styles.statLabel}>Button Clicks</p>
                             </div>
                         </div>
                     </div>
@@ -113,7 +133,6 @@ const LowerSection = ({ data }) => {
                 ))}
             </div>
 
-            {/* 🔥 Small Context Menu */}
             {menuVisible && (
                 <div
                     ref={menuRef}

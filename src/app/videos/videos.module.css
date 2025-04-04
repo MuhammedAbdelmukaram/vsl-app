@@ -16,6 +16,14 @@
     font-weight: bold;
 }
 
+.divider{
+    height: 1px;
+    width: 100%;
+    background-color: #575757;
+    margin-top: 20px;
+    margin-bottom: 28px;
+}
+
 .addButton{
     display: flex;
     align-items: center;

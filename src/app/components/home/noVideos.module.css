@@ -4,6 +4,13 @@
     padding: 20px;
 }
 
+.tutorialBoxWrapper{
+    margin-left: 220px;
+    max-width: 75vw;
+    padding: 20px;
+}
+
+
 .started{
     font-size: 20px;
     font-weight: bold;

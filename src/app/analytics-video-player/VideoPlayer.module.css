@@ -1,0 +1,324 @@
+
+.playerWrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 16 / 9;
+    background-color: #000;
+    overflow: hidden;
+    border-radius: 10px;
+}
+/* 📌 Skeleton Loader - Matches Video Player Size */
+.skeletonLoader {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ✨ Shimmer Effect */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* ReactPlayer positioning */
+.reactPlayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+@keyframes glowingBorder {
+    0% {
+        box-shadow: 0 0 5px var(--borderGlowColor, rgba(212, 89, 0, 0.6)),
+        0 0 10px var(--borderGlowColor, rgba(212, 89, 0, 0.5));
+    }
+    50% {
+        box-shadow: 0 0 15px var(--borderGlowColor, rgba(212, 89, 0, 0.8)),
+        0 0 25px var(--borderGlowColor, rgba(212, 89, 0, 0.7));
+    }
+    100% {
+        box-shadow: 0 0 5px var(--borderGlowColor, rgba(212, 89, 0, 0.6)),
+        0 0 10px var(--borderGlowColor, rgba(212, 89, 0, 0.5));
+    }
+}
+
+.glowingBorder {
+    animation: glowingBorder 2s infinite alternate;
+}
+
+
+/* ReactPlayer positioning */
+.reactPlayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.leftClickArea, .centerClickArea, .rightClickArea {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    cursor: pointer;
+}
+
+.leftClickArea {
+    left: 0;
+    width: 25%;
+}
+
+.centerClickArea {
+    left: 25%;
+    width: 50%;
+}
+
+.rightClickArea {
+    right: 0;
+    width: 25%;
+}
+
+
+/* 📌 Theatre Mode Button */
+.theatreButton {
+    position: absolute;
+    bottom: 10px;
+    right: 60px;
+    background: rgba(0, 0, 0, 0);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.theatreButton:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* 📌 Fullscreen Mode */
+.fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    background: black;
+    z-index: 9999;
+}
+
+.exitButtonsContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.exitButton {
+    background-color: #ffffff;
+    color: #000;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.exitButton:hover {
+    background-color: #ddd;
+}
+
+
+/* 📌 Theatre Mode */
+.theatre {
+    width: 1200px !important;
+    max-width: 1200px !important;
+    height: auto !important;
+    background: #111;
+    border-radius: 10px;
+}
+
+/* Progress Bar */
+.progressBarWrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 7px;
+    background-color: rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+}
+
+.progressBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #9a00f3;
+    transition: width 0.1s ease;
+}
+
+/* Play/Pause Button */
+.playPauseButton {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.playPauseButton:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* Fullscreen Button */
+.fullscreenButton {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.fullscreenButton:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.contextMenu {
+    position: fixed; /* Fix position relative to the viewport */
+    background: #333;
+    color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    padding: 0;
+    z-index: 1000;
+}
+
+.contextMenu li {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.contextMenu li:hover {
+    background: #444;
+}
+
+
+
+/* Overlay for AutoPlay */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.overlayContent {
+    text-align: center;
+    color: #fff;
+}
+
+.playButton {
+    background: none;
+    border: none;
+    color: #ffa500;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.playButton:hover {
+    transform: scale(1.1);
+}
+
+.autoPlayText {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+/* Exit Thumbnail */
+/* Thumbnail Wrapper */
+.thumbnail,
+.exitThumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    cursor: pointer;
+    z-index: 3;
+}
+
+.thumbnailImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlayContent {
+    position: absolute;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    pointer-events: none;
+}
+
+.overlayContainer{
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    background-color: #fff;
+    padding: 14px 30px;
+    border-radius: 4px;
+}

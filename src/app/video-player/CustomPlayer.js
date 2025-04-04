@@ -1,13 +1,36 @@
-// components/CustomPlayer.js
-"use client"; // Ensure it's a client component
+"use client";
 
-import React from "react";
+import React, { useRef, useImperativeHandle } from "react";
 import ReactPlayer from "react-player/file";
 
-const CustomPlayer = React.forwardRef(({ url, playing, muted, onProgress, onPause, onStart, progressInterval, onEnded }, ref) => {
+const CustomPlayer = React.forwardRef(({
+                                           url,
+                                           playing,
+                                           muted,
+                                           onProgress,
+                                           onPause,
+                                           onStart,
+                                           progressInterval,
+                                           onEnded
+                                       }, ref) => {
+    const internalPlayerRef = useRef(null);
+
+    // ✅ Expose custom methods to parent via ref
+    useImperativeHandle(ref, () => ({
+        getCurrentTime: () => internalPlayerRef.current?.getCurrentTime?.() || 0,
+        getDuration: () => internalPlayerRef.current?.getDuration?.() || 0,
+        seekTo: (time, type) => internalPlayerRef.current?.seekTo?.(time, type),
+        setPlaybackRate: (rate) => {
+            const video = internalPlayerRef.current?.getInternalPlayer?.();
+            if (video && video.playbackRate !== undefined) {
+                video.playbackRate = rate;
+            }
+        }
+    }));
+
     return (
         <ReactPlayer
-            ref={ref} // ✅ Now refs will work correctly
+            ref={internalPlayerRef}
             url={url}
             playing={playing}
             muted={muted}
@@ -23,6 +46,6 @@ const CustomPlayer = React.forwardRef(({ url, playing, muted, onProgress, onPaus
     );
 });
 
-CustomPlayer.displayName = "CustomPlayer"; // Fix for React warnings
+CustomPlayer.displayName = "CustomPlayer";
 
 export default CustomPlayer;

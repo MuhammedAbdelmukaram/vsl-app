@@ -1,121 +1,109 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import UpperSection from "../components/home/upperSection";
-import LowerSection from "../components/home/lowerSection";
-import Layout from "../components/LayoutHS";
-import styles from "@/app/videos/videos.module.css";
-import Loader from "@/app/loader/page";
-import NoVideos from "@/app/components/home/noVideos";
-import IntegrationModal from "@/app/components/integrationsModal";
+"use client"
+import React, { useEffect, useState } from "react"
+import { useSearchParams, useRouter } from "next/navigation"
+import { useWindowSize } from "react-use"
+import Confetti from "react-confetti"
 
+import UpperSection from "../components/home/upperSection"
+import LowerSection from "../components/home/lowerSection"
+import Layout from "../components/LayoutHS"
+import styles from "@/app/videos/videos.module.css"
+import Loader from "@/app/loader/page"
+import IntegrationModal from "@/app/components/integrationsModal"
+import TutorialBox from "@/app/home/TutorialBox";
 
 const Home = () => {
-    const [videoPerformance, setVideoPerformance] = useState([]);
-    const [hasVideos, setHasVideos] = useState(false);
-    const [favoredIntegrations, setFavoredIntegrations] = useState([]); // Track user's integrations
-    const [loading, setLoading] = useState(true);
-    const [showIntegrationModal, setShowIntegrationModal] = useState(false);
+    const [favoredIntegrations, setFavoredIntegrations] = useState([])
+    const [showIntegrationModal, setShowIntegrationModal] = useState(false)
+    const [loading, setLoading] = useState(true)
+
+    const searchParams = useSearchParams()
+    const router = useRouter()
+    const { width, height } = useWindowSize()
+    const [showConfetti, setShowConfetti] = useState(false)
 
     useEffect(() => {
-        const fetchData = async () => {
+        if (searchParams.get("payment") === "success") {
+            setShowConfetti(true)
+
+            const timer = setTimeout(() => {
+                setShowConfetti(false)
+                setTimeout(() => {
+                    router.replace("/home", { scroll: false })
+                }, 1000)
+            }, 10000)
+
+            return () => clearTimeout(timer)
+        }
+    }, [searchParams, router])
+
+    useEffect(() => {
+        const fetchFavoredIntegrations = async () => {
             try {
-                const token = localStorage.getItem("token");
+                const token = localStorage.getItem("token")
+                if (!token) throw new Error("User is not authenticated")
 
-                if (!token) {
-                    throw new Error("User is not authenticated");
-                }
+                const res = await fetch("/api/getVideosHome?page=1&limit=1", {
+                    headers: { Authorization: `Bearer ${token}` },
+                })
 
-                const response = await fetch("/api/getVideosHome", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const data = await res.json()
+                const integrations = data.favoredIntegrations || []
 
-                if (!response.ok) {
-                    if (response.status === 404) {
-                        setVideoPerformance([]);
-                        setHasVideos(false);
-                        return;
-                    }
-                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                const { videos, favoredIntegrations } = data;
-
-                setHasVideos(videos.length > 0);
-
-                setVideoPerformance(videos.map((video) => ({
-                    id: video._id,
-                    name: video.name,
-                    thumbnail: video.thumbnail || "/default-thumbnail.jpg",
-                    views: 0,
-                    uniqueViews: 0,
-                    playRate: "0%",
-                    pitchRetention: "0%",
-                    engagement: "0%",
-                    buttonClicks: 0,
-                })));
-
-                // Check if favoredIntegrations exists, otherwise show modal
-                if (!favoredIntegrations || favoredIntegrations.length === 0) {
-                    setShowIntegrationModal(true);
+                if (!integrations.length) {
+                    setShowIntegrationModal(true)
                 } else {
-                    setFavoredIntegrations(favoredIntegrations);
+                    setFavoredIntegrations(integrations)
                 }
-            } catch (error) {
-                console.error("Error fetching videos:", error);
-                setVideoPerformance([]);
-                setHasVideos(false);
+            } catch (err) {
+                console.error("Error checking integrations:", err)
             } finally {
-                setLoading(false);
+                setLoading(false)
             }
-        };
+        }
 
-        fetchData();
-    }, []);
+        fetchFavoredIntegrations()
+    }, [])
 
-    const handleSaveIntegrations = (selectedIntegrations) => {
-        setFavoredIntegrations(selectedIntegrations);
-        setShowIntegrationModal(false);
-
-        // Save to backend
-        fetch("/api/saveIntegrations", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify({ integrations: selectedIntegrations }),
-        }).catch((error) => console.error("Error saving integrations:", error));
-    };
-
-    if (loading) {
-        return <Loader />;
-    }
+    if (loading) return <Loader />
 
     return (
         <Layout>
-            {hasVideos ? (
-                <>
-                    <div style={{  marginLeft: 220}}>
-                        <UpperSection data={[]} />
-                        <LowerSection data={videoPerformance} />
-                    </div>
-
-                </>
-            ) : (
-                <NoVideos />
+            {showConfetti && (
+                <Confetti
+                    width={width}
+                    height={height}
+                    numberOfPieces={300}
+                    recycle={false}
+                />
             )}
+            <TutorialBox />
+            <div className={styles.divider} />
+            <div style={{ marginLeft: 220 }}>
+                <LowerSection />
+            </div>
 
-            {/* Show integration modal if no favored integrations */}
             <IntegrationModal
                 isOpen={showIntegrationModal}
                 onClose={() => setShowIntegrationModal(false)}
-                onSave={handleSaveIntegrations}
+                onSave={(selected) => {
+                    setFavoredIntegrations(selected)
+                    setShowIntegrationModal(false)
+
+                    fetch("/api/saveIntegrations", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        },
+                        body: JSON.stringify({ integrations: selected }),
+                    }).catch((error) =>
+                        console.error("Error saving integrations:", error)
+                    )
+                }}
             />
         </Layout>
-    );
-};
+    )
+}
 
-export default Home;
+export default Home

@@ -1,6 +1,6 @@
 import { decodeJwt } from "jose";
 
-export const uploadVideoToR2 = async (file, setVideoId, setUploadedVideoUrl, setUploadStatus) => {
+export const uploadVideoToR2 = async (file, setVideoId, setUploadedVideoUrl, setUploadStatus, setUploadProgress) => {
     try {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("Token not found in localStorage.");
@@ -29,13 +29,34 @@ export const uploadVideoToR2 = async (file, setVideoId, setUploadedVideoUrl, set
         const { signedUrl, uploadUrl } = await response.json();
 
         // Upload video to R2
-        const uploadResponse = await fetch(signedUrl, {
-            method: "PUT",
-            headers: { "Content-Type": file.type },
-            body: file,
+        await new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open("PUT", signedUrl);
+            xhr.setRequestHeader("Content-Type", file.type);
+
+            xhr.upload.onprogress = (e) => {
+                if (e.lengthComputable) {
+                    const percentComplete = (e.loaded / e.total) * 100;
+                    console.log(`Upload progress: ${Math.round(percentComplete)}%`);
+                    setUploadProgress(percentComplete);
+                    setUploadStatus(`Uploading: ${Math.round(percentComplete)}%`);
+                }
+            };
+
+
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    resolve();
+                } else {
+                    reject(new Error("Upload failed"));
+                }
+            };
+
+            xhr.onerror = () => reject(new Error("Upload error"));
+            xhr.send(file);
         });
 
-        if (!uploadResponse.ok) throw new Error("Failed to upload file");
+
 
         // Construct the custom domain URL
         const customDomainUrl = uploadUrl.replace(
@@ -43,8 +64,15 @@ export const uploadVideoToR2 = async (file, setVideoId, setUploadedVideoUrl, set
             "https://cdn.vslapp.pro"
         );
 
+        const duration = await getVideoDuration(file); // in seconds
+        const formattedDuration = formatTime(duration); // e.g. "2:34"
+
+
+
         // Save video details to DB and retrieve video ID
-        const id = await saveVideoToDB(customDomainUrl, token, file.name);
+        // Then pass it to saveVideoToDB
+        const id = await saveVideoToDB(customDomainUrl, token, file.name, formattedDuration);
+
         setVideoId(id);
         setUploadedVideoUrl(customDomainUrl);
         setUploadStatus("Uploaded Successfully!");
@@ -56,7 +84,7 @@ export const uploadVideoToR2 = async (file, setVideoId, setUploadedVideoUrl, set
 
 
 // Function to save video to database
-export const saveVideoToDB = async (videoUrl, token, videoName) => {
+export const saveVideoToDB = async (videoUrl, token, videoName, length) => {
     try {
         const response = await fetch("/api/saveVideo", {
             method: "POST",
@@ -73,6 +101,7 @@ export const saveVideoToDB = async (videoUrl, token, videoName) => {
                 pitchTime: null,
                 autoPlayText: "",
                 brandColor: "#ffffff",
+                length, // ✅ send duration here
             }),
         });
 
@@ -84,6 +113,26 @@ export const saveVideoToDB = async (videoUrl, token, videoName) => {
         console.error("Database Error:", error);
         throw error;
     }
+};
+
+
+const getVideoDuration = (file) => {
+    return new Promise((resolve, reject) => {
+        const video = document.createElement("video");
+        video.preload = "metadata";
+        video.onloadedmetadata = () => {
+            URL.revokeObjectURL(video.src);
+            resolve(video.duration); // in seconds
+        };
+        video.onerror = () => reject("Error loading video metadata");
+        video.src = URL.createObjectURL(file);
+    });
+};
+
+const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
 
 

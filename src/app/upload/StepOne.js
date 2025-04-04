@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, {useState} from "react";
 import styles from "./upload.module.css";
 import Image from "next/image";
 
@@ -10,6 +10,7 @@ const StepOne = ({
                      uploadedExitThumbnailUrl,
                      handleVideoFileChange,
                      handleThumbnailUploadWrapper,
+                     uploadProgress,
                      nextStep,
                  }) => {
     const [loading, setLoading] = useState({
@@ -40,9 +41,9 @@ const StepOne = ({
             return;
         }
 
-        setLoading((prev) => ({ ...prev, [type]: true }));
+        setLoading((prev) => ({...prev, [type]: true}));
         await handleThumbnailUploadWrapper(e, type);
-        setLoading((prev) => ({ ...prev, [type]: false }));
+        setLoading((prev) => ({...prev, [type]: false}));
     };
 
     const handleDrop = async (e, type) => {
@@ -59,11 +60,11 @@ const StepOne = ({
         }
 
         if (type === "video") {
-            setLoading((prev) => ({ ...prev, video: true }));
-            await handleVideoFileChange({ target: { files: [file] } });
-            setLoading((prev) => ({ ...prev, video: false }));
+            setLoading((prev) => ({...prev, video: true}));
+            await handleVideoFileChange({target: {files: [file]}});
+            setLoading((prev) => ({...prev, video: false}));
         } else {
-            await handleUploadWithLoading({ target: { files: [file] } }, type);
+            await handleUploadWithLoading({target: {files: [file]}}, type);
         }
     };
 
@@ -100,15 +101,28 @@ const StepOne = ({
                             type="file"
                             id="fileInput"
                             accept={allowedVideoTypes.join(",")}
-                            style={{ display: "none" }}
+                            style={{display: "none"}}
                             onChange={async (e) => {
-                                setLoading((prev) => ({ ...prev, video: true }));
+                                setLoading((prev) => ({...prev, video: true}));
                                 await handleVideoFileChange(e);
-                                setLoading((prev) => ({ ...prev, video: false }));
+                                setLoading((prev) => ({...prev, video: false}));
                             }}
                         />
                         {loading.video ? (
-                            <div className={styles.loader}></div>
+                            uploadProgress > 0 && uploadProgress < 100 ? (
+                                <div className={styles.wrapperUploadProgress}>
+
+                                    <p className={styles.uploadText}>Uploading</p>
+                                    <div className={styles.progressWrapper}>
+                                        <div className={styles.progressBar} style={{width: `${uploadProgress}%`}}/>
+                                        <p>{Math.round(uploadProgress)}%</p>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className={styles.loader}></div>
+                            )
+
+
                         ) : uploadedVideoUrl ? (
                             <div className={styles.uploadedContainer}>
                                 <p>
@@ -143,7 +157,7 @@ const StepOne = ({
                                     height={40}
                                 />
                                 <div className={styles.dragDropArea}>
-                                    <p style={{ fontSize: 18 }}>
+                                    <p style={{fontSize: 18}}>
                                         Upload or Drop Your Video
                                     </p>
                                 </div>
@@ -179,7 +193,7 @@ const StepOne = ({
                             type="file"
                             id="thumbnailInput"
                             accept={allowedImageTypes.join(",")}
-                            style={{ display: "none" }}
+                            style={{display: "none"}}
                             disabled={!uploadedVideoUrl}
                             onChange={(e) => handleUploadWithLoading(e, "thumbnail")}
                         />
@@ -253,7 +267,7 @@ const StepOne = ({
                             type="file"
                             id="exitThumbnailInput"
                             accept={allowedImageTypes.join(",")}
-                            style={{ display: "none" }}
+                            style={{display: "none"}}
                             disabled={!uploadedVideoUrl}
                             onChange={(e) => handleUploadWithLoading(e, "exitThumbnail")}
                         />

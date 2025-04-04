@@ -19,6 +19,8 @@ const UploadPage = () => {
     const [videoId, setVideoId] = useState(null);
     const [m3u8Url, setM3u8Url] = useState(null); // ✅ Store M3U8 URL
     const [token, setToken] = useState(null);
+    const [uploadProgress, setUploadProgress] = useState(0);
+
 
     const router = useRouter();
 
@@ -33,15 +35,22 @@ const UploadPage = () => {
                 let newVideoId = null;
 
                 await new Promise((resolve) => {
-                    uploadVideoToR2(file, (id) => {
-                        newVideoId = id;
-                        setVideoId(id);
-                    }, (url) => {
-                        uploadedUrl = url;
-                        setUploadedVideoUrl(url);
-                        resolve(); // ✅ Ensure we wait for both videoId & URL
-                    }, setUploadStatus);
+                    uploadVideoToR2(
+                        file,
+                        (id) => {
+                            newVideoId = id;
+                            setVideoId(id);
+                        },
+                        (url) => {
+                            uploadedUrl = url;
+                            setUploadedVideoUrl(url);
+                            resolve(); // ✅ Ensure we wait for both videoId & URL
+                        },
+                        setUploadStatus,
+                        setUploadProgress // ✅ NEW: pass progress setter
+                    );
                 });
+
 
                 if (!uploadedUrl || !newVideoId) {
                     console.error("❌ Upload failed: videoId or uploadedUrl is missing.");
@@ -183,6 +192,7 @@ const UploadPage = () => {
                     handleVideoFileChange={handleVideoFileChange}
                     handleThumbnailUploadWrapper={handleThumbnailUploadWrapper}
                     nextStep={nextStep}
+                    uploadProgress={uploadProgress}
                 />
             )}
             {currentStep === 2 && (

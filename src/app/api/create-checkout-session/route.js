@@ -22,7 +22,7 @@ export async function POST(req) {
                     quantity: 1,
                 },
             ],
-            success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/home`,
+            success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/home?payment=success`,
             cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/home`,
             metadata,
         };

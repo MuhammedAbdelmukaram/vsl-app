@@ -1,21 +1,23 @@
 import React, {useEffect, useState} from "react";
 import styles from "./analytics.module.css";
 
-const WeeklyHeatmap = ({selectedVideo, customDates}) => {
-    const [heatmapData, setHeatmapData] = useState([]);
+const WeeklyHeatmap = ({selectedVideo, customDates, heatmapData}) => {
+
     const [hoveredCell, setHoveredCell] = useState(null);
 
 
     // TEMPORARILY USING PLACEHOLDER DATA FOR DESIGN PURPOSES
-    useEffect(() => {
-        const placeholder = [];
-        for (let hour = 0; hour < 24; hour++) {
-            for (let day = 0; day < 7; day++) {
-                placeholder.push({day, hour, count: Math.floor(Math.random() * 30)});
+    {/*
+        useEffect(() => {
+            const placeholder = [];
+            for (let hour = 0; hour < 24; hour++) {
+                for (let day = 0; day < 7; day++) {
+                    placeholder.push({day, hour, count: Math.floor(Math.random() * 30)});
+                }
             }
-        }
-        setHeatmapData(placeholder);
-    }, []);
+            setHeatmapData(placeholder);
+        }, []);
+    */}
 
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const hours = Array.from({length: 24}, (_, i) => i);

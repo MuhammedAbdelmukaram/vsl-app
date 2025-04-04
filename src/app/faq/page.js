@@ -6,14 +6,38 @@ import HelpModal from "@/app/components/helpModal"; // ✅ Import HelpModal
 
 const faqs = [
     {
-        question: "How do I add my video to my website?",
-        answer: "You can embed the video using an iframe or upload it directly."
+        question: "How do I add it to my website?",
+        answer: (
+            <>
+                It’s super simple. We’ve prepared a step-by-step guide{" "}
+                <a
+                    href="https://vslplayer.io/guide"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.link}
+                >
+                    here
+                </a>{" "}
+                to help you get set up quickly. If you get stuck or need help, our team is just a message away.
+            </>
+        )
     },
     {
-        question: "How do I add my video to my website?",
-        answer: "You can embed the video using an iframe or upload it directly."
+        question: "How does the free trial work?",
+        answer: "We offer a 14-day free trial so you can test everything risk-free. After the trial, your video will remain live but with a watermark and limited analytics — giving you time to upgrade without disruption. After that grace period, playback is paused until you upgrade."
     },
+    {
+        question: "Is your player responsive?",
+        answer: "Absolutely. Our player is fully responsive and optimized to work seamlessly across all devices — whether your visitors are on desktop, tablet, or mobile. It auto-adjusts to deliver a smooth viewing experience anywhere."
+    },
+    {
+        question: "Is it easy to cancel?",
+        answer: "Yes, canceling is hassle-free. You can cancel your subscription anytime through your dashboard. No phone calls, no pressure — just a few clicks and you’re done."
+    }
 ];
+
+
+
 
 const FAQ = () => {
     const [openIndex, setOpenIndex] = useState(null);

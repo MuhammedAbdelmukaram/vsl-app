@@ -197,6 +197,21 @@
 
 }
 
+.setPitchButton {
+    padding: 4px 10px;
+    background-color: #ED6300;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.setPitchButton:hover {
+    background-color: #d75a00;
+}
+
+
 .dot {
     width: 8px;
     height: 8px;
@@ -390,7 +405,7 @@
 }
 
 .card3 {
-    transform: translateY(-20px);
+    transform: translateY(0px);
     background-color: #131313;
     box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.25);
     padding: 24px 32px 32px 32px;
@@ -556,6 +571,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-height: 458px;
 }
 
 .progressContainer {
@@ -1240,7 +1256,7 @@
     text-align: center;
     border-radius: 16px;
     background-color: transparent;
-    margin-top: 40px;
+    margin-top: 120px;
 }
 
 .placeholderText {

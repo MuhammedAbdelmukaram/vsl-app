@@ -86,9 +86,24 @@ export async function GET(req) {
         const days = eachDayOfInterval({ start: startOfDay(from), end: endOfDay(to) });
         const avgDailyViews = totalViews > 0 ? totalViews / Math.max(days.length, 1) : 0;
 
+
         // Repeat View Rate
-        const returnedWatchers = totalViews - uniqueViews;
-        const repeatViewRate = uniqueViews > 0 ? (returnedWatchers / uniqueViews) * 100 : 0;
+        // Fetch the sessionIds of users who watched more than once
+        const repeatedViews = await AnalyticsEvent.aggregate([
+            { $match: { ...baseQuery, event: "played" } },
+            { $group: { _id: "$sessionId", totalPlays: { $sum: 1 } } },
+            { $match: { totalPlays: { $gt: 1 } } }, // Only those who played more than once
+        ]);
+
+        const returnedWatchers = repeatedViews.length;
+
+// Get the number of unique viewers who watched more than once
+        const repeatViewersCount = repeatedViews.length;
+
+// Calculate Repeat View Rate
+        const repeatViewRate = uniqueViews > 0 ? (repeatViewersCount / uniqueViews) * 100 : 0;
+
+
 
         // Hook Retention (watched past first 15 seconds)
         const hookHits = await AnalyticsEvent.countDocuments({
@@ -115,6 +130,7 @@ export async function GET(req) {
             hookRetention,
             completionRate,
             averageWatchTime,
+            pitchTime
         });
     } catch (err) {
         console.error("[API Error] /analytics/stats:", err);
