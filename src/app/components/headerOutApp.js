@@ -20,19 +20,30 @@ const HeaderOutApp = () => {
     return (
         <header className={styles.header}>
             {/* Logo on the left */}
-            <div className={styles.logo} onClick={handleLogoClick} style={{cursor: "pointer"}}>
+            <Link href="/" className={styles.logo}>
                 <Image
-                    src="/logo.png" // Replace with your logo path
-                    alt="Logo"
-                    width={40} // Base width
-                    height={40} // Base height
+                    src="/logo.png"
+                    alt="VSL Player logo"
+                    width={40}
+                    height={40}
                     className={styles.logoImage}
                 />
-            </div>
+            </Link>
+
 
             {/* Hamburger Menu for Mobile */}
-            <div className={styles.hamburger} onClick={toggleMenu}>
-                <div className={styles.bar}></div>
+            <div
+                className={styles.hamburger}
+                onClick={toggleMenu}
+                role="button"
+                aria-label="Toggle navigation menu"
+                aria-expanded={menuOpen}
+                aria-controls="main-navigation"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === "Enter") toggleMenu(); }}
+            >
+
+            <div className={styles.bar}></div>
                 <div className={styles.bar}></div>
                 <div className={styles.bar}></div>
             </div>
@@ -40,15 +51,16 @@ const HeaderOutApp = () => {
             {/* Navigation links */}
 
 
-                <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>
-                    <div className={styles.navGap}>
-                        <Link href="/pricing" className={styles.navLink}>Pricing</Link>
-                        <Link href="/guide" className={styles.navLink}>Guide</Link>
-                        <Link href="/login" className={styles.navLink}>Login</Link>
-                    </div>
-                    <div className={styles.line} ></div>
-                    <Link href="/signup" className={styles.bookCall}>Try it now</Link>
-                </nav>
+            <nav aria-label="Main navigation" className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>
+                <ul className={styles.navGap}>
+                    <li><Link href="/pricing" className={styles.navLink}>Pricing</Link></li>
+                    <li><Link href="/guide" className={styles.navLink}>Guide</Link></li>
+                    <li><Link href="/login" className={styles.navLink}>Login</Link></li>
+                </ul>
+                <div className={styles.line}></div>
+                <Link href="/signup" className={styles.bookCall}>Try it now</Link>
+            </nav>
+
 
         </header>
     );

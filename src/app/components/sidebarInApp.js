@@ -19,11 +19,19 @@ const SidebarInApp = () => {
         setIsMenuOpen(false);
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        router.push("/");
+    const handleLogout = async () => {
+        try {
+            await fetch("/api/logout"); // clear HttpOnly cookie
+
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+
+            router.push("/");
+        } catch (err) {
+            console.error("Logout failed:", err);
+        }
     };
+
 
     useEffect(() => {
         const fetchVideoCount = async () => {

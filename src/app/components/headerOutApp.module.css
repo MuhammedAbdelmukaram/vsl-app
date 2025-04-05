@@ -54,7 +54,7 @@
 .navGap{
     display: flex;
     gap: 60px;
-
+    list-style: none;
     margin-right: 30px;
 }
 .navOpen {
@@ -198,3 +198,44 @@
     }
 }
 
+
+@media (max-width: 768px) {
+    .header {
+        padding: 6px 10px;
+        margin: 0 3vw;
+    }
+
+    .logoImage {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .hamburger {
+        margin-right: 10px;
+    }
+
+    .bar {
+        width: 20px;
+        height: 2px;
+        margin: 3px 0;
+    }
+
+    .nav {
+        top: 50px; /* reduce height of menu open area */
+        padding: 18px 16px;
+    }
+
+    .navGap {
+        gap: 14px;
+    }
+
+    .bookCall {
+        margin-top: 12px;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .line {
+        margin: 10px 0;
+    }
+}

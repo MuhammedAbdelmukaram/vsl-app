@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./plans.module.css";
 import Layout from "@/app/components/LayoutHS";
 import { useRouter } from "next/navigation";
+import Loader from "../loader/page"
 
 const Page = () => {
     const router = useRouter();

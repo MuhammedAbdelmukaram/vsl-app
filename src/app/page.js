@@ -88,17 +88,20 @@ const Page = () => {
                         </motion.p>
                         <div className={styles.boxes}>
                             <div className={styles.box}>
-                                <Image src="/Hero1.png" alt="Clock Icon" width={72} height={72}
+                                <Image src="/Hero1.png" alt="Smart progress bar icon to improve video engagement"
+                                       width={72} height={72}
                                        className={styles.boxImg}/>
                                 <p className={styles.boxText}>Smart Progress Bar</p>
                             </div>
                             <div className={styles.box}>
-                                <Image src="/Hero2.png" alt="Clock Icon" width={72} height={72}
+                                <Image src="/Hero2.png" alt="Auto-play icon for seamless VSL playback" width={72}
+                                       height={72}
                                        className={styles.boxImg}/>
                                 <p className={styles.boxText}>Auto-Play</p>
                             </div>
                             <div className={styles.box}>
-                                <Image src="/Hero3.png" alt="Clock Icon" width={72} height={72}
+                                <Image src="/Hero3.png" alt="Exit thumbnail icon for call-to-action moments" width={72}
+                                       height={72}
                                        className={styles.boxImg}/>
                                 <p className={styles.boxText}>Exit Thumbnails</p>
                             </div>
@@ -161,9 +164,7 @@ const Page = () => {
 
 
                 <div className={styles.relative}>
-
-
-                    <motion.div
+                    <motion.button
                         initial="hidden"
                         whileInView="visible"
                         viewport={{once: true, amount: 0.3}}
@@ -172,9 +173,9 @@ const Page = () => {
                         className={styles.bookCall}
                         onClick={handleTryItNow}
                     >
-                        <p>Try For Free</p>
+                        Try For Free
+                    </motion.button>
 
-                    </motion.div>
                     <Image
                         src="/arrow.svg"
                         alt="Partner 4"
@@ -191,38 +192,38 @@ const Page = () => {
 
 
             </div>
-            <div className={styles.smallReview}>
-                <div className={styles.person}>
-                    <Image
-                        src="/g1.jpg"
-                        alt="Partner 4"
-                        width={35}
-                        height={35}
-
-                    />
-                </div>
-                <div className={styles.person}>
-                    <Image
-                        src="/g2.jpg"
-                        alt="Partner 4"
-                        width={35}
-                        height={35}
-                        objectFit="cover"
-                    />
-                </div>
-                <div className={styles.person}>
-                    <Image
-                        src="/g3.jpg"
-                        alt="Partner 4"
-                        width={35}
-                        height={35}
-
-                    />
-                </div>
-                <p className={styles.smallText}>Over 500 firms and 10,000+ Users Love It</p>
-
-
+            <div className={styles.smallReview} aria-label="User trust indicator">
+                <ul className={styles.personList}>
+                    <li className={styles.person}>
+                        <Image
+                            src="/g1.jpg"
+                            alt="Happy user smiling in testimonial"
+                            width={35}
+                            height={35}
+                        />
+                    </li>
+                    <li className={styles.person}>
+                        <Image
+                            src="/g2.jpg"
+                            alt="Satisfied customer giving positive feedback"
+                            width={35}
+                            height={35}
+                        />
+                    </li>
+                    <li className={styles.person}>
+                        <Image
+                            src="/g3.jpg"
+                            alt="Another client who uses VSL Player"
+                            width={35}
+                            height={35}
+                        />
+                    </li>
+                </ul>
+                <p className={styles.smallText}>
+                    Over 500 firms and 10,000+ users love it
+                </p>
             </div>
+
             <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -234,7 +235,8 @@ const Page = () => {
                 <CompanyMarquee/>
             </motion.div>
 
-            <div className={styles.science}>
+            <section className={styles.science} aria-labelledby="science-heading">
+
                 <div className={styles.headline}>
                     <p className={styles.eyebrow2}>
                         BACKED BY SCIENCE
@@ -245,7 +247,7 @@ const Page = () => {
 
                 </div>
                 <Science/>
-            </div>
+            </section>
 
 
             <TestimonialSection/>
@@ -253,6 +255,7 @@ const Page = () => {
 
             <ToolsSection/>
             <Integrations/>
+
             <VideoAnalyticsSection/>
             <QuoteSection/>
             <StepsSection/>

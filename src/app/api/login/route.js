@@ -28,27 +28,27 @@ export async function POST(request) {
             );
         }
 
-        // Ensure JWT_SECRET exists
-        if (!process.env.JWT_SECRET) {
-            console.error("JWT_SECRET is missing from .env file");
-            return new Response(
-                JSON.stringify({ message: "Server configuration error" }),
-                { status: 500 }
-            );
-        }
-
         const secret = new TextEncoder().encode(process.env.JWT_SECRET);
         const token = await new SignJWT({ id: user._id, email: user.email })
             .setProtectedHeader({ alg: "HS256" })
             .setExpirationTime("72h")
             .sign(secret);
 
+        // Set the cookie with the token
+        const cookie = `auth_token=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${60 * 60 * 72}`;
+
         return new Response(
             JSON.stringify({
                 token,
                 user: { id: user._id, name: user.name, email: user.email },
             }),
-            { status: 200, headers: { "Content-Type": "application/json" } }
+            {
+                status: 200,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Set-Cookie": cookie,
+                },
+            }
         );
     } catch (error) {
         console.error("Error during login:", error);

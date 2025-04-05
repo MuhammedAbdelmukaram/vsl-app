@@ -4,9 +4,9 @@ import Image from "next/image";
 
 const QuoteSection = () => {
     return (
-        <div className={styles.quoteSection}>
+        <section className={styles.quoteSection}>
             <div className={styles.quoteBox}>
-                <Image src="/chane.jpg" alt="Partner 1" width={200} height={200} className={styles.logo}/>
+                <Image src="/chane.jpg" alt="Profile picture of satisfied user" width={200} height={200} className={styles.logo}/>
             </div>
             <div>
 
@@ -18,7 +18,7 @@ const QuoteSection = () => {
                 <p className={styles.author}>Alex Backer <span className={styles.position}>CEO of TikTok, CTO of Facebook</span>
                 </p>
             </div>
-        </div>
+        </section>
     );
 };
 

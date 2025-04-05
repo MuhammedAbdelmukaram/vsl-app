@@ -64,7 +64,9 @@ const LowerSection = () => {
         }
     };
 
-    if (loading) return <div className={styles.loading}>Loading...</div>;
+    if (loading) return  <div className={styles.loader}>
+        <div className={styles.ring}></div>
+    </div>;
 
     return (
         <div className={styles.lowerSection} onClick={handleOutsideClick}>

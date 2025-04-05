@@ -33,12 +33,12 @@ const Science = () => {
                         {/* VSL Player Section */}
                         <div className={styles.row}>
                             <div className={styles.section}>
-                                <img src="/me.svg" alt="VSL Player" className={styles.icon}/>
+                                <img src="/me.svg" alt="VSL Player Logo" className={styles.icon}/>
                                 <span className={styles.subtext}>VSL Player</span>
                             </div>
 
                             <div>
-                                <Image src="/peopleAll.svg" alt="Clock Icon" width={436} height={40}
+                                <Image src="/peopleAll.svg" alt="VSL Player play rate showing 10 out of 10 viewers" width={436} height={40}
                                        className={styles.logo} style={{ colorScheme: 'light' }}/>
                             </div>
                         </div>
@@ -46,7 +46,7 @@ const Science = () => {
                         {/* Industry Average Section */}
                         <div className={styles.row}>
                             <div className={styles.section}>
-                                <img src="/competitors.svg" alt="Industry Average" className={styles.icon}/>
+                                <img src="/competitors.svg" alt="Competitors - Industry Average icon containing logos of some competitors" className={styles.icon}/>
                                 <span className={styles.subtext}>
                             Industry average <span
                                     className={styles.parenthesis}>(Youtube, Vimeo, Wistia, DailyMotion)</span>
@@ -54,7 +54,7 @@ const Science = () => {
                             </div>
 
                             <div>
-                                <Image src="/peopleSome.svg" alt="Clock Icon" width={436} height={40}
+                                <Image src="/peopleSome.svg" alt="Competitor average play rate showing 8 out of 10 viewers" width={436} height={40}
                                        className={styles.logo} style={{ colorScheme: 'light' }}/>
                             </div>
 
@@ -87,7 +87,8 @@ const Science = () => {
                         <div className={styles.row}>
                             {/* VSL Player */}
                             <div className={styles.section}>
-                                <Image src="/competitors2.svg" alt="VSL Player" width={504} height={107}/>
+                                <Image src="/competitors2.svg" alt="Video retention timeline showing VSL Player reaching 7:21 average watch time compared to competitors at 3:24"
+                                       width={504} height={107}/>
                             </div>
                         </div>
                     </div>
@@ -114,7 +115,7 @@ const Science = () => {
 
                         {/* Right Side - VSL Player Icon */}
                         <div className={styles.section}>
-                            <Image src="/competitors4.svg" alt="CTA Comparison Graphic" width={600} height={280}/>
+                            <Image src="/competitors4.svg" alt="CTA Comparison Graphic betwen VSL Player and competitors" width={600} height={280}/>
                         </div>
                     </div>
 
@@ -136,7 +137,7 @@ const Science = () => {
 
                     {/* Below the line Image (Assuming Image below is part of the graphic) */}
                     <div className={styles.bottomImage}>
-                        <Image src="/competitors3.svg" alt="CTA Comparison Graphic" width={400} height={280}/>
+                        <Image src="/competitors3.svg" alt="Graphic showing 19% increase in conversion rate when using VSL player" width={400} height={280}/>
                     </div>
                 </div>
 
@@ -163,7 +164,7 @@ const Science = () => {
 
                         {/* Right Side - VSL Player Icon */}
                         <div className={styles.section}>
-                            <Image src="/competitors4.svg" alt="CTA Comparison Graphic" width={600} height={280}/>
+                            <Image src="/competitors4.svg" alt="CTA Comparison Graphic betwen VSL Player and competitors" width={600} height={280}/>
                         </div>
                     </div>
 

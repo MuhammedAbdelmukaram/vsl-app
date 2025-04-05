@@ -153,3 +153,27 @@
     color: #ffffff;
     border-radius: 4px;
 }
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top:120px;
+
+
+}
+
+.ring {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 165, 0, 0.2); /* Light orange */
+    border-top: 5px solid #d45900; /* Primary orange */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

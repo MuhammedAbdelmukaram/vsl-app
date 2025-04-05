@@ -9,7 +9,7 @@ const TestimonialSection = () => {
 
     return (
         <section className={styles.testimonialSection}>
-            <h2 className={styles.subtitle}>WHAT OTHERS SAY?</h2>
+            <p className={styles.subtitle}>WHAT OTHERS SAY?</p>
             <h1 className={styles.title}>Don’t take our word. Take theirs!</h1>
 
             {/* Marquee that stops on hover */}

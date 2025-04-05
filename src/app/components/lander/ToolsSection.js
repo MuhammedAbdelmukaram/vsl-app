@@ -74,7 +74,7 @@ const ToolsSection = () => {
                         </button>
 
                     ))}
-                    <a className={styles.moreFeatures} href="#">+10 more features</a>
+                    <p className={styles.moreFeatures} >+10 more features</p>
                 </div>
 
                 {/* Video Placeholder (Now an Image) */}

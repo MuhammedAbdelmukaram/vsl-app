@@ -6,6 +6,7 @@ import HeaderOutApp from "@/app/components/headerOutApp";
 import useAuth from "@/utils/useAuth"; // Hook to check login status
 import styles from "./pricing.module.css";
 import Image from "next/image";
+import Loader from "../loader/page"
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 

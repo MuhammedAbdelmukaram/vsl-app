@@ -360,6 +360,16 @@
     object-fit: cover; /* Crops and centers the image */
 }
 
+/* Optional: Removes bullet points for the list */
+.personList {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    gap: 8px; /* space between avatars */
+}
+
+
 .smallReview{
     position: inherit;
     z-index: 2!important;

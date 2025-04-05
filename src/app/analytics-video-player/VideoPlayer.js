@@ -262,14 +262,6 @@ const VideoPlayer = (
 
 
 
-
-
-
-    useEffect(() => {
-        console.log("playerRef in production:", playerRef.current);
-    }, [playerRef.current]);
-
-
     const handleExitThumbnailClick = (e) => {
         if (e) e.stopPropagation();
         setShowExit(false);

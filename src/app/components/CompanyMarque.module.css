@@ -18,6 +18,7 @@
 
 /* Partner logos container with responsive gap */
 .partnerLogos {
+    list-style: none;
     display: flex;
     gap: clamp(2vw, 15vw, 20vw); /* Responsive gap that scales with screen size */
     margin-right: 15vw;

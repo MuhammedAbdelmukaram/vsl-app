@@ -4,7 +4,7 @@ import React from "react";
 import Integrations from "@/app/components/lander/Integrations";
 const StepsSection = () => {
     return (
-        <div className={styles.container}>
+        <section className={styles.container}>
             <div className={styles.eyebrows}>
                 <p>WORKS ON ANY WEBSITE</p>
             </div>
@@ -49,7 +49,7 @@ const StepsSection = () => {
             </div>
 
 
-        </div>
+        </section>
     );
 };
 
